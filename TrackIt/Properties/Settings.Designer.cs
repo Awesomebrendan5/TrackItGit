@@ -46,5 +46,25 @@ namespace TrackIt.Properties {
                 this["i"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public string[][] AppBlacklist {
+            get {
+                return ((string[][])(this["AppBlacklist"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool MiniWindowOpened {
+            get {
+                return ((bool)(this["MiniWindowOpened"]));
+            }
+            set {
+                this["MiniWindowOpened"] = value;
+            }
+        }
     }
 }

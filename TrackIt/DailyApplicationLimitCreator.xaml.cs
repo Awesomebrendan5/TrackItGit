@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,46 +16,21 @@ using System.Windows.Shapes;
 namespace TrackIt
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for DailyApplicationLimitCreator.xaml
     /// </summary>
-    public partial class BlacklistCreation : Window
+    public partial class DailyApplicationLimitCreator : Window
     {
-        public BlacklistCreation()
+        public DailyApplicationLimitCreator()
         {
             InitializeComponent();
             ListofApplications();
         }
-
-        private void EnterBlacklistName_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
         private void ConfirmButtonClick(object sender, RoutedEventArgs e)
         {
-            void SelectedItems(object sender, RoutedEventArgs e)
-            {
-                if (Applications.SelectedItem != null)
-                {
-                    int i = 0;
-                    while (i < 0)
-                    {
-                        string selectedText = EnterBlacklistName.SelectedText;
-                        //Properties.Settings.Default.AppBlacklist[i] = selectedText;
-                        int j = 0;
-                        while (j < 0)
-                        {
-                            Properties.Settings.Default.AppBlacklist[i][j] = (string)Applications.SelectedItems[j];
-                            j = j + 1;
-                        }
-                        i = i + 1;
-                    }
-                }
-            }
+
         }
         private void BackButtonClick(object sender, RoutedEventArgs e)
         {
-            Properties.Settings.Default.MiniWindowOpened = false;
             this.Close();
         }
         void ListofApplications()
@@ -69,6 +43,5 @@ namespace TrackIt
                 Applications.Items.Add(subkey.GetValue("DisplayName"));
             }
         }
-
     }
 }

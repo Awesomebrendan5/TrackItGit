@@ -1,4 +1,4 @@
-﻿    using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,18 +15,13 @@ using System.Windows.Shapes;
 namespace TrackIt
 {
     /// <summary>
-    /// Interaction logic for DateCreator.xaml
+    /// Interaction logic for ForgotPassword.xaml
     /// </summary>
-    public partial class DateCreator : Window
+    public partial class ForgotPassword : Window
     {
-        public DateCreator()
+        public ForgotPassword()
         {
             InitializeComponent();
-            DateTitle();
-        }
-        void DateTitle()
-        {
-            TrackIt.Text = Properties.Settings.Default.DatePicked.ToShortDateString();
         }
         private void ConfirmButtonClick(object sender, RoutedEventArgs e)
         {

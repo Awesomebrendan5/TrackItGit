@@ -25,6 +25,11 @@ namespace TrackIt
             InitializeComponent();
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             WindowState = WindowState.Maximized;
+            ScreenScale();
+        }
+
+        void ScreenScale()
+        {
             if (SystemParameters.PrimaryScreenHeight != 1080)
             {
                 Line.Height = SystemParameters.PrimaryScreenHeight * 1;
@@ -91,9 +96,15 @@ namespace TrackIt
         }
         void ScreenTimeButtonClick(object sender, RoutedEventArgs e) 
         {
+            var newForm = new ScreentimeMenu();
+            newForm.Show();
+            this.Close();
         }
         void PasswordButtonClick(object sender, RoutedEventArgs e)
         {
+            var newForm = new PasswordMenu();
+            newForm.Show();
+            this.Close();
         }
         void HomeButtonClick(object sender, RoutedEventArgs e)
         {

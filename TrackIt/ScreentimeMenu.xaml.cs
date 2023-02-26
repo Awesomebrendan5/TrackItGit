@@ -1,23 +1,33 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace TrackIt
 {
     /// <summary>
-    /// Interaction logic for Calendar.xaml
+    /// Interaction logic for ScreentimeMenu.xaml
     /// </summary>
-    public partial class CalendarMenu : Window
+    public partial class ScreentimeMenu : Window
     {
-        public CalendarMenu()
+        public ScreentimeMenu()
         {
             InitializeComponent();
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             WindowState = WindowState.Maximized;
-            {
-                
-            }
+            ScreenScale();
+        }
+        void ScreenScale()
+        {
             if (SystemParameters.PrimaryScreenHeight != 1080)
             {
                 Line.Height = SystemParameters.PrimaryScreenHeight * 1;
@@ -70,54 +80,24 @@ namespace TrackIt
 
                 TrackIt.SetValue(Canvas.TopProperty, 0 * (SystemParameters.PrimaryScreenHeight / 1080));
                 TrackIt.Height = SystemParameters.PrimaryScreenHeight * 0.0444;
-                TrackIt.Width = SystemParameters.PrimaryScreenWidth * 0.0802;
+                Home.Width = SystemParameters.PrimaryScreenWidth * 0.0802;
                 TrackIt.FontSize = (40 * SystemParameters.PrimaryScreenHeight / 1080);
                 TrackIt.SetValue(Canvas.LeftProperty, 95.0 * (SystemParameters.PrimaryScreenWidth / 1920));
-
-                CalendarContainer.SetValue(Canvas.TopProperty, 145 * (SystemParameters.PrimaryScreenHeight / 1080));
-                CalendarContainer.Height = SystemParameters.PrimaryScreenHeight * 0.8287;
-                CalendarContainer.Width = SystemParameters.PrimaryScreenWidth * 0.5943;
-                CalendarContainer.SetValue(Canvas.LeftProperty, 396 * (SystemParameters.PrimaryScreenWidth / 1920));
-                CalendarContainer.StretchDirection = StretchDirection.Both;
-                CalendarContainer.Stretch = Stretch.Fill;
-                CalendarContainer.MaxWidth = 1000 * (SystemParameters.PrimaryScreenWidth / 1920);
-                CalendarContainer.MaxHeight = 1000 * (SystemParameters.PrimaryScreenHeight / 1080);
-
-                CalendarLabel.SetValue(Canvas.TopProperty, 75 * (SystemParameters.PrimaryScreenHeight / 1080));
-                CalendarLabel.Height = SystemParameters.PrimaryScreenHeight * 0.0565;
-                CalendarLabel.Width = SystemParameters.PrimaryScreenWidth * 0.1063;
-                CalendarLabel.FontSize = (50 * SystemParameters.PrimaryScreenHeight / 1080);
-                CalendarLabel.SetValue(Canvas.LeftProperty, 771 * (SystemParameters.PrimaryScreenWidth / 1920));
-
-                BlacklistBox.SetValue(Canvas.TopProperty, 235 * (SystemParameters.PrimaryScreenHeight / 1080));
-                BlacklistBox.Height = SystemParameters.PrimaryScreenHeight * 0.6991;
-                BlacklistBox.Width = SystemParameters.PrimaryScreenWidth * 0.1417;
-                BlacklistBox.SetValue(Canvas.LeftProperty, 1603 * (SystemParameters.PrimaryScreenWidth / 1920));
-
-                CreateBlacklist.SetValue(Canvas.TopProperty, 891 * (SystemParameters.PrimaryScreenHeight / 1080));
-                CreateBlacklist.Height = SystemParameters.PrimaryScreenHeight * 0.0481;
-                CreateBlacklist.Width = SystemParameters.PrimaryScreenWidth * 0.099;
-                CreateBlacklist.SetValue(Canvas.LeftProperty, 1644 * (SystemParameters.PrimaryScreenWidth / 1920));
-
-                BlacklistLabel.SetValue(Canvas.TopProperty, 157 * (SystemParameters.PrimaryScreenHeight / 1080));
-                BlacklistLabel.Height = SystemParameters.PrimaryScreenHeight * 0.0565;
-                BlacklistLabel.Width = SystemParameters.PrimaryScreenWidth * 0.1063;
-                BlacklistLabel.FontSize = (50 * SystemParameters.PrimaryScreenHeight / 1080);
-                BlacklistLabel.SetValue(Canvas.LeftProperty, 1636 * (SystemParameters.PrimaryScreenWidth / 1920));
-
             }
+
         }
         void CalendarButtonClick(object sender, RoutedEventArgs e)
         {
-        }
-        void ScreenTimeButtonClick(object sender, RoutedEventArgs e)
-        {
             if (Properties.Settings.Default.MiniWindowOpened == false)
             {
-                var newForm = new ScreentimeMenu();
+                var newForm = new CalendarMenu();
                 newForm.Show();
                 this.Close();
             }
+
+        }
+        void ScreenTimeButtonClick(object sender, RoutedEventArgs e)
+        {
         }
         void PasswordButtonClick(object sender, RoutedEventArgs e)
         {
@@ -137,35 +117,23 @@ namespace TrackIt
                 this.Close();
             }
         }
-        void CreateBlacklistClick(object sender, RoutedEventArgs e)
+        private void AddApplicationClick(object sender, RoutedEventArgs e)
         {
             if (Properties.Settings.Default.MiniWindowOpened == false)
             {
-             var newForm = new BlacklistCreation();
-             Properties.Settings.Default.MiniWindowOpened = true;
-             newForm.Show();
+                Properties.Settings.Default.MiniWindowOpened = true;
+                var newForm = new ApplicationsNotToTrack();
+                newForm.Show();
             }
         }
-
-            void Calendar_SelectedDatesChanged(object sender,
-               SelectionChangedEventArgs e)
-                {
-                    var calendar = sender as Calendar;
-                    Properties.Settings.Default.DatePicked = calendar.SelectedDate.Value;
-                    
-                    if (calendar.SelectedDate.HasValue)
-                    {
-                        DateTime dt = calendar.SelectedDate.Value;
-                        Properties.Settings.Default.DatePicked = dt;
-                        if (Properties.Settings.Default.MiniWindowOpened == false)
-                        {
-                            Properties.Settings.Default.MiniWindowOpened = true;
-                            var newForm = new Scheduler();
-                            newForm.Show();
-                        }
-                    }
-                }
-
+        private void CreateDailyUseClick(object sender, RoutedEventArgs e)
+        {
+            if (Properties.Settings.Default.MiniWindowOpened == false)
+            {
+                Properties.Settings.Default.MiniWindowOpened = true;
+                var newForm = new DailyApplicationLimitCreator();
+                newForm.Show();
+            }
         }
     }
-
+}

@@ -10,18 +10,22 @@
   <ItemGroup>
     <None Remove="Images\BlacklistBox.png" />
     <None Remove="Images\Calendar.png" />
+    <None Remove="Images\EventSquare.png" />
     <None Remove="Images\Home.png" />
     <None Remove="Images\Line.png" />
     <None Remove="Images\Password.png" />
+    <None Remove="Images\PasswordBox.png" />
     <None Remove="Images\Screentime.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Images\BlacklistBox.png" />
     <Resource Include="Images\Calendar.png" />
+    <Resource Include="Images\EventSquare.png" />
     <Resource Include="Images\Home.png" />
     <Resource Include="Images\Line.png" />
     <Resource Include="Images\Password.png" />
+    <Resource Include="Images\PasswordBox.png" />
     <Resource Include="Images\Screentime.png" />
   </ItemGroup>
 

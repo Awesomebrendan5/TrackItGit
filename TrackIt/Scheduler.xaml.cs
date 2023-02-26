@@ -1,4 +1,4 @@
-﻿    using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,26 +11,29 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace TrackIt
 {
     /// <summary>
-    /// Interaction logic for DateCreator.xaml
+    /// Interaction logic for EventCreator.xaml
     /// </summary>
-    public partial class DateCreator : Window
+    public partial class Scheduler : Window
     {
-        public DateCreator()
+        public Scheduler()
         {
             InitializeComponent();
             DateTitle();
         }
         void DateTitle()
         {
-            TrackIt.Text = Properties.Settings.Default.DatePicked.ToShortDateString();
+            DateToday.Text = Properties.Settings.Default.DatePicked.ToShortDateString();
         }
-        private void ConfirmButtonClick(object sender, RoutedEventArgs e)
+        private void NewEventClick(object sender, RoutedEventArgs e)
         {
-
+            var newForm = new DateCreator();
+            newForm.Show();
+            this.Close();
         }
         private void BackButtonClick(object sender, RoutedEventArgs e)
         {
