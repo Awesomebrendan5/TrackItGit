@@ -32,5 +32,10 @@ namespace TrackIt
             Properties.Settings.Default.MiniWindowOpened = false;
             this.Close();
         }
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e) //Saves musicstarted status on shutdown
+        {
+            Properties.Settings.Default.MiniWindowOpened = false;
+            Properties.Settings.Default.Save();
+        }
     }
 }

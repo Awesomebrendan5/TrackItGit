@@ -69,6 +69,11 @@ namespace TrackIt
                 Applications.Items.Add(subkey.GetValue("DisplayName"));
             }
         }
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e) //Saves musicstarted status on shutdown
+        {
+            Properties.Settings.Default.MiniWindowOpened = false;
+            Properties.Settings.Default.Save();
+        }
 
     }
 }
