@@ -32,7 +32,7 @@ namespace TrackIt
             Properties.Settings.Default.MiniWindowOpened = false;
             this.Close();
         }
-        protected override void OnClosing(System.ComponentModel.CancelEventArgs e) 
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)      
         {
             Properties.Settings.Default.MiniWindowOpened = false;
             Properties.Settings.Default.Save();

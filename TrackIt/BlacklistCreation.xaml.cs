@@ -34,15 +34,15 @@ namespace TrackIt
 
         private void ConfirmButtonClick(object sender, RoutedEventArgs e)
         {
-            void SelectedItems(object sender, RoutedEventArgs e)
+            void SelectedItems(object sender, RoutedEventArgs e, string[] selectedText)
             {
-                if (Applications.SelectedItem != null)
+                if (Applications.SelectedItem != null && EnterBlacklistName.SelectedText != null)
                 {
                     int i = 0;
                     while (i < 0)
                     {
-                        string selectedText = EnterBlacklistName.SelectedText;
-                        //Properties.Settings.Default.AppBlacklist[i] = selectedText;
+                        selectedText[i] = EnterBlacklistName.SelectedText;
+                        Properties.Settings.Default.AppBlacklist[i] = selectedText;
                         int j = 0;
                         while (j < 0)
                         {
