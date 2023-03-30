@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Diagnostics;
 
 namespace TrackIt
 {
@@ -25,6 +26,8 @@ namespace TrackIt
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             WindowState = WindowState.Maximized;
             ScreenScale();
+            ScreenTimeStat();
+            
         }
         void ScreenScale()
         {
@@ -85,6 +88,23 @@ namespace TrackIt
                 TrackIt.SetValue(Canvas.LeftProperty, 95.0 * (SystemParameters.PrimaryScreenWidth / 1920));
             }
 
+        }
+        void ScreenTimeStat()
+        {
+            
+            Process[] processlist = Process.GetProcesses();
+            foreach (Process process in processlist)
+            {
+                int i = 0;
+                while (i < processlist.Length)
+                {
+                    if (!String.IsNullOrEmpty(process.MainWindowTitle))
+                    {
+                        Properties.Settings.Default.OpenApplications[i] = (process.MainWindowTitle);
+                        i++;
+                    }
+                }
+            }
         }
         void CalendarButtonClick(object sender, RoutedEventArgs e)
         {

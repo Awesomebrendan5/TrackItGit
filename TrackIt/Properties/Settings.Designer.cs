@@ -66,5 +66,16 @@ namespace TrackIt.Properties {
                 this["MiniWindowOpened"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public string[] OpenApplications {
+            get {
+                return ((string[])(this["OpenApplications"]));
+            }
+            set {
+                this["OpenApplications"] = value;
+            }
+        }
     }
 }

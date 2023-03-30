@@ -36,9 +36,9 @@ namespace TrackIt
                 Line.Width = SystemParameters.PrimaryScreenWidth * 0.0031;
                 Line.SetValue(Canvas.LeftProperty, 324.0 * (SystemParameters.PrimaryScreenWidth / 1920));
 
-                CalendarIcon.SetValue(Canvas.TopProperty, 182.0 * (SystemParameters.PrimaryScreenHeight / 1080));
-                CalendarIcon.Height = SystemParameters.PrimaryScreenHeight * 0.0963;
-                CalendarIcon.Width = SystemParameters.PrimaryScreenWidth * 0.0443;
+                CalendarIcon.SetValue(Canvas.TopProperty, 182 * (SystemParameters.PrimaryScreenHeight / 1080));
+                CalendarIcon.Height = SystemParameters.PrimaryScreenHeight * (CalendarIcon.Height/1080);
+                CalendarIcon.Width = SystemParameters.PrimaryScreenWidth * (CalendarIcon.Width/1920);
                 CalendarIcon.SetValue(Canvas.LeftProperty, 5.0 * (SystemParameters.PrimaryScreenWidth / 1920));
 
                 Calendar.SetValue(Canvas.TopProperty, 207.0 * (SystemParameters.PrimaryScreenHeight / 1080));
