@@ -77,7 +77,6 @@ namespace TrackIt.Properties {
             {
                 if (this["OpenApplication"] == null)
                 {
-                    // If the OpenApplication setting is null, initialize it with an empty array
                     this["OpenApplication"] = new int[0];
                 }
                 return (int[])(this["OpenApplication"]);
