@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
+using System.Windows.Media; 
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Timers;
 
 namespace TrackIt
 {
@@ -20,6 +22,9 @@ namespace TrackIt
     /// </summary>
     public partial class ScreentimeMenu : Window
     {
+        [DllImport("user32.dll")]
+        static extern IntPtr GetForegroundWindow();
+
         public ScreentimeMenu()
         {
             InitializeComponent();
@@ -27,8 +32,9 @@ namespace TrackIt
             WindowState = WindowState.Maximized;
             ScreenScale();
             ScreenTimeStat();
-            
-        }
+        
+
+    }
         void ScreenScale()
         {
             if (SystemParameters.PrimaryScreenHeight != 1080)
@@ -91,18 +97,25 @@ namespace TrackIt
         }
         void ScreenTimeStat()
         {
-            
-            Process[] processlist = Process.GetProcesses();
-            foreach (Process process in processlist)
+            IntPtr CurrentWindow = GetForegroundWindow(); //Saves the currently open Window.
+            Properties.Settings.Default.OpenApplication[0] = CurrentWindow.ToInt32(); //Saves that window into an array.
+            System.Timers.Timer t = new System.Timers.Timer(TimeSpan.FromMinutes(0.1).TotalMilliseconds); //Sets a system timer for 10 seconds.
+            IntPtr OldOpenWindow = CurrentWindow; //Saves the currently open window as OldOpenWindow.
+            t.AutoReset = true; //Sets the timer to Autoreset.
+            t.Elapsed += new System.Timers.ElapsedEventHandler(timer_Elapsed); //Starts a method if timer elapses.
+            t.Start(); //Starts timer.
+
+            void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
             {
-                int i = 0;
-                while (i < processlist.Length)
+                IntPtr NewOpenWindow = GetForegroundWindow(); //Defines NewOpenWindow as the window now open.
+                if (OldOpenWindow == NewOpenWindow) //Checks if the OldOpenWindow is the same as the NewOpenWindow.
                 {
-                    if (!String.IsNullOrEmpty(process.MainWindowTitle))
-                    {
-                        Properties.Settings.Default.OpenApplications[i] = (process.MainWindowTitle);
-                        i++;
-                    }
+
+                }
+                if (OldOpenWindow != NewOpenWindow) //Checks if the OldOpenWindow is different to the NewOpenWindow. 
+                {
+                    IntPtr CurrentWindow = GetForegroundWindow(); //Saves the new open Window.
+                    Properties.Settings.Default.OpenApplication[0] = CurrentWindow.ToInt32(); //Saves that window into an array.
                 }
             }
         }

@@ -14,7 +14,7 @@
     <Setting Name="MiniWindowOpened" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="OpenApplications" Type="System.String[]" Scope="User">
+    <Setting Name="OpenApplication" Type="System.Int32[]" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>
