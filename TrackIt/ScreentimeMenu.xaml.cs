@@ -22,8 +22,11 @@ namespace TrackIt
     /// </summary>
     public partial class ScreentimeMenu : Window
     {
-        [DllImport("user32.dll")]
+        [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         static extern IntPtr GetForegroundWindow();
+        static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString,
+        int nMaxCount);
+        static extern int GetWindowTextLength(IntPtr hWnd);
 
         public ScreentimeMenu()
         {
@@ -35,6 +38,7 @@ namespace TrackIt
         
 
     }
+        public record ScreentimeStats(String ApplicationName, long ScreenTimeCollect, DateTime DateCollected);
         void ScreenScale()
         {
             if (SystemParameters.PrimaryScreenHeight != 1080)
@@ -98,24 +102,35 @@ namespace TrackIt
         void ScreenTimeStat()
         {
             IntPtr CurrentWindow = GetForegroundWindow(); //Saves the currently open Window.
-            Properties.Settings.Default.OpenApplication[0] = CurrentWindow.ToInt32(); //Saves that window into an array.
+            Int32 OpenApplication = CurrentWindow.ToInt32(); //Saves that window into an array.
             System.Timers.Timer t = new System.Timers.Timer(TimeSpan.FromMinutes(0.1).TotalMilliseconds); //Sets a system timer for 10 seconds.
             IntPtr OldOpenWindow = CurrentWindow; //Saves the currently open window as OldOpenWindow.
+            Stopwatch ScreenTimer = new Stopwatch();
+            ScreenTimer.Start();
             t.AutoReset = true; //Sets the timer to Autoreset.
             t.Elapsed += new System.Timers.ElapsedEventHandler(timer_Elapsed); //Starts a method if timer elapses.
             t.Start(); //Starts timer.
+            
 
             void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
             {
                 IntPtr NewOpenWindow = GetForegroundWindow(); //Defines NewOpenWindow as the window now open.
                 if (OldOpenWindow == NewOpenWindow) //Checks if the OldOpenWindow is the same as the NewOpenWindow.
                 {
-
+                    int textLength = GetWindowTextLength(CurrentWindow);
+                    StringBuilder ApplicationName = new StringBuilder(textLength + 1);
+                    GetWindowText(CurrentWindow, ApplicationName, ApplicationName.Capacity);
+                    DateTime DateCollected = DateTime.Now;
+                    long TimerDuration = ScreenTimer.ElapsedMilliseconds;
+                    String ApplicationNamed = ApplicationName.ToString();
+                    ScreentimeStats i = new (ApplicationName: ApplicationNamed, ScreenTimeCollect: TimerDuration, DateCollected: DateCollected);
+                    
                 }
                 if (OldOpenWindow != NewOpenWindow) //Checks if the OldOpenWindow is different to the NewOpenWindow. 
                 {
+                    ScreenTimer.Reset();
                     IntPtr CurrentWindow = GetForegroundWindow(); //Saves the new open Window.
-                    Properties.Settings.Default.OpenApplication[0] = CurrentWindow.ToInt32(); //Saves that window into an array.
+                    OpenApplication = CurrentWindow.ToInt32(); //Saves that window into an array.
                 }
             }
         }
