@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Runtime.InteropServices;
 using System.Timers;
+using TrackIt.Properties;
 
 namespace TrackIt
 {
@@ -24,9 +25,11 @@ namespace TrackIt
     {
         [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         static extern IntPtr GetForegroundWindow();
-        static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString,
-        int nMaxCount);
+        [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString,int nMaxCount);
+        [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         static extern int GetWindowTextLength(IntPtr hWnd);
+ 
 
         public ScreentimeMenu()
         {
@@ -35,9 +38,9 @@ namespace TrackIt
             WindowState = WindowState.Maximized;
             ScreenScale();
             ScreenTimeStat();
-        
-
-    }
+            TodayCharts other = new TodayCharts();
+            //Embed.Source = new Uri("OtherxamlPage.xaml", UriKind.RelativeOrAbsolute);
+        }
         public record ScreentimeStats(String ApplicationName, long ScreenTimeCollect, DateTime DateCollected);
         void ScreenScale()
         {
@@ -124,12 +127,17 @@ namespace TrackIt
                     long TimerDuration = ScreenTimer.ElapsedMilliseconds;
                     String ApplicationNamed = ApplicationName.ToString();
                     ScreentimeStats i = new (ApplicationName: ApplicationNamed, ScreenTimeCollect: TimerDuration, DateCollected: DateCollected);
-                    
+                    Properties.Settings.Default.ListofRecords.Add(i);
+
+
+
+
                 }
                 if (OldOpenWindow != NewOpenWindow) //Checks if the OldOpenWindow is different to the NewOpenWindow. 
                 {
                     ScreenTimer.Reset();
                     IntPtr CurrentWindow = GetForegroundWindow(); //Saves the new open Window.
+                    IntPtr OldOpenWindow = CurrentWindow;
                     OpenApplication = CurrentWindow.ToInt32(); //Saves that window into an array.
                 }
             }
