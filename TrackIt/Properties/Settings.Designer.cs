@@ -8,21 +8,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using static TrackIt.ScreentimeMenu;
+
 namespace TrackIt.Properties {
-
-
+    
+    
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.5.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.1.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
-
+        
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
-
+        
         public static Settings Default {
             get {
                 return defaultInstance;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1500-02-11")]
@@ -34,7 +36,7 @@ namespace TrackIt.Properties {
                 this["DatePicked"] = value;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
@@ -46,7 +48,7 @@ namespace TrackIt.Properties {
                 this["i"] = value;
             }
         }
-
+        
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         public string[][] AppBlacklist {
@@ -54,7 +56,7 @@ namespace TrackIt.Properties {
                 return ((string[][])(this["AppBlacklist"]));
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
@@ -66,24 +68,28 @@ namespace TrackIt.Properties {
                 this["MiniWindowOpened"] = value;
             }
         }
-
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public int[] OpenApplication {
+            get {
+                return ((int[])(this["OpenApplication"]));
+            }
+            set {
+                this["OpenApplication"] = value;
+            }
+        }
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
 
-        public int[] OpenApplication
-        {
-            get
-            {
-                if (this["OpenApplication"] == null)
-                {
-                    this["OpenApplication"] = new int[0];
-                }
-                return (int[])(this["OpenApplication"]);
+        public System.Collections.Generic.List<ScreentimeStats> ListofRecords {
+            get {
+                return ((System.Collections.Generic.List<ScreentimeStats>)(this["ListofRecords"]));
             }
-            set
-            {
-                this["OpenApplication"] = value;
+            set {
+                this["ListofRecords"] = value;
             }
         }
     }
