@@ -81,9 +81,9 @@ namespace TrackIt.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string ListofRecords {
+        public System.Collections.ArrayList ListofRecords {
             get {
-                return ((string)(this["ListofRecords"]));
+                return ((System.Collections.ArrayList)(this["ListofRecords"]));
             }
             set {
                 this["ListofRecords"] = value;
