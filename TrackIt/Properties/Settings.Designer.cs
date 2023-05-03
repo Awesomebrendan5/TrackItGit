@@ -8,6 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using static TrackIt.ScreentimeMenu;
+
 namespace TrackIt.Properties {
     
     
@@ -81,9 +83,10 @@ namespace TrackIt.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public System.Collections.ArrayList ListofRecords {
+
+        public System.Collections.Generic.List<ScreentimeStats> ListofRecords {
             get {
-                return ((System.Collections.ArrayList)(this["ListofRecords"]));
+                return ((System.Collections.Generic.List<ScreentimeStats>)(this["ListofRecords"]));
             }
             set {
                 this["ListofRecords"] = value;
