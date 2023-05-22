@@ -20,10 +20,11 @@ using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
+using static TrackIt.ScreentimeMenu;
 
 namespace TrackIt
 {
-    [ObservableObject]
+
     /// <summary>
     /// Interaction logic for ScreentimeMenu.xaml
     /// </summary>
@@ -32,10 +33,10 @@ namespace TrackIt
         [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         static extern IntPtr GetForegroundWindow();
         [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-        static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString,int nMaxCount);
+        static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
         [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         static extern int GetWindowTextLength(IntPtr hWnd);
- 
+
 
         public ScreentimeMenu()
         {
@@ -44,8 +45,6 @@ namespace TrackIt
             WindowState = WindowState.Maximized;
             ScreenScale();
             ScreenTimeStat();
-            TodayCharts other = new TodayCharts();
-            //Embed.Source = new Uri("OtherxamlPage.xaml", UriKind.RelativeOrAbsolute);
         }
 
         public record ScreentimeStats(String ApplicationName, long ScreenTimeCollect, DateTime DateCollected);
@@ -120,7 +119,7 @@ namespace TrackIt
             t.AutoReset = true; //Sets the timer to Autoreset.
             t.Elapsed += new System.Timers.ElapsedEventHandler(timer_Elapsed); //Starts a method if timer elapses.
             t.Start(); //Starts timer.
-            
+
 
             void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
             {
@@ -133,7 +132,7 @@ namespace TrackIt
                     DateTime DateCollected = DateTime.Now;
                     long TimerDuration = ScreenTimer.ElapsedMilliseconds;
                     String ApplicationNamed = ApplicationName.ToString();
-                    ScreentimeStats i = new (ApplicationName: ApplicationNamed, ScreenTimeCollect: TimerDuration, DateCollected: DateCollected);
+                    ScreentimeStats i = new(ApplicationName: ApplicationNamed, ScreenTimeCollect: TimerDuration, DateCollected: DateCollected);
                     Properties.Settings.Default.ListofRecords.Add(i);
 
 
@@ -198,13 +197,34 @@ namespace TrackIt
                 newForm.Show();
             }
         }
-    }  public partial class ViewModel
+    }
+
+
+    namespace ViewModelsSamples.Bars.Basic
     {
-        public ISeries[] Series { get; set; } =
+        public partial class test
+        { 
+            public test()
+            {
+                Bob();
+                void Bob()
+                {
+                    foreach (ScreentimeStats ApplicationName in Properties.Settings.Default.ListofRecords)
+                    {
+                         Properties.Settings.Default.a = Convert.ToString(ApplicationName);
+                    }
+                }
+            }
+        }
+        public partial class ViewModel : ObservableObject
         {
+
+            public ISeries[] Series { get; set; } =
+            {
+
         new ColumnSeries<double>
         {
-            Name = "Mary",
+            Name = (Properties.Settings.Default.a),
             Values = new double[] { 2, 5, 4 }
         },
         new ColumnSeries<double>
@@ -214,8 +234,8 @@ namespace TrackIt
         }
     };
 
-        public Axis[] XAxes { get; set; } =
-        {
+            public Axis[] XAxes { get; set; } =
+            {
         new Axis
         {
             Labels = new string[] { "Category 1", "Category 2", "Category 3" },
@@ -226,6 +246,6 @@ namespace TrackIt
             TicksAtCenter = true
         }
     };
+        }
     }
-
 }

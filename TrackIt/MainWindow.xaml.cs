@@ -108,9 +108,7 @@ namespace TrackIt
         }
         void HomeButtonClick(object sender, RoutedEventArgs e)
         {
-            var newForm = new TodayCharts();
-            newForm.Show();
-            this.Close();
+
         }
     }
 
