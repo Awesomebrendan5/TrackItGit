@@ -15,9 +15,15 @@ using System.Windows.Shapes;
 using System.Runtime.InteropServices;
 using System.Timers;
 using TrackIt.Properties;
+using CommunityToolkit.Mvvm.ComponentModel;
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
+using SkiaSharp;
 
 namespace TrackIt
 {
+    [ObservableObject]
     /// <summary>
     /// Interaction logic for ScreentimeMenu.xaml
     /// </summary>
@@ -41,6 +47,7 @@ namespace TrackIt
             TodayCharts other = new TodayCharts();
             //Embed.Source = new Uri("OtherxamlPage.xaml", UriKind.RelativeOrAbsolute);
         }
+
         public record ScreentimeStats(String ApplicationName, long ScreenTimeCollect, DateTime DateCollected);
         void ScreenScale()
         {
@@ -191,5 +198,34 @@ namespace TrackIt
                 newForm.Show();
             }
         }
+    }  public partial class ViewModel
+    {
+        public ISeries[] Series { get; set; } =
+        {
+        new ColumnSeries<double>
+        {
+            Name = "Mary",
+            Values = new double[] { 2, 5, 4 }
+        },
+        new ColumnSeries<double>
+        {
+            Name = "Ana",
+            Values = new double[] { 3, 1, 6 }
+        }
+    };
+
+        public Axis[] XAxes { get; set; } =
+        {
+        new Axis
+        {
+            Labels = new string[] { "Category 1", "Category 2", "Category 3" },
+            LabelsRotation = 0,
+            SeparatorsPaint = new SolidColorPaint(new SKColor(200, 200, 200)),
+            SeparatorsAtCenter = false,
+            TicksPaint = new SolidColorPaint(new SKColor(35, 35, 35)),
+            TicksAtCenter = true
+        }
+    };
     }
+
 }

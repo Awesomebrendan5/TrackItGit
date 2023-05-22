@@ -3,7 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
+        xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+        xmlns:vms="clr-namespace:TrackIt"
+        
+        mc:Ignorable="lvc"
         WindowStartupLocation="CenterScreen"
         Title="MainWindow" Height="1080" Width="1920">
     <Canvas Name="MainMenu" Focusable="true" Background="#75A0D8">
@@ -22,13 +25,15 @@
         <Label Name ="AddApplicationLabel" Height="69" Width="158" Content="Applications &#xD;&#xA;Not to Track" FontFamily="Narkisim" Canvas.Left="1662" FontSize="27" Canvas.Top="62" HorizontalAlignment="Center" VerticalAlignment="Top" />
         <Button Name ="AddApplicationButton" Click="AddApplicationClick" Content="Add Application" Canvas.Left="1628" Canvas.Top="812" Height="52" Width="227" Background="#5FB72E" FontSize="30" FontFamily="Narkism" HorizontalAlignment="Left" VerticalAlignment="Center"></Button>
         <Button Name ="CreateDailyUseLimit" Click="CreateDailyUseClick" Content="Set Daily Usage Limit" Canvas.Left="1592" Canvas.Top="964" Height="60" Width="298" Background="#5FB72E" FontSize="30" FontFamily="Narkism" HorizontalAlignment="Left" VerticalAlignment="Top"></Button>
-        <Grid Name="Embed" Height="294" Width="499" Canvas.Left="335" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="0*"/>
-                <RowDefinition Height="0*"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-
-        </Grid>
+        <Canvas Name="graphit" Height="344" Width="456" Canvas.Left="440" Canvas.Top="46">
+            <Canvas.DataContext>
+                <vms:ViewModel/>
+            </Canvas.DataContext>
+            <lvc:CartesianChart
+        Series="{Binding Series}"
+        XAxes="{Binding XAxes}"
+        LegendPosition="Right">
+            </lvc:CartesianChart>
+        </Canvas>
     </Canvas>
 </Window>

@@ -83,12 +83,14 @@ namespace TrackIt.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-
-        public System.Collections.Generic.List<ScreentimeStats> ListofRecords {
-            get {
+        public System.Collections.Generic.List<ScreentimeStats> ListofRecords
+        {
+            get
+            {
                 return ((System.Collections.Generic.List<ScreentimeStats>)(this["ListofRecords"]));
             }
-            set {
+            set
+            {
                 this["ListofRecords"] = value;
             }
         }
