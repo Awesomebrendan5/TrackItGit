@@ -15,6 +15,7 @@ namespace TrackIt
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             WindowState = WindowState.Maximized;
             ScreenScale();
+            Tests();
         }
         void ScreenScale()
         {
@@ -132,6 +133,10 @@ namespace TrackIt
                 var newForm = new ForgotPassword();
                 newForm.Show();
             }
+        }
+        void Tests()
+        {
+            Tested.Items.Add(Properties.Settings.Default.ListofRecords[1].ScreenTimeCollect);
         }
     }
 }
