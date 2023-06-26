@@ -112,7 +112,7 @@ namespace TrackIt
         {
             IntPtr CurrentWindow = GetForegroundWindow(); //Saves the currently open Window.
             Int32 OpenApplication = CurrentWindow.ToInt32(); //Saves that window into an array.
-            System.Timers.Timer t = new System.Timers.Timer(TimeSpan.FromMinutes(0.1).TotalMilliseconds); //Sets a system timer for 10 seconds.
+            System.Timers.Timer t = new System.Timers.Timer(TimeSpan.FromSeconds(10).TotalSeconds); //Sets a system timer for 10 seconds.
             IntPtr OldOpenWindow = CurrentWindow; //Saves the currently open window as OldOpenWindow.
             Stopwatch ScreenTimer = new Stopwatch();
             ScreenTimer.Start();
@@ -126,6 +126,9 @@ namespace TrackIt
                 IntPtr NewOpenWindow = GetForegroundWindow(); //Defines NewOpenWindow as the window now open.
                 if (OldOpenWindow == NewOpenWindow) //Checks if the OldOpenWindow is the same as the NewOpenWindow.
                 {
+                }
+                if (OldOpenWindow != NewOpenWindow) //Checks if the OldOpenWindow is different to the NewOpenWindow. 
+                {
                     int textLength = GetWindowTextLength(CurrentWindow);
                     StringBuilder ApplicationName = new StringBuilder(textLength + 1);
                     GetWindowText(CurrentWindow, ApplicationName, ApplicationName.Capacity);
@@ -134,17 +137,9 @@ namespace TrackIt
                     String ApplicationNamed = ApplicationName.ToString();
                     ScreentimeStats i = new(ApplicationName: ApplicationNamed, ScreenTimeCollect: TimerDuration, DateCollected: DateCollected);
                     Properties.Settings.Default.ListofRecords.Add(i);
-
-
-
-
-                }
-                if (OldOpenWindow != NewOpenWindow) //Checks if the OldOpenWindow is different to the NewOpenWindow. 
-                {
-                    ScreenTimer.Reset();
-                    IntPtr CurrentWindow = GetForegroundWindow(); //Saves the new open Window.
-                    IntPtr OldOpenWindow = CurrentWindow;
-                    OpenApplication = CurrentWindow.ToInt32(); //Saves that window into an array.
+                    ScreenTimer.Restart();
+                    CurrentWindow = NewOpenWindow;
+                    OldOpenWindow = NewOpenWindow;
                 }
             }
         }
@@ -209,10 +204,8 @@ namespace TrackIt
                 Bob();
                 void Bob()
                 {
-                    foreach (ScreentimeStats ApplicationName in Properties.Settings.Default.ListofRecords)
-                    {
-                         Properties.Settings.Default.a = Convert.ToString(ApplicationName);
-                    }
+                    Properties.Settings.Default.ListofRecords.Sort((a, b) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
+                    Properties.Settings.Default.Save();
                 }
             }
         }
@@ -224,7 +217,7 @@ namespace TrackIt
 
         new ColumnSeries<double>
         {
-            Name = (Properties.Settings.Default.a),
+            //Name = (Properties.Settings.Default.ListofRecords[0].ApplicationName),
             Values = new double[] { 2, 5, 4 }
         },
         new ColumnSeries<double>

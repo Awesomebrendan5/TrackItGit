@@ -37,5 +37,6 @@ namespace TrackIt
             Properties.Settings.Default.MiniWindowOpened = false;
             Properties.Settings.Default.Save();
         }
+        
     }
 }
