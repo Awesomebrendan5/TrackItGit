@@ -25,7 +25,7 @@ namespace TrackIt
         }
         private void ConfirmButtonClick(object sender, RoutedEventArgs e)
         {
-
+            Properties.Settings.Default.password = null;
         }
         private void BackButtonClick(object sender, RoutedEventArgs e)
         {

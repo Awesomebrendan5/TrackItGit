@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TrackIt.Properties;
 
 namespace TrackIt
 {
@@ -25,7 +26,27 @@ namespace TrackIt
         }
         private void ConfirmButtonClick(object sender, RoutedEventArgs e)
         {
-
+            if (Password.Password == PasswordConfirmation.Password & Password.Password.Length > 7)
+            {
+                Properties.Settings.Default.password = PasswordConfirmation.SecurePassword;
+                var newForm = new PasswordSaved();
+                newForm.Show();
+            }
+            if (Password.Password != PasswordConfirmation.Password & Password.Password.Length > 7)
+            {
+                var newForm = new PasswordMismatch();
+                newForm.Show();
+            }
+            if (Password.Password == PasswordConfirmation.Password & Password.Password.Length < 7)
+            {
+                var newForm = new PasswordTooShort();
+                newForm.Show();
+            }
+            if (Password.Password != PasswordConfirmation.Password & Password.Password.Length < 7)
+            {
+                var newForm = new PasswordDoubleMismatch();
+                newForm.Show();
+            }
         }
         private void BackButtonClick(object sender, RoutedEventArgs e)
         {

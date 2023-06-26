@@ -25,7 +25,13 @@ namespace TrackIt
         }
         private void ConfirmButtonClick(object sender, RoutedEventArgs e)
         {
-
+            if (Properties.Settings.Default.password != NewPassword.SecurePassword)
+            {
+                if (NewPassword.SecurePassword == NewPasswordConfirmation.SecurePassword)
+                {
+                    Properties.Settings.Default.password = NewPassword.SecurePassword;
+                }
+            }
         }
         private void BackButtonClick(object sender, RoutedEventArgs e)
         {
