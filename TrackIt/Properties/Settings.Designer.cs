@@ -49,11 +49,14 @@ namespace TrackIt.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         public string[][] AppBlacklist {
             get {
                 return ((string[][])(this["AppBlacklist"]));
+            }
+            set {
+                this["AppBlacklist"] = value;
             }
         }
         
@@ -108,10 +111,9 @@ namespace TrackIt.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public System.Security.SecureString password {
+        public global::System.Security.SecureString password {
             get {
-                return ((System.Security.SecureString)(this["password"]));
+                return ((global::System.Security.SecureString)(this["password"]));
             }
             set {
                 this["password"] = value;

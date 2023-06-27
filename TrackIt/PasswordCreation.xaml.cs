@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TrackIt.Properties;
 
+
 namespace TrackIt
 {
     /// <summary>
@@ -29,6 +30,7 @@ namespace TrackIt
             if (Password.Password == PasswordConfirmation.Password & Password.Password.Length > 7)
             {
                 Properties.Settings.Default.password = PasswordConfirmation.SecurePassword;
+                Properties.Settings.Default.Save();
                 var newForm = new PasswordSaved();
                 newForm.Show();
             }

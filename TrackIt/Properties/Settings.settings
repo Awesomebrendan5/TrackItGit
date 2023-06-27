@@ -8,7 +8,7 @@
     <Setting Name="i" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="AppBlacklist" Type="System.String[][]" Scope="Application">
+    <Setting Name="AppBlacklist" Type="System.String[][]" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="MiniWindowOpened" Type="System.Boolean" Scope="User">
