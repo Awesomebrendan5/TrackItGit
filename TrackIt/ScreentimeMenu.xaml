@@ -20,11 +20,11 @@
         <Button Name="Home" Click="HomeButtonClick" Height="54" Width ="120" Canvas.Top="864" RenderTransformOrigin="0.37,-2.518" Background="Transparent" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Narkisim" FontSize="40" Content="Home" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="93"/>
         <TextBlock Name="TrackIt" Height="48" Width="154" Text="TrackIt" FontFamily="Narkisim" FontSize="40" Foreground="#FF0000" Canvas.Left="95" HorizontalAlignment="Left" VerticalAlignment="Center" />
         <TextBlock Name = "ScreenTimeLabel" Height="61" Width="272" Text="ScreenTime" FontFamily="Narkisim" Canvas.Left="947" FontSize="50" Canvas.Top="24" HorizontalAlignment="Left" VerticalAlignment="Center" ></TextBlock>
-        <Image Name="BlacklistBox" Height="755" Canvas.Left="1608" Source="Images/BlacklistBox.png" Stretch="Fill" Canvas.Top="136" Width="272" HorizontalAlignment="Left" VerticalAlignment="Top" Opacity="100"/>
         <Label Name ="AddApplicationLabel" Height="69" Width="158" Content="Applications &#xD;&#xA;Not to Track" FontFamily="Narkisim" Canvas.Left="1662" FontSize="27" Canvas.Top="62" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        <Image Name="BlacklistBox" Height="755" Canvas.Left="1608" Source="Images/BlacklistBox.png" Stretch="Fill" Canvas.Top="136" Width="272" HorizontalAlignment="Left" VerticalAlignment="Top" Opacity="100"/>
         <Button Name ="AddApplicationButton" Click="AddApplicationClick" Content="Add Application" Canvas.Left="1628" Canvas.Top="812" Height="52" Width="227" Background="#5FB72E" FontSize="30" FontFamily="Narkism" HorizontalAlignment="Left" VerticalAlignment="Center"></Button>
         <Button Name ="CreateDailyUseLimit" Click="CreateDailyUseClick" Content="Set Daily Usage Limit" Canvas.Left="1592" Canvas.Top="964" Height="60" Width="298" Background="#5FB72E" FontSize="30" FontFamily="Narkism" HorizontalAlignment="Left" VerticalAlignment="Top"></Button>
-        <UserControl Height="387" Width="584" Canvas.Left="416" Canvas.Top="97">
+        <UserControl Name="Chart" Height="387" Width="584" Canvas.Left="416" Canvas.Top="97">
             <UserControl.DataContext>
                 <vms:ViewModel/>
             </UserControl.DataContext>

@@ -102,9 +102,44 @@ namespace TrackIt
 
                 TrackIt.SetValue(Canvas.TopProperty, 0 * (SystemParameters.PrimaryScreenHeight / 1080));
                 TrackIt.Height = SystemParameters.PrimaryScreenHeight * 0.0444;
-                Home.Width = SystemParameters.PrimaryScreenWidth * 0.0802;
+                TrackIt.Width = SystemParameters.PrimaryScreenWidth * 0.0802;
                 TrackIt.FontSize = (40 * SystemParameters.PrimaryScreenHeight / 1080);
                 TrackIt.SetValue(Canvas.LeftProperty, 95.0 * (SystemParameters.PrimaryScreenWidth / 1920));
+
+                ScreenTimeLabel.SetValue(Canvas.TopProperty, 24 * (SystemParameters.PrimaryScreenHeight / 1080));
+                ScreenTimeLabel.Height = SystemParameters.PrimaryScreenHeight * 0.0565;
+                ScreenTimeLabel.Width = SystemParameters.PrimaryScreenWidth * 0.1417;
+                ScreenTimeLabel.SetValue(Canvas.LeftProperty, 947 * (SystemParameters.PrimaryScreenWidth / 1920));
+                ScreenTimeLabel.FontSize = (50 * SystemParameters.PrimaryScreenHeight / 1080);
+
+                AddApplicationLabel.SetValue(Canvas.TopProperty, 62 * (SystemParameters.PrimaryScreenHeight / 1080));
+                AddApplicationLabel.Height = SystemParameters.PrimaryScreenHeight * 0.0639;
+                AddApplicationLabel.Width = SystemParameters.PrimaryScreenWidth * 0.0823;
+                AddApplicationLabel.SetValue(Canvas.LeftProperty, 1662 * (SystemParameters.PrimaryScreenWidth / 1920));
+                AddApplicationLabel.FontSize = (27 * SystemParameters.PrimaryScreenHeight / 1080);
+
+                BlacklistBox.SetValue(Canvas.TopProperty, 136 * (SystemParameters.PrimaryScreenHeight / 1080));
+                BlacklistBox.Height = SystemParameters.PrimaryScreenHeight * 0.6991;
+                BlacklistBox.Width = SystemParameters.PrimaryScreenWidth * 0.1417;
+                BlacklistBox.SetValue(Canvas.LeftProperty, 1608 * (SystemParameters.PrimaryScreenWidth / 1920));
+
+                AddApplicationButton.SetValue(Canvas.TopProperty, 812 * (SystemParameters.PrimaryScreenHeight / 1080));
+                AddApplicationButton.Height = SystemParameters.PrimaryScreenHeight * 0.0481;
+                AddApplicationButton.Width = SystemParameters.PrimaryScreenWidth * 0.1182;
+                AddApplicationButton.SetValue(Canvas.LeftProperty, 1628 * (SystemParameters.PrimaryScreenWidth / 1920));
+                AddApplicationButton.FontSize = (30 * SystemParameters.PrimaryScreenHeight / 1080);
+
+                CreateDailyUseLimit.SetValue(Canvas.TopProperty, 964 * (SystemParameters.PrimaryScreenHeight / 1080));
+                CreateDailyUseLimit.Height = SystemParameters.PrimaryScreenHeight * 0.0556;
+                CreateDailyUseLimit.Width = SystemParameters.PrimaryScreenWidth * 0.1552;
+                CreateDailyUseLimit.SetValue(Canvas.LeftProperty, 1592 * (SystemParameters.PrimaryScreenWidth / 1920));
+                CreateDailyUseLimit.FontSize = (30 * SystemParameters.PrimaryScreenHeight / 1080);
+
+                Chart.SetValue(Canvas.TopProperty, 97 * (SystemParameters.PrimaryScreenHeight / 1080));
+                Chart.Height = SystemParameters.PrimaryScreenHeight * 0.3583;
+                Chart.Width = SystemParameters.PrimaryScreenWidth * 0.3042;
+                Chart.SetValue(Canvas.LeftProperty, 416 * (SystemParameters.PrimaryScreenWidth / 1920));
+                Chart.FontSize = (30 * SystemParameters.PrimaryScreenHeight / 1080);
             }
 
         }
@@ -197,9 +232,9 @@ namespace TrackIt
 
     namespace ViewModelsSamples.Bars.Basic
     {
-        public partial class test
+        public partial class Test
         { 
-            public test()
+            public Test()
             {
                 Bob();
                 void Bob()
