@@ -15,7 +15,7 @@ namespace TrackIt
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             WindowState = WindowState.Maximized;
             ScreenScale();
-            Tests();
+            //Tests();
         }
         void ScreenScale()
         {
@@ -74,6 +74,32 @@ namespace TrackIt
                 Home.Width = SystemParameters.PrimaryScreenWidth * 0.0802;
                 TrackIt.FontSize = (40 * SystemParameters.PrimaryScreenHeight / 1080);
                 TrackIt.SetValue(Canvas.LeftProperty, 95.0 * (SystemParameters.PrimaryScreenWidth / 1920));
+
+                Box.SetValue(Canvas.TopProperty, 272 * (SystemParameters.PrimaryScreenHeight / 1080));
+                Box.Height = SystemParameters.PrimaryScreenHeight * 0.4824;
+                Box.Width = SystemParameters.PrimaryScreenWidth * 0.1781;
+                Box.SetValue(Canvas.LeftProperty, 960 * (SystemParameters.PrimaryScreenWidth / 1920));
+
+                PasswordLabel.SetValue(Canvas.TopProperty, 24 * (SystemParameters.PrimaryScreenHeight / 1080));
+                PasswordLabel.Height = SystemParameters.PrimaryScreenHeight * 0.0565;
+                PasswordLabel.Width = SystemParameters.PrimaryScreenWidth * 0.2104;
+                PasswordLabel.FontSize = (50 * SystemParameters.PrimaryScreenHeight / 1080);
+                PasswordLabel.SetValue(Canvas.LeftProperty, 929 * (SystemParameters.PrimaryScreenWidth / 1920));
+
+                PasswordCreationButton.SetValue(Canvas.TopProperty, 342 * (SystemParameters.PrimaryScreenHeight / 1080));
+                PasswordCreationButton.Height = SystemParameters.PrimaryScreenHeight * 0.0481;
+                PasswordCreationButton.Width = SystemParameters.PrimaryScreenWidth * 0.1365;
+                PasswordCreationButton.SetValue(Canvas.LeftProperty, 1000 * (SystemParameters.PrimaryScreenWidth / 1920));
+
+                ChangePasswordButton.SetValue(Canvas.TopProperty, 480 * (SystemParameters.PrimaryScreenHeight / 1080));
+                ChangePasswordButton.Height = SystemParameters.PrimaryScreenHeight * 0.0481;
+                ChangePasswordButton.Width = SystemParameters.PrimaryScreenWidth * 0.1365;
+                ChangePasswordButton.SetValue(Canvas.LeftProperty, 1000 * (SystemParameters.PrimaryScreenWidth / 1920));
+
+                ForgotPasswordButton.SetValue(Canvas.TopProperty, 618 * (SystemParameters.PrimaryScreenHeight / 1080));
+                ForgotPasswordButton.Height = SystemParameters.PrimaryScreenHeight * 0.0481;
+                ForgotPasswordButton.Width = SystemParameters.PrimaryScreenWidth * 0.1365;
+                ForgotPasswordButton.SetValue(Canvas.LeftProperty, 1000 * (SystemParameters.PrimaryScreenWidth / 1920));
             }
         }
         void CalendarButtonClick(object sender, RoutedEventArgs e)
@@ -109,34 +135,52 @@ namespace TrackIt
         }
         void PasswordCreationClick(object sender, RoutedEventArgs e)
         {
-            if (Properties.Settings.Default.MiniWindowOpened == false)
+            string password = new System.Net.NetworkCredential(string.Empty, Properties.Settings.Default.Password).Password;
+            if (Properties.Settings.Default.MiniWindowOpened == false & string.IsNullOrEmpty(password))
             {
                 Properties.Settings.Default.MiniWindowOpened = true;
                 var newForm = new PasswordCreation();
                 newForm.Show();
             }
+            if (Properties.Settings.Default.MiniWindowOpened == false & !string.IsNullOrEmpty(password))
+            {
+                var newForm = new PasswordAlreadyCreated();
+                newForm.Show();
+            }
         }
         void ChangePasswordClick(object sender, RoutedEventArgs e)
         {
-            if (Properties.Settings.Default.MiniWindowOpened == false)
+            string password = new System.Net.NetworkCredential(string.Empty, Properties.Settings.Default.Password).Password;
+            if (Properties.Settings.Default.MiniWindowOpened == false & !string.IsNullOrEmpty(password))
             {
                 Properties.Settings.Default.MiniWindowOpened = true;
                 var newForm = new ChangePassword();
                 newForm.Show();
             }
+            if (Properties.Settings.Default.MiniWindowOpened == false & string.IsNullOrEmpty(password))
+            {
+                var newForm = new NoPasswordCreated();
+                newForm.Show();
+            }
         }
         void ForgotPasswordClick(object sender, RoutedEventArgs e)
         {
-            if (Properties.Settings.Default.MiniWindowOpened == false)
+            string password = new System.Net.NetworkCredential(string.Empty, Properties.Settings.Default.Password).Password;
+            if (Properties.Settings.Default.MiniWindowOpened == false & !string.IsNullOrEmpty(password))
             {
                 Properties.Settings.Default.MiniWindowOpened = true;
                 var newForm = new ForgotPassword();
                 newForm.Show();
             }
+            if (Properties.Settings.Default.MiniWindowOpened == false & string.IsNullOrEmpty(password))
+            {
+                var newForm = new NoPasswordCreated();
+                newForm.Show();
+            }
         }
-        void Tests()
+        /*void Tests()
         {
             Tested.Items.Add(Properties.Settings.Default.ListofRecords[1].ScreenTimeCollect);
-        }
+        }*/
     }
 }

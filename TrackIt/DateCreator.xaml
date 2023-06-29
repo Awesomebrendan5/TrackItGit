@@ -8,20 +8,20 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
 
-        Title="MainWindow" Height="698" Width="428">
+        Title="MainWindow" Height="720" Width="428">
     <Canvas Name="MainMenu" Focusable="true" Background="#75A0D8">
-        <TextBlock Name="TrackIt" Height="48" Width="257" Text="Create New Event" FontFamily="Narkisim" FontSize="30" Foreground="Black" Canvas.Left="69" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Top="10" TextAlignment="Center"/>
-        <TextBlock Name="EnterEvent" Height="48" Width="257" Text="Enter Event Name" FontFamily="Narkisim" FontSize="20" Foreground="Black" Canvas.Left="69" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Top="86" TextAlignment="Center"/>
-        <TextBox Name="EventInput" Height="48" Width="202" Canvas.Left="94" Canvas.Top="120" Background="#E9DBDB"></TextBox>
+        <TextBlock Name="EventLabel" Height="48" Width="257" Text="Create New Event" FontFamily="Narkisim" FontSize="30" Foreground="Black" Canvas.Left="69" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Top="10" TextAlignment="Center"/>
+        <TextBlock Name="EnterEvent" Height="48" Width="257" Text="Enter Event Name" FontFamily="Narkisim" FontSize="20" Foreground="Black" Canvas.Left="69" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="86" TextAlignment="Center"/>
+        <TextBox Name="EventInput" Height="48" Width="202" Canvas.Left="96" Canvas.Top="120" Background="#E9DBDB" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBox>
         <TextBlock Name="SelectEventTime" Height="48" Width="257" Text="Select Event Time" FontFamily="Narkisim" FontSize="20" Foreground="Black" Canvas.Left="69" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Top="246" TextAlignment="Center"/>
-        <TextBlock Name="Hour" Height="22" Width="50" Text="Hour" FontFamily="Narkisim" FontSize="20" Foreground="Black" Canvas.Left="92" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Top="329" TextAlignment="Center"/>
-        <TextBlock Name="Minute" Height="22" Width="69" Text="Minute" FontFamily="Narkisim" FontSize="20" Foreground="Black" Canvas.Left="168" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Top="329" TextAlignment="Center"/>
-        <TextBlock Name="Second" Height="22" Width="69" Text="Second" FontFamily="Narkisim" FontSize="20" Foreground="Black" Canvas.Left="251" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Top="329" TextAlignment="Center"/>
-        <TextBox Name="HourBox" Height=" 32" Width="50" Canvas.Left="92" Canvas.Top="356" Background="White"></TextBox>
-        <TextBox x:Name="MinuteBox" Height=" 32" Width="50" Canvas.Left="177" Canvas.Top="356" Background="White"/>
-        <TextBox x:Name="SecondBox" Height=" 32" Width="50" Canvas.Left="262" Canvas.Top="356" Background="White"/>
-        <Button Name="Confirm" Click="ConfirmButtonClick" Height="43" Width ="124" Canvas.Top="461" Background="#5FB72E" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Calibri" FontSize="20" Content="Confirm" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="145"/>
-        <Button Name="Back" Click="BackButtonClick" Height="43" Width ="124" Canvas.Top="623" Background="#E14026" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Calibri" FontSize="20" Content="Back" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="-4"/>
+        <TextBlock Name="Hour" Height="22" Width="50" Text="Hour" FontFamily="Narkisim" FontSize="20" Foreground="Black" Canvas.Left="87" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Top="332" TextAlignment="Center"/>
+        <TextBlock Name="Minute" Height="22" Width="69" Text="Minute" FontFamily="Narkisim" FontSize="20" Foreground="Black" Canvas.Left="163" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Top="332" TextAlignment="Center"/>
+        <TextBlock Name="Second" Height="22" Width="69" Text="Second" FontFamily="Narkisim" FontSize="20" Foreground="Black" Canvas.Left="246" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Top="332" TextAlignment="Center"/>
+        <TextBox Name="HourBox" Height=" 32" Width="50" Canvas.Left="87" Canvas.Top="359" Background="White"></TextBox>
+        <TextBox x:Name="MinuteBox" Height=" 32" Width="50" Canvas.Left="172" Canvas.Top="359" Background="White"/>
+        <TextBox x:Name="SecondBox" Height=" 32" Width="50" Canvas.Left="257" Canvas.Top="359" Background="White"/>
+        <Button Name="Confirm" Click="ConfirmButtonClick" Height="43" Width ="124" Canvas.Top="460" Background="#5FB72E" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Calibri" FontSize="20" Content="Confirm" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="135"/>
+        <Button Name="Back" Click="BackButtonClick" Height="43" Width ="124" Canvas.Top="651" Background="#E14026" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Calibri" FontSize="20" Content="Back" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="-4"/>
     </Canvas>
 </Window>
 

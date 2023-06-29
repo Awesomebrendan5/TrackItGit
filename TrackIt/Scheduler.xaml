@@ -8,10 +8,10 @@
         mc:Ignorable="d"
         Title="BlacklistCreation" Height="720" Width="428">
     <Canvas Focusable="true" Background="#75A0D8">
-        <Image Height="368" Canvas.Left="96" Source="/Images/EventSquare.png" Stretch="Fill" Canvas.Top="106" Width="236"/>
+        <Image Name="Box" Height="368" Canvas.Left="96" Source="/Images/EventSquare.png" Stretch="Fill" Canvas.Top="106" Width="236"/>
         <TextBlock TextAlignment ="Left" x:Name="DateToday" Height="48" Width="159" Text="20/11/22" FontFamily="Calibri" FontSize="30" Foreground="Black" Canvas.Left="80" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Top="10"/>
         <TextBlock TextAlignment ="Center" x:Name="Schedule" Height="48" Width="130" Text="- Schedule" FontFamily="Calibri" FontSize="30" Foreground="Black" Canvas.Left="214" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Top="10"/>
         <Button x:Name="CreateNewEvent" Click="NewEventClick" Height="43" Width ="124" Canvas.Top="418" Background="#5FB72E" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Calibri" FontSize="20" Content="Create New" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="155"/>
-        <Button x:Name="Back" Click="BackButtonClick" Height="43" Width ="124" Canvas.Top="643" Background="#E14026" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Calibri" FontSize="20" Content="Back" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="-4"/>
+        <Button x:Name="Back" Click="BackButtonClick" Height="43" Width ="124" Canvas.Top="651" Background="#E14026" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Calibri" FontSize="20" Content="Back" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="-4"/>
     </Canvas>
 </Window>
