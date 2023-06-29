@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TrackIt"
         mc:Ignorable="d"
+        WindowState="Maximized"
+        WindowStyle="None"
         Height="{Binding SystemParameters.PrimaryScreenHeight}"
-         Width="{Binding SystemParameters.PrimaryScreenHeight}"
+        Width="{Binding SystemParameters.PrimaryScreenHeight}"
         Title="MainWindow" >
     <Canvas Name="MainMenu" Focusable="true" Background="#75A0D8">
         <Button Name="Calendar" Click="CalendarButtonClick" Height="54" Width ="170" Canvas.Top="207" RenderTransformOrigin="0.37,-2.518" Background="Transparent" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Narkisim" FontSize="40" Content="Calendar" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="95"/>

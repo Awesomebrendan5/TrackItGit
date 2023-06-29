@@ -17,7 +17,7 @@ namespace TrackIt
 
         void Screenscale()
         {
-            if (SystemParameters.PrimaryScreenHeight != 1080)
+            if (SystemParameters.PrimaryScreenHeight == 1080)
             {
                 Height = SystemParameters.PrimaryScreenHeight * 0.6667;
                 Width = SystemParameters.PrimaryScreenWidth * 0.2229;
