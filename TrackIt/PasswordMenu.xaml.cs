@@ -165,10 +165,16 @@ namespace TrackIt
         }
         void ForgotPasswordClick(object sender, RoutedEventArgs e)
         {
-            if (Properties.Settings.Default.MiniWindowOpened == false)
+            string password = new System.Net.NetworkCredential(string.Empty, Properties.Settings.Default.password).Password;
+            if (Properties.Settings.Default.MiniWindowOpened == false & !string.IsNullOrEmpty(password))
             {
                 Properties.Settings.Default.MiniWindowOpened = true;
                 var newForm = new ForgotPassword();
+                newForm.Show();
+            }
+            if (Properties.Settings.Default.MiniWindowOpened == false & string.IsNullOrEmpty(password))
+            {
+                var newForm = new NoPasswordCreated();
                 newForm.Show();
             }
         }

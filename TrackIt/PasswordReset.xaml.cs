@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace TrackIt
 {
     /// <summary>
-    /// Interaction logic for PasswordDoubleMismatch.xaml
+    /// Interaction logic for PasswordReset.xaml
     /// </summary>
-    public partial class PasswordDoubleMismatch : Window
+    public partial class PasswordReset : Window
     {
-        public PasswordDoubleMismatch()
+        public PasswordReset()
         {
             InitializeComponent();
             Screenscale();
@@ -31,11 +31,11 @@ namespace TrackIt
                 Height = SystemParameters.PrimaryScreenHeight * 0.2611;
                 Width = SystemParameters.PrimaryScreenWidth * 0.2401;
 
-                ErrorMessage.SetValue(Canvas.TopProperty, 10 * (SystemParameters.PrimaryScreenHeight / 1080));
-                ErrorMessage.Height = SystemParameters.PrimaryScreenHeight * 0.0444;
-                ErrorMessage.Width = SystemParameters.PrimaryScreenWidth * 0.1339;
-                ErrorMessage.SetValue(Canvas.LeftProperty, 102 * (SystemParameters.PrimaryScreenWidth / 1920));
-                ErrorMessage.FontSize = (30 * SystemParameters.PrimaryScreenHeight / 1080);
+                SuccessMessage.SetValue(Canvas.TopProperty, 10 * (SystemParameters.PrimaryScreenHeight / 1080));
+                SuccessMessage.Height = SystemParameters.PrimaryScreenHeight * 0.0444;
+                SuccessMessage.Width = SystemParameters.PrimaryScreenWidth * 0.1339;
+                SuccessMessage.SetValue(Canvas.LeftProperty, 102 * (SystemParameters.PrimaryScreenWidth / 1920));
+                SuccessMessage.FontSize = (30 * SystemParameters.PrimaryScreenHeight / 1080);
 
                 Information.SetValue(Canvas.TopProperty, 95 * (SystemParameters.PrimaryScreenHeight / 1080));
                 Information.Height = SystemParameters.PrimaryScreenHeight * 0.0491;
@@ -45,7 +45,7 @@ namespace TrackIt
 
                 Exit.SetValue(Canvas.TopProperty, 182 * (SystemParameters.PrimaryScreenHeight / 1080));
                 Exit.Height = SystemParameters.PrimaryScreenHeight * 0.05;
-                Exit.Width = SystemParameters.PrimaryScreenWidth * 0.0729;
+                Exit.Width = SystemParameters.PrimaryScreenWidth * 0.0948;
                 Exit.SetValue(Canvas.LeftProperty, 160 * (SystemParameters.PrimaryScreenWidth / 1920));
                 Exit.FontSize = (25 * SystemParameters.PrimaryScreenHeight / 1080);
             }
