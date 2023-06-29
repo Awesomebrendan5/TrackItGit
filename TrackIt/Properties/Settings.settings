@@ -23,7 +23,10 @@
     <Setting Name="a" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="password" Type="System.Security.SecureString" Scope="User">
+    <Setting Name="Password" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SecurePassword" Type="System.Security.SecureString" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

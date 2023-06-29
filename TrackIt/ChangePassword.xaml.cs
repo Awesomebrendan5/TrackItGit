@@ -85,19 +85,18 @@ namespace TrackIt
         }
         private void ConfirmButtonClick(object sender, RoutedEventArgs e)
         {
-            string password = new System.Net.NetworkCredential(string.Empty, Properties.Settings.Default.password).Password;
-            if (password != NewPassword.Password)
+            if (Properties.Settings.Default.Password != NewPassword.Password)
             {
                 if (NewPassword.Password == NewPasswordConfirmation.Password & NewPassword.Password.Length > 7)
                 {
-                    Properties.Settings.Default.password = NewPassword.SecurePassword;
+                    Properties.Settings.Default.Password = NewPassword.Password;
                     Properties.Settings.Default.Save();
                     var newForm = new PasswordSaved();
                     newForm.Show();
                 }
                 if (NewPassword.Password != NewPasswordConfirmation.Password & NewPassword.Password.Length > 7)
                 {
-                    Properties.Settings.Default.password = NewPassword.SecurePassword;
+                    Properties.Settings.Default.Password = NewPassword.Password;
                     var newForm = new PasswordMismatch();
                     newForm.Show();
                 }

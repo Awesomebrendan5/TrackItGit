@@ -111,12 +111,24 @@ namespace TrackIt.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Security.SecureString password {
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Password {
             get {
-                return ((global::System.Security.SecureString)(this["password"]));
+                return ((string)(this["Password"]));
             }
             set {
-                this["password"] = value;
+                this["Password"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Security.SecureString SecurePassword {
+            get {
+                return ((global::System.Security.SecureString)(this["SecurePassword"]));
+            }
+            set {
+                this["SecurePassword"] = value;
             }
         }
     }

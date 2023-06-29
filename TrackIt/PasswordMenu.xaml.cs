@@ -135,7 +135,7 @@ namespace TrackIt
         }
         void PasswordCreationClick(object sender, RoutedEventArgs e)
         {
-            string password = new System.Net.NetworkCredential(string.Empty, Properties.Settings.Default.password).Password;
+            string password = new System.Net.NetworkCredential(string.Empty, Properties.Settings.Default.Password).Password;
             if (Properties.Settings.Default.MiniWindowOpened == false & string.IsNullOrEmpty(password))
             {
                 Properties.Settings.Default.MiniWindowOpened = true;
@@ -150,7 +150,7 @@ namespace TrackIt
         }
         void ChangePasswordClick(object sender, RoutedEventArgs e)
         {
-            string password = new System.Net.NetworkCredential(string.Empty, Properties.Settings.Default.password).Password;
+            string password = new System.Net.NetworkCredential(string.Empty, Properties.Settings.Default.Password).Password;
             if (Properties.Settings.Default.MiniWindowOpened == false & !string.IsNullOrEmpty(password))
             {
                 Properties.Settings.Default.MiniWindowOpened = true;
@@ -165,7 +165,7 @@ namespace TrackIt
         }
         void ForgotPasswordClick(object sender, RoutedEventArgs e)
         {
-            string password = new System.Net.NetworkCredential(string.Empty, Properties.Settings.Default.password).Password;
+            string password = new System.Net.NetworkCredential(string.Empty, Properties.Settings.Default.Password).Password;
             if (Properties.Settings.Default.MiniWindowOpened == false & !string.IsNullOrEmpty(password))
             {
                 Properties.Settings.Default.MiniWindowOpened = true;
