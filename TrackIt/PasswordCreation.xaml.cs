@@ -13,8 +13,13 @@ namespace TrackIt
         {
             InitializeComponent();
             Screenscale();
+            Resizer();
         }
 
+        void Resizer()
+        {
+
+        }
         void Screenscale()
         {
             if (SystemParameters.PrimaryScreenHeight == 1080)
@@ -83,12 +88,12 @@ namespace TrackIt
                 var newForm = new PasswordMismatch();
                 newForm.Show();
             }
-            if (Password.Password == PasswordConfirmation.Password & Password.Password.Length < 7)
+            if (Password.Password == PasswordConfirmation.Password & Password.Password.Length <= 7)
             {
                 var newForm = new PasswordTooShort();
                 newForm.Show();
             }
-            if (Password.Password != PasswordConfirmation.Password & Password.Password.Length < 7)
+            if (Password.Password != PasswordConfirmation.Password & Password.Password.Length <= 7)
             {
                 var newForm = new PasswordDoubleMismatch();
                 newForm.Show();
