@@ -136,16 +136,16 @@ namespace TrackIt
         {
             IntPtr CurrentWindow = GetForegroundWindow(); //Saves the currently open Window.
             Int32 OpenApplication = CurrentWindow.ToInt32(); //Saves that window into an array.
-            System.Timers.Timer t = new System.Timers.Timer(TimeSpan.FromSeconds(10).TotalSeconds); //Sets a system timer for 10 seconds.
+            var t = new System.Timers.Timer(10000); //Sets a system timer for 10 seconds.
             IntPtr OldOpenWindow = CurrentWindow; //Saves the currently open window as OldOpenWindow.
             Stopwatch ScreenTimer = new Stopwatch();
             ScreenTimer.Start();
-            t.AutoReset = true; //Sets the timer to Autoreset.
-            t.Elapsed += new System.Timers.ElapsedEventHandler(timer_Elapsed); //Starts a method if timer elapses.
+            t.Elapsed += OnEventExecution; //Starts a method if timer elapses.
             t.Start(); //Starts timer.
+            Console.ReadLine();
 
 
-            void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+            void OnEventExecution(object sender, System.Timers.ElapsedEventArgs e)
             {
                 IntPtr NewOpenWindow = GetForegroundWindow(); //Defines NewOpenWindow as the window now open.
                 if (OldOpenWindow == NewOpenWindow) //Checks if the OldOpenWindow is the same as the NewOpenWindow.

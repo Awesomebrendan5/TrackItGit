@@ -74,38 +74,47 @@ namespace TrackIt
         }
         private void ConfirmButtonClick(object sender, RoutedEventArgs e)
         {
-            if (Properties.Settings.Default.Password != NewPassword.Password)
+            if (Properties.Settings.Default.Password == OldPassword.Password)
             {
-                if (NewPassword.Password == NewPasswordConfirmation.Password & NewPassword.Password.Length > 7)
+                if (Properties.Settings.Default.Password == NewPassword.Password)
                 {
-                    Properties.Settings.Default.Password = NewPassword.Password;
-                    Properties.Settings.Default.Save();
-                    var newForm = new PasswordSaved();
+                    var newForm = new PasswordSame();
                     newForm.Show();
                 }
-                if (NewPassword.Password != NewPasswordConfirmation.Password & NewPassword.Password.Length > 7)
+                if (NewPassword.Password != Properties.Settings.Default.Password)
                 {
-                    Properties.Settings.Default.Password = NewPassword.Password;
-                    var newForm = new PasswordMismatch();
-                    newForm.Show();
-                }
-                if (NewPassword.Password == NewPasswordConfirmation.Password & NewPassword.Password.Length < 7)
-                {
-                    var newForm = new PasswordTooShort();
-                    newForm.Show();
-                }
-                if (NewPassword.Password != NewPasswordConfirmation.Password & NewPassword.Password.Length < 7)
-                {
-                    var newForm = new PasswordDoubleMismatch();
-                    newForm.Show();
+                    if (NewPassword.Password == NewPasswordConfirmation.Password & NewPassword.Password.Length > 7)
+                    {
+                        Properties.Settings.Default.Password = NewPassword.Password;
+                        Properties.Settings.Default.Save();
+                        var newForm = new PasswordSaved();
+                        newForm.Show();
+                    }
+                    if (NewPassword.Password != NewPasswordConfirmation.Password & NewPassword.Password.Length > 7)
+                    {
+                        Properties.Settings.Default.Password = NewPassword.Password;
+                        var newForm = new PasswordMismatch();
+                        newForm.Show();
+                    }
+                    if (NewPassword.Password == NewPasswordConfirmation.Password & NewPassword.Password.Length <= 7)
+                    {
+                        var newForm = new PasswordTooShort();
+                        newForm.Show();
+                    }
+                    if (NewPassword.Password != NewPasswordConfirmation.Password & NewPassword.Password.Length <= 7)
+                    {
+                        var newForm = new PasswordDoubleMismatch();
+                        newForm.Show();
+                    }
                 }
             }
             else
             {
-                var newForm = new PasswordSame();
+                var newForm = new WrongPassword();
                 newForm.Show();
             }
         }
+
         private void BackButtonClick(object sender, RoutedEventArgs e)
         {
             Properties.Settings.Default.MiniWindowOpened = false;

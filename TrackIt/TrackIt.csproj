@@ -16,6 +16,7 @@
     <None Remove="Images\Password.png" />
     <None Remove="Images\PasswordBox.png" />
     <None Remove="Images\Screentime.png" />
+    <None Remove="Images\Splashscreen.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,6 +33,10 @@
     <Resource Include="Images\Password.png" />
     <Resource Include="Images\PasswordBox.png" />
     <Resource Include="Images\Screentime.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <SplashScreen Include="Images\Splashscreen.png" />
   </ItemGroup>
 
   <ItemGroup>

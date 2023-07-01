@@ -1,5 +1,18 @@
-﻿using System.Windows;
+﻿using System;
+using System.Threading;
+using System.Timers;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Animation;
+using System.Text;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using CommunityToolkit.Mvvm.ComponentModel;
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
+using SkiaSharp;
+using static TrackIt.ScreentimeMenu;
 
 namespace TrackIt
 {

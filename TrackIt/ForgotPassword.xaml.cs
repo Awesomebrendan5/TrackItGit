@@ -49,6 +49,8 @@ namespace TrackIt
         {
             Properties.Settings.Default.Password = null;
             Properties.Settings.Default.Save();
+            var newForm = new PasswordReset();
+            newForm.Show();
         }
         private void BackButtonClick(object sender, RoutedEventArgs e)
         {
