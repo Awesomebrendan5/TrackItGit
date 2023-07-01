@@ -161,6 +161,7 @@ namespace TrackIt
                     String ApplicationNamed = ApplicationName.ToString();
                     ScreentimeStats i = new(ApplicationName: ApplicationNamed, ScreenTimeCollect: TimerDuration, DateCollected: DateCollected);
                     Properties.Settings.Default.ListofRecords.Add(i);
+                    Properties.Settings.Default.Save();
                     ScreenTimer.Restart();
                     CurrentWindow = NewOpenWindow;
                     OldOpenWindow = NewOpenWindow;
