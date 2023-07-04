@@ -10,6 +10,11 @@ using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
 using static TrackIt.ScreentimeMenu;
+using CsvHelper.Configuration;
+using CsvHelper;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 
 namespace TrackIt
 {
@@ -36,7 +41,12 @@ namespace TrackIt
             ScreenTimeStat();
         }
 
-        public record ScreentimeStats(String ApplicationName, long ScreenTimeCollect, DateTime DateCollected);
+        public class ScreentimeStats
+        {
+            public string ApplicationName { get; set; }
+            public long ScreenTimeCollect { get; set; }
+            public DateTime DateCollected { get; set; }
+        }
         void ScreenScale()
         {
             if (SystemParameters.PrimaryScreenHeight != 1080)
@@ -159,10 +169,24 @@ namespace TrackIt
                     DateTime DateCollected = DateTime.Now;
                     long TimerDuration = ScreenTimer.ElapsedMilliseconds;
                     String ApplicationNamed = ApplicationName.ToString();
-                    ScreentimeStats i = new(ApplicationName: ApplicationNamed, ScreenTimeCollect: TimerDuration, DateCollected: DateCollected);
-                    Properties.Settings.Default.ListofRecords.Add(i);
-                    Properties.Settings.Default.Save();
+                    var records = new List<ScreentimeStats>
+                        {
+                            new ScreentimeStats { ApplicationName = ApplicationNamed, ScreenTimeCollect = TimerDuration, DateCollected = DateCollected}
+                        };
+                    // Append to the file.
+                    var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+                    {
+                        // Don't write the header again.
+                        HasHeaderRecord = false,
+                    };
+                    using (var stream = File.Open("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Storage.csv", FileMode.Append))
+                    using (var writer = new StreamWriter(stream))
+                    using (var csv = new CsvWriter(writer, config))
+                    {
+                        csv.WriteRecords(records);
+                    }
                     ScreenTimer.Restart();
+                    Console.WriteLine("Works");
                     CurrentWindow = NewOpenWindow;
                     OldOpenWindow = NewOpenWindow;
                 }
@@ -242,7 +266,7 @@ namespace TrackIt
 
         new ColumnSeries<double>
         {
-            //Name = (Properties.Settings.Default.ListofRecords[0].ApplicationName),
+            Name = (Properties.Settings.Default.ListofRecords[0].ApplicationName),
             Values = new double[] { 2, 5, 4 }
         },
         new ColumnSeries<double>
