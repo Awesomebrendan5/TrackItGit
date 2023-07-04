@@ -186,7 +186,6 @@ namespace TrackIt
                         csv.WriteRecords(records);
                     }
                     ScreenTimer.Restart();
-                    Console.WriteLine("Works");
                     CurrentWindow = NewOpenWindow;
                     OldOpenWindow = NewOpenWindow;
                 }
