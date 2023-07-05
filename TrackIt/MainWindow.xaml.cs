@@ -13,6 +13,11 @@ using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
 using static TrackIt.ScreentimeMenu;
+using CsvHelper;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
 
 namespace TrackIt
 {
@@ -27,6 +32,7 @@ namespace TrackIt
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             WindowState = WindowState.Maximized;
             ScreenScale();
+            Bob();
         }
 
         void ScreenScale()
@@ -86,6 +92,19 @@ namespace TrackIt
                 Home.Width = SystemParameters.PrimaryScreenWidth * 0.0802;
                 TrackIt.FontSize = (40 * SystemParameters.PrimaryScreenHeight / 1080);
                 TrackIt.SetValue(Canvas.LeftProperty, 95.0 * (SystemParameters.PrimaryScreenWidth / 1920));
+            }
+        }
+        public void Bob()
+        {
+            using (var reader = new StreamReader("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Storage6.csv"))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                var records = csv.GetRecords<ScreentimeStats>();
+                List<ScreentimeStats> alist = records.ToList();
+                alist.Sort((b, a) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
+                Properties.Settings.Default.a = alist[0].ApplicationName;
+                Properties.Settings.Default.avalue = (alist[0].ScreenTimeCollect/60000);
+                Properties.Settings.Default.Save();
             }
         }
         void CalendarButtonClick(object sender, RoutedEventArgs e) 

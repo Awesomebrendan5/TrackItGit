@@ -15,6 +15,10 @@ using CsvHelper;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Timers;
+using System.Collections;
+using static System.Net.Mime.MediaTypeNames;
+using System.Linq;
 
 namespace TrackIt
 {
@@ -173,17 +177,30 @@ namespace TrackIt
                         {
                             new ScreentimeStats { ApplicationName = ApplicationNamed, ScreenTimeCollect = TimerDuration, DateCollected = DateCollected}
                         };
-                    // Append to the file.
-                    var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+                    if (Properties.Settings.Default.FileCreated1 == false)
                     {
-                        // Don't write the header again.
-                        HasHeaderRecord = false,
-                    };
-                    using (var stream = File.Open("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Storage.csv", FileMode.Append))
-                    using (var writer = new StreamWriter(stream))
-                    using (var csv = new CsvWriter(writer, config))
+                        using (var writer = new StreamWriter("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Storage6.csv"))
+                        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                        {
+                            csv.WriteRecords(records);
+                        }
+                        Properties.Settings.Default.FileCreated1 = true;
+                        Properties.Settings.Default.Save();
+                    }
+                    if (Properties.Settings.Default.FileCreated1 == true)
                     {
-                        csv.WriteRecords(records);
+                        // Append to the file.
+                        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+                        {
+                            // Don't write the header again.
+                            HasHeaderRecord = false,
+                        };
+                        using (var stream = File.Open("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Storage6.csv", FileMode.Append))
+                        using (var writer = new StreamWriter(stream))
+                        using (var csv = new CsvWriter(writer, config))
+                        {
+                            csv.WriteRecords(records);
+                        }
                     }
                     ScreenTimer.Restart();
                     CurrentWindow = NewOpenWindow;
@@ -246,30 +263,24 @@ namespace TrackIt
     namespace ViewModelsSamples.Bars.Basic
     {
         public partial class Test
-        { 
-            public Test()
+        {
+            public Test() 
             {
-                Bob();
-                void Bob()
-                {
-                    Properties.Settings.Default.ListofRecords.Sort((a, b) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
-                    Properties.Settings.Default.Save();
-                }
             }
         }
         public partial class ViewModel : ObservableObject
-        {
-
-            public ISeries[] Series { get; set; } =
+        {     
+            public ISeries[] Series { get; set;} =
             {
 
         new ColumnSeries<double>
         {
-            Name = (Properties.Settings.Default.ListofRecords[0].ApplicationName),
-            Values = new double[] { 2, 5, 4 }
+            Name = Properties.Settings.Default.a,
+            Values = new double[] { Properties.Settings.Default.avalue }
         },
         new ColumnSeries<double>
         {
+            
             Name = "Ana",
             Values = new double[] { 3, 1, 6 }
         }

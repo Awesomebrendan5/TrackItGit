@@ -8,8 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using static TrackIt.ScreentimeMenu;
-
 namespace TrackIt.Properties {
     
     
@@ -82,20 +80,7 @@ namespace TrackIt.Properties {
                 this["OpenApplication"] = value;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public System.Collections.Generic.List<ScreentimeStats> ListofRecords
-        {
-            get
-            {
-                return ((System.Collections.Generic.List<ScreentimeStats>)(this["ListofRecords"]));
-            }
-            set {
-                this["ListofRecords"] = value;
-            }
-        }
+       
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -129,6 +114,30 @@ namespace TrackIt.Properties {
             }
             set {
                 this["SecurePassword"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool FileCreated1 {
+            get {
+                return ((bool)(this["FileCreated1"]));
+            }
+            set {
+                this["FileCreated1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public long avalue {
+            get {
+                return ((long)(this["avalue"]));
+            }
+            set {
+                this["avalue"] = value;
             }
         }
     }

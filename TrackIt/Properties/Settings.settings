@@ -29,5 +29,11 @@
     <Setting Name="SecurePassword" Type="System.Security.SecureString" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="FileCreated1" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="avalue" Type="System.Int64" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
