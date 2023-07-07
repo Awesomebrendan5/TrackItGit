@@ -42,7 +42,6 @@ namespace TrackIt
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             WindowState = WindowState.Maximized;
             ScreenScale();
-            ScreenTimeStat();
         }
 
         public class ScreentimeStats
@@ -145,68 +144,6 @@ namespace TrackIt
                 Chart.FontSize = (30 * SystemParameters.PrimaryScreenHeight / 1080);
             }
 
-        }
-        void ScreenTimeStat()
-        {
-            IntPtr CurrentWindow = GetForegroundWindow(); //Saves the currently open Window.
-            Int32 OpenApplication = CurrentWindow.ToInt32(); //Saves that window into an array.
-            var t = new System.Timers.Timer(10000); //Sets a system timer for 10 seconds.
-            IntPtr OldOpenWindow = CurrentWindow; //Saves the currently open window as OldOpenWindow.
-            Stopwatch ScreenTimer = new Stopwatch();
-            ScreenTimer.Start();
-            t.Elapsed += OnEventExecution; //Starts a method if timer elapses.
-            t.Start(); //Starts timer.
-            Console.ReadLine();
-
-
-            void OnEventExecution(object sender, System.Timers.ElapsedEventArgs e)
-            {
-                IntPtr NewOpenWindow = GetForegroundWindow(); //Defines NewOpenWindow as the window now open.
-                if (OldOpenWindow == NewOpenWindow) //Checks if the OldOpenWindow is the same as the NewOpenWindow.
-                {
-                }
-                if (OldOpenWindow != NewOpenWindow) //Checks if the OldOpenWindow is different to the NewOpenWindow. 
-                {
-                    int textLength = GetWindowTextLength(CurrentWindow);
-                    StringBuilder ApplicationName = new StringBuilder(textLength + 1);
-                    GetWindowText(CurrentWindow, ApplicationName, ApplicationName.Capacity);
-                    DateTime DateCollected = DateTime.Now;
-                    long TimerDuration = ScreenTimer.ElapsedMilliseconds;
-                    String ApplicationNamed = ApplicationName.ToString();
-                    var records = new List<ScreentimeStats>
-                        {
-                            new ScreentimeStats { ApplicationName = ApplicationNamed, ScreenTimeCollect = TimerDuration, DateCollected = DateCollected}
-                        };
-                    if (Properties.Settings.Default.FileCreated1 == false)
-                    {
-                        using (var writer = new StreamWriter("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Storage6.csv"))
-                        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-                        {
-                            csv.WriteRecords(records);
-                        }
-                        Properties.Settings.Default.FileCreated1 = true;
-                        Properties.Settings.Default.Save();
-                    }
-                    if (Properties.Settings.Default.FileCreated1 == true)
-                    {
-                        // Append to the file.
-                        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
-                        {
-                            // Don't write the header again.
-                            HasHeaderRecord = false,
-                        };
-                        using (var stream = File.Open("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Storage6.csv", FileMode.Append))
-                        using (var writer = new StreamWriter(stream))
-                        using (var csv = new CsvWriter(writer, config))
-                        {
-                            csv.WriteRecords(records);
-                        }
-                    }
-                    ScreenTimer.Restart();
-                    CurrentWindow = NewOpenWindow;
-                    OldOpenWindow = NewOpenWindow;
-                }
-            }
         }
         void CalendarButtonClick(object sender, RoutedEventArgs e)
         {

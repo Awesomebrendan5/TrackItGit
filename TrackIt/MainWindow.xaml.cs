@@ -18,8 +18,11 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using Microsoft.Win32;
+using System.Reflection;
+using System.Drawing.Drawing2D;
 
-namespace TrackIt
+namespace TrackIt   
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -33,6 +36,11 @@ namespace TrackIt
             WindowState = WindowState.Maximized;
             ScreenScale();
             Bob();
+            Startup();
+        }
+
+        void Startup()
+        {
         }
 
         void ScreenScale()

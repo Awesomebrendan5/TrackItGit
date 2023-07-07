@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32414.318
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrackIt", "TrackIt\TrackIt.csproj", "{316EED45-96D0-4F01-BEB2-2F04DDE17D8D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackIt", "TrackIt\TrackIt.csproj", "{316EED45-96D0-4F01-BEB2-2F04DDE17D8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheTracker", "TheTracker\TheTracker.csproj", "{8EFFED15-3A0D-4618-BF16-37E918E433A2}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "TrackItSetup", "TrackItSetup\TrackItSetup.vdproj", "{411C8694-B3BB-4AD1-883C-E18F7B738201}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,13 @@ Global
 		{316EED45-96D0-4F01-BEB2-2F04DDE17D8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{316EED45-96D0-4F01-BEB2-2F04DDE17D8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{316EED45-96D0-4F01-BEB2-2F04DDE17D8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EFFED15-3A0D-4618-BF16-37E918E433A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EFFED15-3A0D-4618-BF16-37E918E433A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EFFED15-3A0D-4618-BF16-37E918E433A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EFFED15-3A0D-4618-BF16-37E918E433A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{411C8694-B3BB-4AD1-883C-E18F7B738201}.Debug|Any CPU.ActiveCfg = Debug
+		{411C8694-B3BB-4AD1-883C-E18F7B738201}.Release|Any CPU.ActiveCfg = Release
+		{411C8694-B3BB-4AD1-883C-E18F7B738201}.Release|Any CPU.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
