@@ -1,6 +1,14 @@
 ﻿using Microsoft.Win32;
 using System.Windows;
 using System.Windows.Controls;
+using CsvHelper.Configuration;
+using CsvHelper;
+using System.Runtime.InteropServices;
+using System.Text;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Drawing.Drawing2D;
 
 namespace TrackIt
 {
@@ -9,11 +17,22 @@ namespace TrackIt
     /// </summary>
     public partial class BlacklistCreation : Window
     {
+        [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        static extern IntPtr GetForegroundWindow();
+        [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
+        [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        static extern int GetWindowTextLength(IntPtr hWnd);
         public BlacklistCreation()
         {
             InitializeComponent();
             ListofApplications();
             Screenscale();
+        }
+        public class Blacklists
+        {
+            public string BlacklistName { get; set; }
+            public string ApplicationName { get; set; }
         }
 
         void Screenscale()
@@ -73,22 +92,26 @@ namespace TrackIt
 
         private void ConfirmButtonClick(object sender, RoutedEventArgs e)
         {
-            void SelectedItems(object sender, RoutedEventArgs e, string[] selectedText)
+            SelectedItems();
+            void SelectedItems()
             {
-                if (Applications.SelectedItem != null && EnterBlacklistName.SelectedText != null)
+                if (Applications.SelectedItem != null && EnterBlacklistName.Text != null)
                 {
-                    int i = 0;
-                    while (i < 0)
+                    string BlacklistName = EnterBlacklistName.Text;
+                    string filePath = "C:\\Users\\brend\\source\\repos\\TrackIt\\"+BlacklistName + ".txt";
+                    string messageBoxText = filePath;
+                    string caption = "Word Processor";
+                    MessageBoxButton button = MessageBoxButton.YesNoCancel;
+                    MessageBoxImage icon = MessageBoxImage.Warning;
+                    MessageBoxResult result;
+
+                    result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
+                    using (StreamWriter writer = new StreamWriter(filePath))
                     {
-                        selectedText[i] = EnterBlacklistName.SelectedText;
-                        Properties.Settings.Default.AppBlacklist[i] = selectedText;
-                        int j = 0;
-                        while (j < 0)
+                        foreach (var item in Applications.SelectedItems)
                         {
-                            Properties.Settings.Default.AppBlacklist[i][j] = (string)Applications.SelectedItems[j];
-                            j = j + 1;
+                            writer.WriteLine(item.ToString());
                         }
-                        i = i + 1;
                     }
                 }
             }
