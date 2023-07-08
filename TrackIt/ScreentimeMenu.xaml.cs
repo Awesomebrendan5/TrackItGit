@@ -218,8 +218,8 @@ namespace TrackIt
         new ColumnSeries<double>
         {
             
-            Name = "Ana",
-            Values = new double[] { 3, 1, 6 }
+            Name = Properties.Settings.Default.b,
+            Values = new double[] { Properties.Settings.Default.bvalue }
         }
     };
 
@@ -227,7 +227,7 @@ namespace TrackIt
             {
         new Axis
         {
-            Labels = new string[] { "Category 1", "Category 2", "Category 3" },
+            Labels = new string[] { Properties.Settings.Default.a, Properties.Settings.Default.b, Properties.Settings.Default.c, Properties.Settings.Default.d, Properties.Settings.Default.e},
             LabelsRotation = 0,
             SeparatorsPaint = new SolidColorPaint(new SKColor(200, 200, 200)),
             SeparatorsAtCenter = false,

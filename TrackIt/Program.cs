@@ -5,9 +5,6 @@ using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
 using Topshelf;
-using CliWrap;
-using System.IO;
-using System.Reflection;
 
 namespace TheTracker
 {
@@ -16,11 +13,8 @@ namespace TheTracker
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        static void Main(String[] args)
+        static void Main1(String[] args)
         {
-            string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            Directory.SetCurrentDirectory(path);
-
             var exitCode = HostFactory.Run(x =>
             {
                 x.Service<TheTrackerService>(s =>

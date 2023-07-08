@@ -21,6 +21,7 @@ using System.Linq;
 using Microsoft.Win32;
 using System.Reflection;
 using System.Drawing.Drawing2D;
+using TheTracker;
 
 namespace TrackIt   
 {
@@ -41,9 +42,17 @@ namespace TrackIt
 
         void Startup()
         {
+            if (Properties.Settings.Default.StartupSet == false)
+            {
+                var newForm = new TheTrackerService();
+                newForm.Start();
+                Properties.Settings.Default.StartupSet = true;
+                Properties.Settings.Default.Save();
+            }
+
         }
 
-        void ScreenScale()
+            void ScreenScale()
         {
             if (SystemParameters.PrimaryScreenHeight != 1080)
             {
@@ -113,6 +122,14 @@ namespace TrackIt
                 Properties.Settings.Default.a = alist[0].ApplicationName;
                 Properties.Settings.Default.avalue = (alist[0].ScreenTimeCollect/60000);
                 Properties.Settings.Default.Save();
+                Properties.Settings.Default.b = alist[1].ApplicationName;
+                Properties.Settings.Default.bvalue = (alist[0].ScreenTimeCollect / 60000);
+                Properties.Settings.Default.c = alist[1].ApplicationName;
+                Properties.Settings.Default.cvalue = (alist[0].ScreenTimeCollect / 60000);
+                Properties.Settings.Default.d = alist[1].ApplicationName;
+                Properties.Settings.Default.dvalue = (alist[0].ScreenTimeCollect / 60000);
+                Properties.Settings.Default.e = alist[1].ApplicationName;
+                Properties.Settings.Default.evalue = (alist[0].ScreenTimeCollect / 60000);
             }
         }
         void CalendarButtonClick(object sender, RoutedEventArgs e) 

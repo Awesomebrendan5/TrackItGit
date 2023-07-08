@@ -80,7 +80,6 @@ namespace TrackIt.Properties {
                 this["OpenApplication"] = value;
             }
         }
-       
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -138,6 +137,114 @@ namespace TrackIt.Properties {
             }
             set {
                 this["avalue"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool StartupSet {
+            get {
+                return ((bool)(this["StartupSet"]));
+            }
+            set {
+                this["StartupSet"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string b {
+            get {
+                return ((string)(this["b"]));
+            }
+            set {
+                this["b"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public long bvalue {
+            get {
+                return ((long)(this["bvalue"]));
+            }
+            set {
+                this["bvalue"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string c {
+            get {
+                return ((string)(this["c"]));
+            }
+            set {
+                this["c"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public long cvalue {
+            get {
+                return ((long)(this["cvalue"]));
+            }
+            set {
+                this["cvalue"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string d {
+            get {
+                return ((string)(this["d"]));
+            }
+            set {
+                this["d"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public long dvalue {
+            get {
+                return ((long)(this["dvalue"]));
+            }
+            set {
+                this["dvalue"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string e {
+            get {
+                return ((string)(this["e"]));
+            }
+            set {
+                this["e"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public long evalue {
+            get {
+                return ((long)(this["evalue"]));
+            }
+            set {
+                this["evalue"] = value;
             }
         }
     }

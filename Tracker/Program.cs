@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+using System.Formats.Asn1;
+using Microsoft.Win32;
 
 namespace TheTracker
 {
@@ -21,7 +23,6 @@ namespace TheTracker
         static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
         [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         static extern int GetWindowTextLength(IntPtr hWnd);
-        private readonly Timer t;
 
         public class ScreentimeStats
         {
@@ -31,7 +32,18 @@ namespace TheTracker
         }
 
 
-        public TheTrackerService()
+        static void Main(string[] args)
+        {
+            Startup();
+            ScreenTimeStat();
+        }
+        void Startup()
+        {
+                String Path = AppDomain.CurrentDomain.BaseDirectory;
+                RegistryKey rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+                rkApp.SetValue("TrackIt", Path + "TrackIt.exe");
+        }
+        void ScreenTimeStat()
         {
             bool Fileexists = false;
             IntPtr CurrentWindow = GetForegroundWindow(); //Saves the currently open Window.
@@ -40,6 +52,7 @@ namespace TheTracker
             Stopwatch ScreenTimer = new Stopwatch();
             ScreenTimer.Start();
             String path = "C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Storage6.csv";
+            System.Timers.Timer t;
             if (File.Exists(path))
             {
                 Fileexists = true;
@@ -48,8 +61,11 @@ namespace TheTracker
             {
                 Fileexists = false;
             }
-            t = new Timer(10000) { AutoReset = true };
+            t = new System.Timers.Timer(10000) { AutoReset = true };
             t.Elapsed += OnEventExecution;
+            Startup();
+
+
             void OnEventExecution(object sender, System.Timers.ElapsedEventArgs e)
             {
                 IntPtr NewOpenWindow = GetForegroundWindow(); //Defines NewOpenWindow as the window now open.
@@ -68,16 +84,17 @@ namespace TheTracker
                         {
                             new ScreentimeStats { ApplicationName = ApplicationNamed, ScreenTimeCollect = TimerDuration, DateCollected = DateCollected}
                         };
-                    if (Fileexists == false)
+                    if (Properties.Settings.Default.FileCreated1 == false)
                     {
                         using (var writer = new StreamWriter("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Storage6.csv"))
                         using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
                         {
                             csv.WriteRecords(records);
                         }
-                        Fileexists = true;
+                        Properties.Settings.Default.FileCreated1 = true;
+                        Properties.Settings.Default.Save();
                     }
-                    if (Fileexists == true)
+                    if (Properties.Settings.Default.FileCreated1 == true)
                     {
                         // Append to the file.
                         var config = new CsvConfiguration(CultureInfo.InvariantCulture)
@@ -98,15 +115,7 @@ namespace TheTracker
                 }
             }
         }
-        public void Start()
-        {
-            t.Start();
-        }
-
-        public void stop()
-        {
-            t.Stop();
-        }
+    }
     }
 }
 
