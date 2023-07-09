@@ -10,6 +10,15 @@ using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
 using static TrackIt.ScreentimeMenu;
+using CsvHelper.Configuration;
+using CsvHelper;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Timers;
+using System.Collections;
+using static System.Net.Mime.MediaTypeNames;
+using System.Linq;
 
 namespace TrackIt
 {
@@ -33,10 +42,14 @@ namespace TrackIt
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             WindowState = WindowState.Maximized;
             ScreenScale();
-            ScreenTimeStat();
         }
 
-        public record ScreentimeStats(String ApplicationName, long ScreenTimeCollect, DateTime DateCollected);
+        public class ScreentimeStats
+        {
+            public string ApplicationName { get; set; }
+            public long ScreenTimeCollect { get; set; }
+            public DateTime DateCollected { get; set; }
+        }
         void ScreenScale()
         {
             if (SystemParameters.PrimaryScreenHeight != 1080)
@@ -132,41 +145,6 @@ namespace TrackIt
             }
 
         }
-        void ScreenTimeStat()
-        {
-            IntPtr CurrentWindow = GetForegroundWindow(); //Saves the currently open Window.
-            Int32 OpenApplication = CurrentWindow.ToInt32(); //Saves that window into an array.
-            System.Timers.Timer t = new System.Timers.Timer(TimeSpan.FromSeconds(10).TotalSeconds); //Sets a system timer for 10 seconds.
-            IntPtr OldOpenWindow = CurrentWindow; //Saves the currently open window as OldOpenWindow.
-            Stopwatch ScreenTimer = new Stopwatch();
-            ScreenTimer.Start();
-            t.AutoReset = true; //Sets the timer to Autoreset.
-            t.Elapsed += new System.Timers.ElapsedEventHandler(timer_Elapsed); //Starts a method if timer elapses.
-            t.Start(); //Starts timer.
-
-
-            void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-            {
-                IntPtr NewOpenWindow = GetForegroundWindow(); //Defines NewOpenWindow as the window now open.
-                if (OldOpenWindow == NewOpenWindow) //Checks if the OldOpenWindow is the same as the NewOpenWindow.
-                {
-                }
-                if (OldOpenWindow != NewOpenWindow) //Checks if the OldOpenWindow is different to the NewOpenWindow. 
-                {
-                    int textLength = GetWindowTextLength(CurrentWindow);
-                    StringBuilder ApplicationName = new StringBuilder(textLength + 1);
-                    GetWindowText(CurrentWindow, ApplicationName, ApplicationName.Capacity);
-                    DateTime DateCollected = DateTime.Now;
-                    long TimerDuration = ScreenTimer.ElapsedMilliseconds;
-                    String ApplicationNamed = ApplicationName.ToString();
-                    ScreentimeStats i = new(ApplicationName: ApplicationNamed, ScreenTimeCollect: TimerDuration, DateCollected: DateCollected);
-                    Properties.Settings.Default.ListofRecords.Add(i);
-                    ScreenTimer.Restart();
-                    CurrentWindow = NewOpenWindow;
-                    OldOpenWindow = NewOpenWindow;
-                }
-            }
-        }
         void CalendarButtonClick(object sender, RoutedEventArgs e)
         {
             if (Properties.Settings.Default.MiniWindowOpened == false)
@@ -222,32 +200,26 @@ namespace TrackIt
     namespace ViewModelsSamples.Bars.Basic
     {
         public partial class Test
-        { 
-            public Test()
+        {
+            public Test() 
             {
-                Bob();
-                void Bob()
-                {
-                    Properties.Settings.Default.ListofRecords.Sort((a, b) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
-                    Properties.Settings.Default.Save();
-                }
             }
         }
         public partial class ViewModel : ObservableObject
-        {
-
-            public ISeries[] Series { get; set; } =
+        {     
+            public ISeries[] Series { get; set;} =
             {
 
         new ColumnSeries<double>
         {
-            //Name = (Properties.Settings.Default.ListofRecords[0].ApplicationName),
-            Values = new double[] { 2, 5, 4 }
+            Name = Properties.Settings.Default.a,
+            Values = new double[] { Properties.Settings.Default.avalue }
         },
         new ColumnSeries<double>
         {
-            Name = "Ana",
-            Values = new double[] { 3, 1, 6 }
+            
+            Name = Properties.Settings.Default.b,
+            Values = new double[] { Properties.Settings.Default.bvalue }
         }
     };
 
@@ -255,7 +227,7 @@ namespace TrackIt
             {
         new Axis
         {
-            Labels = new string[] { "Category 1", "Category 2", "Category 3" },
+            Labels = new string[] { Properties.Settings.Default.a, Properties.Settings.Default.b, Properties.Settings.Default.c, Properties.Settings.Default.d, Properties.Settings.Default.e},
             LabelsRotation = 0,
             SeparatorsPaint = new SolidColorPaint(new SKColor(200, 200, 200)),
             SeparatorsAtCenter = false,

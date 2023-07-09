@@ -1,7 +1,29 @@
-﻿using System.Windows;
+﻿using System;
+using System.Threading;
+using System.Timers;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Animation;
+using System.Text;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using CommunityToolkit.Mvvm.ComponentModel;
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
+using SkiaSharp;
+using static TrackIt.ScreentimeMenu;
+using CsvHelper;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using Microsoft.Win32;
+using System.Reflection;
+using System.Drawing.Drawing2D;
+using TheTracker;
 
-namespace TrackIt
+namespace TrackIt   
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -14,9 +36,23 @@ namespace TrackIt
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             WindowState = WindowState.Maximized;
             ScreenScale();
+            Bob();
+            Startup();
         }
 
-        void ScreenScale()
+        void Startup()
+        {
+            if (Properties.Settings.Default.StartupSet == false)
+            {
+                var newForm = new TheTrackerService();
+                newForm.Start();
+                Properties.Settings.Default.StartupSet = true;
+                Properties.Settings.Default.Save();
+            }
+
+        }
+
+            void ScreenScale()
         {
             if (SystemParameters.PrimaryScreenHeight != 1080)
             {
@@ -73,6 +109,27 @@ namespace TrackIt
                 Home.Width = SystemParameters.PrimaryScreenWidth * 0.0802;
                 TrackIt.FontSize = (40 * SystemParameters.PrimaryScreenHeight / 1080);
                 TrackIt.SetValue(Canvas.LeftProperty, 95.0 * (SystemParameters.PrimaryScreenWidth / 1920));
+            }
+        }
+        public void Bob()
+        {
+            using (var reader = new StreamReader("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Storage6.csv"))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                var records = csv.GetRecords<ScreentimeStats>();
+                List<ScreentimeStats> alist = records.ToList();
+                alist.Sort((b, a) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
+                Properties.Settings.Default.a = alist[0].ApplicationName;
+                Properties.Settings.Default.avalue = (alist[0].ScreenTimeCollect/60000);
+                Properties.Settings.Default.Save();
+                Properties.Settings.Default.b = alist[1].ApplicationName;
+                Properties.Settings.Default.bvalue = (alist[0].ScreenTimeCollect / 60000);
+                Properties.Settings.Default.c = alist[1].ApplicationName;
+                Properties.Settings.Default.cvalue = (alist[0].ScreenTimeCollect / 60000);
+                Properties.Settings.Default.d = alist[1].ApplicationName;
+                Properties.Settings.Default.dvalue = (alist[0].ScreenTimeCollect / 60000);
+                Properties.Settings.Default.e = alist[1].ApplicationName;
+                Properties.Settings.Default.evalue = (alist[0].ScreenTimeCollect / 60000);
             }
         }
         void CalendarButtonClick(object sender, RoutedEventArgs e) 
