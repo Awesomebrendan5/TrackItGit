@@ -14,6 +14,7 @@ using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
 using static TrackIt.ScreentimeMenu;
 using CsvHelper;
+using CsvHelper.Configuration;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -21,7 +22,8 @@ using System.Linq;
 using Microsoft.Win32;
 using System.Reflection;
 using System.Drawing.Drawing2D;
-using TheTracker;
+using TrackItMonitor;
+using System.Windows.Media.Media3D;
 
 namespace TrackIt   
 {
@@ -36,7 +38,7 @@ namespace TrackIt
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             WindowState = WindowState.Maximized;
             ScreenScale();
-            Bob();
+            StoreRecords();
             Startup();
         }
 
@@ -44,8 +46,7 @@ namespace TrackIt
         {
             if (Properties.Settings.Default.StartupSet == false)
             {
-                var newForm = new TheTrackerService();
-                newForm.Start();
+                Process.Start("TrackitMonitor.exe");
                 Properties.Settings.Default.StartupSet = true;
                 Properties.Settings.Default.Save();
             }
@@ -111,25 +112,34 @@ namespace TrackIt
                 TrackIt.SetValue(Canvas.LeftProperty, 95.0 * (SystemParameters.PrimaryScreenWidth / 1920));
             }
         }
-        public void Bob()
+        public void StoreRecords()
         {
+            Dictionary<string, ScreentimeStats> mergedRecords = new Dictionary<string, ScreentimeStats>();
             using (var reader = new StreamReader("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Storage6.csv"))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
-                var records = csv.GetRecords<ScreentimeStats>();
+                var records = csv.GetRecords<ScreentimeStats>().ToList(); ;
                 List<ScreentimeStats> alist = records.ToList();
-                alist.Sort((b, a) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
-                Properties.Settings.Default.a = alist[0].ApplicationName;
-                Properties.Settings.Default.avalue = (alist[0].ScreenTimeCollect/60000);
-                Properties.Settings.Default.Save();
-                Properties.Settings.Default.b = alist[1].ApplicationName;
-                Properties.Settings.Default.bvalue = (alist[0].ScreenTimeCollect / 60000);
-                Properties.Settings.Default.c = alist[1].ApplicationName;
-                Properties.Settings.Default.cvalue = (alist[0].ScreenTimeCollect / 60000);
-                Properties.Settings.Default.d = alist[1].ApplicationName;
-                Properties.Settings.Default.dvalue = (alist[0].ScreenTimeCollect / 60000);
-                Properties.Settings.Default.e = alist[1].ApplicationName;
-                Properties.Settings.Default.evalue = (alist[0].ScreenTimeCollect / 60000);
+                foreach (ScreentimeStats record in records)
+                {
+                    // Check if the ApplicationName and DateCollected already exist in the merged records
+                    string key = record.ApplicationName + record.DateCollected.Date.ToString();
+                    if (mergedRecords.ContainsKey(key))
+                    {
+                        // If the key already exists, add the ScreenTimeCollect value to the existing record
+                        mergedRecords[key].ScreenTimeCollect += record.ScreenTimeCollect;
+                    }
+                    else
+                    {
+                        // If the key does not exist, add the record to the merged records
+                        mergedRecords.Add(key, record);
+                    }
+                }
+            }
+            using (var writer = new StreamWriter("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Storage6.csv"))
+            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            {
+                csv.WriteRecords(mergedRecords.Values);
             }
         }
         void CalendarButtonClick(object sender, RoutedEventArgs e) 
@@ -137,6 +147,18 @@ namespace TrackIt
             var newForm = new CalendarMenu();
             newForm.Show();
             this.Close();
+            /*alist.Sort((b, a) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
+Properties.Settings.Default.a = alist[0].ApplicationName;
+Properties.Settings.Default.avalue = (alist[0].ScreenTimeCollect/60000);
+Properties.Settings.Default.Save();
+Properties.Settings.Default.b = alist[1].ApplicationName;
+Properties.Settings.Default.bvalue = (alist[0].ScreenTimeCollect / 60000);
+Properties.Settings.Default.c = alist[1].ApplicationName;
+Properties.Settings.Default.cvalue = (alist[0].ScreenTimeCollect / 60000);
+Properties.Settings.Default.d = alist[1].ApplicationName;
+Properties.Settings.Default.dvalue = (alist[0].ScreenTimeCollect / 60000);
+Properties.Settings.Default.e = alist[1].ApplicationName;
+Properties.Settings.Default.evalue = (alist[0].ScreenTimeCollect / 60000);*/
 
         }
         void ScreenTimeButtonClick(object sender, RoutedEventArgs e) 

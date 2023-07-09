@@ -53,6 +53,7 @@ namespace TheTracker
 
             t = new System.Timers.Timer(10000) { AutoReset = true };
             t.Elapsed += OnEventExecution;
+            Console.ReadLine();
             Startup();
             void Startup()
             {
