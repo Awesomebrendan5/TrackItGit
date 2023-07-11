@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Runtime.InteropServices;
 using CommunityToolkit.Mvvm.ComponentModel;
 using LiveChartsCore;
+using LiveChartsCore.Defaults;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
@@ -19,6 +20,10 @@ using System.Timers;
 using System.Collections;
 using static System.Net.Mime.MediaTypeNames;
 using System.Linq;
+using LiveChartsCore.SkiaSharpView.Painting.Effects;
+using System.Collections.ObjectModel;
+using LiveChartsCore.Kernel.Sketches;
+using System.Xml;
 
 namespace TrackIt
 {
@@ -140,8 +145,26 @@ namespace TrackIt
                 Chart.SetValue(Canvas.TopProperty, 97 * (SystemParameters.PrimaryScreenHeight / 1080));
                 Chart.Height = SystemParameters.PrimaryScreenHeight * 0.3583;
                 Chart.Width = SystemParameters.PrimaryScreenWidth * 0.3042;
-                Chart.SetValue(Canvas.LeftProperty, 416 * (SystemParameters.PrimaryScreenWidth / 1920));
+                Chart.SetValue(Canvas.LeftProperty, 350 * (SystemParameters.PrimaryScreenWidth / 1920));
                 Chart.FontSize = (30 * SystemParameters.PrimaryScreenHeight / 1080);
+
+                Chart1.SetValue(Canvas.TopProperty, 97 * (SystemParameters.PrimaryScreenHeight / 1080));
+                Chart1.Height = SystemParameters.PrimaryScreenHeight * 0.3583;
+                Chart1.Width = SystemParameters.PrimaryScreenWidth * 0.3042;
+                Chart1.SetValue(Canvas.LeftProperty, 1000 * (SystemParameters.PrimaryScreenWidth / 1920));
+                Chart1.FontSize = (30 * SystemParameters.PrimaryScreenHeight / 1080);
+
+                Chart2.SetValue(Canvas.TopProperty, 607 * (SystemParameters.PrimaryScreenHeight / 1080));
+                Chart2.Height = SystemParameters.PrimaryScreenHeight * 0.3583;
+                Chart2.Width = SystemParameters.PrimaryScreenWidth * 0.3042;
+                Chart2.SetValue(Canvas.LeftProperty, 350 * (SystemParameters.PrimaryScreenWidth / 1920));
+                Chart2.FontSize = (30 * SystemParameters.PrimaryScreenHeight / 1080);
+
+                Chart3.SetValue(Canvas.TopProperty, 607 * (SystemParameters.PrimaryScreenHeight / 1080));
+                Chart3.Height = SystemParameters.PrimaryScreenHeight * 0.3583;
+                Chart3.Width = SystemParameters.PrimaryScreenWidth * 0.3042;
+                Chart3.SetValue(Canvas.LeftProperty, 1000 * (SystemParameters.PrimaryScreenWidth / 1920));
+                Chart3.FontSize = (30 * SystemParameters.PrimaryScreenHeight / 1080);
             }
 
         }
@@ -199,42 +222,48 @@ namespace TrackIt
 
     namespace ViewModelsSamples.Bars.Basic
     {
-        public partial class Test
+        public class ViewModel
         {
-            public Test() 
-            {
-            }
-        }
-        public partial class ViewModel : ObservableObject
-        {     
-            public ISeries[] Series { get; set;} =
-            {
+            static string message1 = Properties.Settings.Default.a;
+            static string message2 = Properties.Settings.Default.b;
+            static string message3 = Properties.Settings.Default.c;
+            static string message4 = Properties.Settings.Default.d;
+            static string message5 = Properties.Settings.Default.e;
 
-        new ColumnSeries<double>
-        {
-            Name = Properties.Settings.Default.a,
-            Values = new double[] { Properties.Settings.Default.avalue }
-        },
-        new ColumnSeries<double>
-        {
-            
-            Name = Properties.Settings.Default.b,
-            Values = new double[] { Properties.Settings.Default.bvalue }
-        }
-    };
+            public ISeries[] Series { get; set; }
+                = new ISeries[]
+                {
+                new ColumnSeries<int>
+                {
+                    Values = new[]
+                    {
+                        Convert.ToInt32(Properties.Settings.Default.avalue),
+                        Convert.ToInt32(Properties.Settings.Default.bvalue),
+                        Convert.ToInt32(Properties.Settings.Default.cvalue),
+                        Convert.ToInt32(Properties.Settings.Default.dvalue),
+                        Convert.ToInt32(Properties.Settings.Default.evalue)
+                    },
+                    MaxBarWidth = double.MaxValue
+                }
+                };
 
-            public Axis[] XAxes { get; set; } =
-            {
-        new Axis
-        {
-            Labels = new string[] { Properties.Settings.Default.a, Properties.Settings.Default.b, Properties.Settings.Default.c, Properties.Settings.Default.d, Properties.Settings.Default.e},
-            LabelsRotation = 0,
-            SeparatorsPaint = new SolidColorPaint(new SKColor(200, 200, 200)),
-            SeparatorsAtCenter = false,
-            TicksPaint = new SolidColorPaint(new SKColor(35, 35, 35)),
-            TicksAtCenter = true
-        }
-    };
+            public Axis[] XAxes { get; set; }
+                = new Axis[]
+                {
+                new Axis
+                {
+                    Labels = new string[] { message1, message2, message3, message4, message5 }
+                }
+                };
+
+            public Axis[] YAxes { get; set; }
+                = new Axis[]
+                {
+                new Axis
+                {
+                }
+                };
         }
     }
 }
+

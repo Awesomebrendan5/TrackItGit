@@ -25,16 +25,61 @@
         <Image Name="BlacklistBox" Height="755" Canvas.Left="1608" Source="Images/BlacklistBox.png" Stretch="Fill" Canvas.Top="136" Width="272" HorizontalAlignment="Left" VerticalAlignment="Top" Opacity="100"/>
         <Button Name ="AddApplicationButton" Click="AddApplicationClick" Content="Add Application" Canvas.Left="1628" Canvas.Top="812" Height="52" Width="227" Background="#5FB72E" FontSize="30" FontFamily="Narkism" HorizontalAlignment="Left" VerticalAlignment="Center"></Button>
         <Button Name ="CreateDailyUseLimit" Click="CreateDailyUseClick" Content="Set Daily Usage Limit" Canvas.Left="1592" Canvas.Top="964" Height="60" Width="298" Background="#5FB72E" FontSize="30" FontFamily="Narkism" HorizontalAlignment="Left" VerticalAlignment="Top"></Button>
-        <UserControl Name="Chart" Height="387" Width="584" Canvas.Left="416" Canvas.Top="97">
+        <UserControl Name="Chart" Height="387" Width="584" Canvas.Left="350" Canvas.Top="97">
             <UserControl.DataContext>
                 <vms:ViewModel/>
             </UserControl.DataContext>
             <lvc:CartesianChart
-        Series="{Binding Series}"
-        XAxes="{Binding XAxes}"
-        LegendPosition="Right">
+     Focusable="True"
+     ZoomMode="Both"
+     Height="500"
+     Width="850"
+    Series="{Binding Series}"
+    XAxes="{Binding XAxes}"
+    YAxes="{Binding YAxes}">
             </lvc:CartesianChart>
-
+        </UserControl>
+        <UserControl Name="Chart1" Height="387" Width="584" Canvas.Left="1000" Canvas.Top="97">
+            <UserControl.DataContext>
+                <vms:ViewModel/>
+            </UserControl.DataContext>
+            <lvc:CartesianChart
+     Focusable="True"
+     ZoomMode="Both"
+     Height="500"
+     Width="850"
+    Series="{Binding Series}"
+    XAxes="{Binding XAxes}"
+    YAxes="{Binding YAxes}">
+            </lvc:CartesianChart>
+        </UserControl>
+        <UserControl Name="Chart2" Height="387" Width="584" Canvas.Left="350" Canvas.Top="607">
+            <UserControl.DataContext>
+                <vms:ViewModel/>
+            </UserControl.DataContext>
+            <lvc:CartesianChart
+     Focusable="True"
+     ZoomMode="Both"
+     Height="500"
+     Width="850"
+    Series="{Binding Series}"
+    XAxes="{Binding XAxes}"
+    YAxes="{Binding YAxes}">
+            </lvc:CartesianChart>
+        </UserControl>
+        <UserControl Name="Chart3" Height="387" Width="584" Canvas.Left="1000" Canvas.Top="607">
+            <UserControl.DataContext>
+                <vms:ViewModel/>
+            </UserControl.DataContext>
+            <lvc:CartesianChart
+     Focusable="True"
+     ZoomMode="Both"
+     Height="500"
+     Width="850"
+    Series="{Binding Series}"
+    XAxes="{Binding XAxes}"
+    YAxes="{Binding YAxes}">
+            </lvc:CartesianChart>
         </UserControl>
     </Canvas>
 </Window>
