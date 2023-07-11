@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="E:\documents\Tests\ConsoleApp12\ConsoleApp12.csproj" />
+    <ProjectReference Include="..\ConsoleApp12\TrackItMonitor.csproj" />
   </ItemGroup>
 
   <ItemGroup>
