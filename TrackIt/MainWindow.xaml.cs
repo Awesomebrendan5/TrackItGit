@@ -114,7 +114,7 @@ namespace TrackIt
         public void StoreRecords()
         {
             Dictionary<string, ScreentimeStats> mergedRecords = new Dictionary<string, ScreentimeStats>();
-            using (var reader = new StreamReader("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Storage6.csv"))
+            using (var reader = new StreamReader("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Storage7.csv"))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
                 var records = csv.GetRecords<ScreentimeStats>().ToList(); ;

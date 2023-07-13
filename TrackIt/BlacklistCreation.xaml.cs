@@ -26,6 +26,8 @@ namespace TrackIt
         public BlacklistCreation()
         {
             InitializeComponent();
+            List<string> items = new List<string> { "Item 1", "Item 2", "Item 3" };
+            Applications.ItemsSource = items;
             ListofApplications();
             Screenscale();
         }

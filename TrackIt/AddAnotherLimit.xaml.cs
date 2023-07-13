@@ -1,27 +1,34 @@
 ﻿using CsvHelper.Configuration;
 using CsvHelper;
-using Microsoft.Win32;
+using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Collections.Generic;
-using System;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
-using System.Text.RegularExpressions;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace TrackIt
 {
     /// <summary>
-    /// Interaction logic for DailyApplicationLimitCreator.xaml
+    /// Interaction logic for AddAnotherLimit.xaml
     /// </summary>
-    public partial class DailyApplicationLimitCreator : Window
+    public partial class AddAnotherLimit : Window
     {
         public bool Fileexists;
-        public DailyApplicationLimitCreator()
+        public AddAnotherLimit()
         {
             InitializeComponent();
-            ListofApplications();
             Screenscale();
         }
         public class ScreentimeLimits
@@ -29,10 +36,9 @@ namespace TrackIt
             public string ApplicationName { get; set; }
             public long ScreenTimeLimit { get; set; }
         }
-
         void Screenscale()
         {
-            if (SystemParameters.PrimaryScreenHeight != 1080)
+            /*if (SystemParameters.PrimaryScreenHeight != 1080)
             {
                 Height = SystemParameters.PrimaryScreenHeight * 0.6667;
                 Width = SystemParameters.PrimaryScreenWidth * 0.2229;
@@ -42,24 +48,6 @@ namespace TrackIt
                 UseLimit.Width = SystemParameters.PrimaryScreenWidth * 0.2063;
                 UseLimit.SetValue(Canvas.LeftProperty, 16 * (SystemParameters.PrimaryScreenWidth / 1920));
                 UseLimit.FontSize = (30 * SystemParameters.PrimaryScreenHeight / 1080);
-
-                SelectApplications.SetValue(Canvas.TopProperty, 70 * (SystemParameters.PrimaryScreenHeight / 1080));
-                SelectApplications.Height = SystemParameters.PrimaryScreenHeight * 0.0306;
-                SelectApplications.Width = SystemParameters.PrimaryScreenWidth * 0.0854;
-                SelectApplications.SetValue(Canvas.LeftProperty, 132 * (SystemParameters.PrimaryScreenWidth / 1920));
-                SelectApplications.FontSize = (20 * SystemParameters.PrimaryScreenHeight / 1080);
-
-                Applications.SetValue(Canvas.TopProperty, 108 * (SystemParameters.PrimaryScreenHeight / 1080));
-                Applications.Height = SystemParameters.PrimaryScreenHeight * 0.3;
-                Applications.Width = SystemParameters.PrimaryScreenWidth * 0.1052;
-                Applications.SetValue(Canvas.LeftProperty, 113 * (SystemParameters.PrimaryScreenWidth / 1920));
-                Applications.FontSize = (20 * SystemParameters.PrimaryScreenHeight / 1080);
-
-                SelectEventTime.SetValue(Canvas.TopProperty, 442 * (SystemParameters.PrimaryScreenHeight / 1080));
-                SelectEventTime.Height = SystemParameters.PrimaryScreenHeight * 0.0445;
-                SelectEventTime.Width = SystemParameters.PrimaryScreenWidth * 0.1339;
-                SelectEventTime.SetValue(Canvas.LeftProperty, 78 * (SystemParameters.PrimaryScreenWidth / 1920));
-                SelectEventTime.FontSize = (20 * SystemParameters.PrimaryScreenHeight / 1080);
 
                 Hour.SetValue(Canvas.TopProperty, 493 * (SystemParameters.PrimaryScreenHeight / 1080));
                 Hour.Height = SystemParameters.PrimaryScreenHeight * 0.0204;
@@ -105,13 +93,13 @@ namespace TrackIt
                 Back.Width = SystemParameters.PrimaryScreenWidth * 0.0646;
                 Back.SetValue(Canvas.LeftProperty, -4 * (SystemParameters.PrimaryScreenWidth / 1920));
                 Back.FontSize = (20 * SystemParameters.PrimaryScreenHeight / 1080);
-            }
+            }*/
         }
         private void ConfirmButtonClick(object sender, RoutedEventArgs e)
         {
-            if (Applications.SelectedItem != null)
-                {
-                string ApplicationNamed = Applications.SelectedItem.ToString();
+            if (InputApplication.Text != null)
+            {
+                string ApplicationNamed = InputApplication.Text;
                 long SetLength = Convert.ToInt32(HourBox.Text) * 3600000 + Convert.ToInt32(MinuteBox.Text) * 60000 + Convert.ToInt32(SecondBox.Text) * 1000;
                 String path = "C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Limits.csv";
                 if (File.Exists(path))
@@ -138,8 +126,10 @@ namespace TrackIt
                 }
                 if (Fileexists == true)
                 {
+                    // Append to the file.
                     var config = new CsvConfiguration(CultureInfo.InvariantCulture)
                     {
+                        // Don't write the header again.
                         HasHeaderRecord = false,
                     };
                     using (var stream = File.Open("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Limits.csv", FileMode.Append))
@@ -152,36 +142,16 @@ namespace TrackIt
                 var newForm = new LimitSaved();
                 newForm.Show();
                 this.Close();
+
             }
         }
         private void BackButtonClick(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
-        private void Add_AnotherClick(object sender, RoutedEventArgs e)
-        {
-            var newForm = new AddAnotherLimit();
-            newForm.Show();
-        }
-        void ListofApplications()
-        {
-            string registry_key = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
-            using Microsoft.Win32.RegistryKey key = Registry.LocalMachine.OpenSubKey(registry_key);
-            foreach (string subkey_name in key.GetSubKeyNames())
-            {
-                using RegistryKey subkey = key.OpenSubKey(subkey_name);
-                Applications.Items.Add(subkey.GetValue("DisplayName"));
-            }
-        }
-        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
-        {
-            Properties.Settings.Default.MiniWindowOpened = false;
-            Properties.Settings.Default.Save();
-        }
-
         void HourBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            Regex regexchecker = new Regex("[^0-9]+");
+            Regex regexchecker = new Regex("[^0-9]+"); 
             e.Handled = regexchecker.IsMatch(e.Text);
         }
         private void HourBox_Pasting(object sender, DataObjectPastingEventArgs e)
@@ -208,7 +178,7 @@ namespace TrackIt
 
         private void MinuteBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            Regex regexchecker = new Regex("[^0-9]+");
+            Regex regexchecker = new Regex("[^0-9]+"); 
             e.Handled = regexchecker.IsMatch(e.Text);
         }
 
@@ -236,7 +206,7 @@ namespace TrackIt
 
         private void SecondBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            Regex regexchecker = new Regex("[^0-9]+");
+            Regex regexchecker = new Regex("[^0-9]+"); 
             e.Handled = regexchecker.IsMatch(e.Text);
         }
         private void SecondBox_Pasting(object sender, DataObjectPastingEventArgs e)
