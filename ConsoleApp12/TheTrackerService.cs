@@ -12,6 +12,8 @@ using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.Formats.Asn1;
 using Microsoft.Win32;
+using Microsoft.Toolkit.Uwp.Notifications;
+using System.Windows;
 
 namespace TheTracker
 {
@@ -27,6 +29,7 @@ namespace TheTracker
         static extern int GetWindowTextLength(IntPtr hWnd);
         private readonly System.Timers.Timer t;
         public string NonNullName;
+        bool applicationExistsInList;
 
         public class ScreentimeStats
         {
@@ -39,7 +42,17 @@ namespace TheTracker
             public string ApplicationName { get; set; }
             public long ScreenTimeLimit { get; set; }
         }
-
+        public class BlacklistsRecords
+        {
+            public string BlacklistName { get; set; }
+            public string Applications { get; set; }
+            
+            public string DateRange { get; set; }
+        }
+        public class ApplicationsNotToMonitor
+        {
+            public string Apps { get; set; }
+        }
 
         public TheTrackerService()
         {
@@ -60,6 +73,7 @@ namespace TheTracker
                 Fileexists = false;
             }
             t = new System.Timers.Timer(10000) { AutoReset = true };
+            Start();
             t.Elapsed += OnEventExecution;
             Console.ReadLine();
             void Startup()
@@ -81,91 +95,102 @@ namespace TheTracker
                             DateTime DateCollected = DateTime.Now;
                             long TimerDuration = ScreenTimer.ElapsedMilliseconds;
                             String ApplicationNamed = ApplicationName.ToString();
+                        if (ApplicationNamed.Contains("Google Chrome"))
+                        {
+                            ApplicationNamed = "Google Chrome";
+                            Console.WriteLine("works");
+                        }
+                        if (ApplicationNamed.Contains("Notepad++"))
+                        {
+                            ApplicationNamed = "Notepad++";
+                            Console.WriteLine("works");
+                        }
+                        if (ApplicationNamed.Contains("TrackIt"))
+                        {
+                            ApplicationNamed = "TrackIt";
+                            Console.WriteLine("works");
+                        }
+                        if (ApplicationNamed.Contains("Edge"))
+                        {
+                            ApplicationNamed = "Microsoft Edge";
+                            Console.WriteLine("works");
+                        }
+                        if (ApplicationNamed.Contains("Firefox"))
+                        {
+                            ApplicationNamed = "Firefox";
+                            Console.WriteLine("works");
+                        }
+                        if (ApplicationNamed.Contains("Discord"))
+                        {
+                            ApplicationNamed = "Discord";
+                            Console.WriteLine("works");
+                        }
+                        if (ApplicationNamed.Contains("Opera"))
+                        {
+                            ApplicationNamed = "Opera";
+                            Console.WriteLine("works");
+                        }
+                        if (ApplicationNamed.Contains("OneNote"))
+                        {
+                            ApplicationNamed = "OneNote";
+                            Console.WriteLine("works");
+                        }
+                        if (ApplicationNamed.Contains("Word"))
+                        {
+                            ApplicationNamed = "Microsoft Word";
+                            Console.WriteLine("works");
+                        }
+                        if (ApplicationNamed.Contains("PowerPoint"))
+                        {
+                            ApplicationNamed = "Powerpoint";
+                            Console.WriteLine("works");
+                        }
+                        if (ApplicationNamed.Contains("Excel"))
+                        {
+                            ApplicationNamed = "Excel";
+                            Console.WriteLine("works");
+                        }
+                        if (ApplicationNamed.Contains("Access"))
+                        {
+                            ApplicationNamed = "Access";
+                            Console.WriteLine("works");
+                        }
+                        if (ApplicationNamed.Contains("Outlook"))
+                        {
+                            ApplicationNamed = "Outlook";
+                            Console.WriteLine("works");
+                        }
+                        if (ApplicationNamed.Contains("Adobe XD"))
+                        {
+                            ApplicationNamed = "Adobe XD";
+                            Console.WriteLine("works");
+                        }
+                        if (ApplicationNamed.Contains("Adobe Acrobat"))
+                        {
+                            ApplicationNamed = "Adobe Acrobat";
+                            Console.WriteLine("works");
+                        }
+                        if (ApplicationNamed.Contains("Microsoft Teams"))
+                        {
+                            ApplicationNamed = "Microsoft Teams";
+                            Console.WriteLine("works");
+                        }
+                        Dictionary<string, ApplicationsNotToMonitor> DoNotMonitor = new Dictionary<string, ApplicationsNotToMonitor>();
+                            using (var reader = new StreamReader("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\ApplicationsNotToTrack.csv"))
+                            using (var csv1 = new CsvReader(reader, CultureInfo.InvariantCulture))
+                            {
+                            var records = csv1.GetRecords<ApplicationsNotToMonitor>().ToList();
+                            List<ApplicationsNotToMonitor> alist = records.ToList();
+                            applicationExistsInList = alist.Any(a => a.Apps == ApplicationNamed);
+                            }
+                        if (applicationExistsInList == false)
+                        {
                             if (!ApplicationNamed.Contains("Lock Screen"))
                             {
                                 if (textLength > 0)
                                 {
-                                    if (ApplicationNamed.Contains("Google Chrome"))
-                                    {
-                                        ApplicationNamed = "Google Chrome";
-                                        Console.WriteLine("works");
-                                    }
                                     NonNullName = ApplicationNamed;
-                                    if (ApplicationNamed.Contains("Notepad++"))
-                                    {
-                                        ApplicationNamed = "Notepad++";
-                                        Console.WriteLine("works");
-                                    }
-                                    if (ApplicationNamed.Contains("TrackIt"))
-                                    {
-                                        ApplicationNamed = "TrackIt";
-                                        Console.WriteLine("works");
-                                    }
-                                    if (ApplicationNamed.Contains("Edge"))
-                                    {
-                                        ApplicationNamed = "Microsoft Edge";
-                                        Console.WriteLine("works");
-                                    }
-                                    if (ApplicationNamed.Contains("Firefox"))
-                                    {
-                                        ApplicationNamed = "Firefox";
-                                        Console.WriteLine("works");
-                                    }
-                                    if (ApplicationNamed.Contains("Discord"))
-                                    {
-                                        ApplicationNamed = "Discord";
-                                        Console.WriteLine("works");
-                                    }
-                                    if (ApplicationNamed.Contains("Opera"))
-                                    {
-                                        ApplicationNamed = "Opera";
-                                        Console.WriteLine("works");
-                                    }
-                                    if (ApplicationNamed.Contains("OneNote"))
-                                    {
-                                        ApplicationNamed = "OneNote";
-                                        Console.WriteLine("works");
-                                    }
-                                    if (ApplicationNamed.Contains("Word"))
-                                    {
-                                        ApplicationNamed = "Microsoft Word";
-                                        Console.WriteLine("works");
-                                    }
-                                    if (ApplicationNamed.Contains("PowerPoint"))
-                                    {
-                                        ApplicationNamed = "Powerpoint";
-                                        Console.WriteLine("works");
-                                    }
-                                    if (ApplicationNamed.Contains("Excel"))
-                                    {
-                                        ApplicationNamed = "Excel";
-                                        Console.WriteLine("works");
-                                    }
-                                    if (ApplicationNamed.Contains("Access"))
-                                    {
-                                        ApplicationNamed = "Access";
-                                        Console.WriteLine("works");
-                                    }
-                                    if (ApplicationNamed.Contains("Outlook"))
-                                    {
-                                        ApplicationNamed = "Outlook";
-                                        Console.WriteLine("works");
-                                    }
-                                    if (ApplicationNamed.Contains("Adobe XD"))
-                                    {
-                                        ApplicationNamed = "Adobe XD";
-                                        Console.WriteLine("works");
-                                    }
-                                    if (ApplicationNamed.Contains("Adobe Acrobat"))
-                                    {
-                                        ApplicationNamed = "Adobe Acrobat";
-                                        Console.WriteLine("works");
-                                    }
-                                    if (ApplicationNamed.Contains("Microsoft Teams"))
-                                    {
-                                        ApplicationNamed = "Microsoft Teams";
-                                        Console.WriteLine("works");
-                                    }
+
                                     if (!String.IsNullOrEmpty(ApplicationNamed))
                                     {
                                         var records = new List<ScreentimeStats>
@@ -203,86 +228,6 @@ namespace TheTracker
                                 }
                                 if (textLength <= 0 & !String.IsNullOrEmpty(NonNullName))
                                 {
-                                    if (NonNullName.Contains("Google Chrome"))
-                                    {
-                                        NonNullName = "Google Chrome";
-                                        Console.WriteLine("works");
-                                    }
-                                    if (NonNullName.Contains("Notepad++"))
-                                    {
-                                        NonNullName = "Notepad++";
-                                        Console.WriteLine("works");
-                                    }
-                                    if (NonNullName.Contains("TrackIt"))
-                                    {
-                                        NonNullName = "TrackIt";
-                                        Console.WriteLine("works");
-                                    }
-                                    if (NonNullName.Contains("Edge"))
-                                    {
-                                        NonNullName = "Microsoft Edge";
-                                        Console.WriteLine("works");
-                                    }
-                                    if (NonNullName.Contains("Firefox"))
-                                    {
-                                        NonNullName = "Firefox";
-                                        Console.WriteLine("works");
-                                    }
-                                    if (NonNullName.Contains("Discord"))
-                                    {
-                                        NonNullName = "Discord";
-                                        Console.WriteLine("works");
-                                    }
-                                    if (NonNullName.Contains("Opera"))
-                                    {
-                                        NonNullName = "Opera";
-                                        Console.WriteLine("works");
-                                    }
-                                    if (NonNullName.Contains("OneNote"))
-                                    {
-                                        NonNullName = "OneNote";
-                                        Console.WriteLine("works");
-                                    }
-                                    if (NonNullName.Contains("Word"))
-                                    {
-                                        NonNullName = "Microsoft Word";
-                                        Console.WriteLine("works");
-                                    }
-                                    if (NonNullName.Contains("PowerPoint"))
-                                    {
-                                        NonNullName = "Powerpoint";
-                                        Console.WriteLine("works");
-                                    }
-                                    if (NonNullName.Contains("Excel"))
-                                    {
-                                        NonNullName = "Excel";
-                                        Console.WriteLine("works");
-                                    }
-                                    if (NonNullName.Contains("Access"))
-                                    {
-                                        NonNullName = "Access";
-                                        Console.WriteLine("works");
-                                    }
-                                    if (NonNullName.Contains("Outlook"))
-                                    {
-                                        NonNullName = "Outlook";
-                                        Console.WriteLine("works");
-                                    }
-                                    if (NonNullName.Contains("Adobe XD"))
-                                    {
-                                        NonNullName = "Adobe XD";
-                                        Console.WriteLine("works");
-                                    }
-                                    if (NonNullName.Contains("Adobe Acrobat"))
-                                    {
-                                        NonNullName = "Adobe Acrobat";
-                                        Console.WriteLine("works");
-                                    }
-                                    if (NonNullName.Contains("Microsoft Teams"))
-                                    {
-                                        NonNullName = "Microsoft Teams";
-                                        Console.WriteLine("works");
-                                    }
                                     var records = new List<ScreentimeStats>
                                     {
                                     new ScreentimeStats { ApplicationName = NonNullName, ScreenTimeCollect = TimerDuration, DateCollected = DateCollected}
@@ -313,13 +258,14 @@ namespace TheTracker
                                     CurrentWindow = NewOpenWindow;
                                     OldOpenWindow = NewOpenWindow;
                                 }
-                            }                     
+                            }
+                        }
                     }
                     Dictionary<string, ScreentimeStats> mergedRecords = new Dictionary<string, ScreentimeStats>();
                     using (var reader = new StreamReader("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Storage7.csv"))
                     using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                     {
-                        var records = csv.GetRecords<ScreentimeStats>().ToList(); ;
+                        var records = csv.GetRecords<ScreentimeStats>().ToList();
                         List<ScreentimeStats> alist = records.ToList();
                         foreach (ScreentimeStats record in records)
                         {
@@ -385,17 +331,72 @@ namespace TheTracker
                             String ApplicationNamed = ApplicationNames.ToString();
                             if (screenTime > screenTimeLimit & ApplicationNamed == applicationName)
                             {
-                                Console.WriteLine($"Screen time limit exceeded for {applicationName}.");
                                 const int WM_CLOSE = 0x10;
                                 SendMessage(CurrentWindow1, WM_CLOSE, 0, 0);
-                                Process.Start("TimeLimitExceeded.exe");
+                                new ToastContentBuilder()
+                                .AddArgument("action", "viewConversation")
+                                .AddArgument("conversationId", 9813)
+                                .AddText($"Screen time limit exceeded for {applicationName}.")
+                                .AddText("Wait until tomorrow or turn off screentime limits.")
+                                .Show();
+                            }
+                            if (screenTimeLimit - screenTime < 600000 & screenTimeLimit - screenTime > 590001 & ApplicationNamed == applicationName)
+                            {
+                                new ToastContentBuilder()
+                                .AddArgument("action", "viewConversation")
+                                .AddArgument("conversationId", 9813)
+                                .AddText($"Within 10 minutes of limit for {applicationName}.")
+                                .AddText("Wrap up what you are doing.")
+                                .Show();
+                            }
+                        }
+                    }
+                    var currentDate1 = DateTime.Now;
+                    var BlacklistRecords = new Dictionary<string, long>();
+                    using (var reader = new StreamReader("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\BlacklistsCombined.csv"))
+                    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                    {
+                        var Blacklists = csv.GetRecords<BlacklistsRecords>();
+                        foreach (var blacklist in Blacklists)
+                        {
+                            var dateRange = blacklist.DateRange.Split('-');
+                            if (dateRange.Length != 2)
+                            {
+                                continue;
+                            }
+
+                            var startTime = DateTime.Parse(dateRange[0].Trim());
+                            var endTime = DateTime.Parse(dateRange[1].Trim());
+
+                            if (currentDate1 >= startTime && currentDate1 <= endTime)
+                            {
+                                var lockedApplications = blacklist.Applications.Split(',');
+                                IntPtr CurrentWindow2 = GetForegroundWindow();
+                                int textLength = GetWindowTextLength(CurrentWindow2);
+                                StringBuilder ApplicationNames = new StringBuilder(textLength + 1);
+                                GetWindowText(CurrentWindow2, ApplicationNames, ApplicationNames.Capacity);
+                                String ApplicationNamed = ApplicationNames.ToString();
+                                foreach (var application in lockedApplications)
+                                {
+                                    if (Convert.ToString(application) == ApplicationNamed)
+                                    {
+                                        const int WM_CLOSE = 0x10;
+                                        SendMessage(CurrentWindow2, WM_CLOSE, 0, 0);
+                                        new ToastContentBuilder()
+                                        .AddArgument("action", "viewConversation") 
+                                        .AddArgument("conversationId", 9813)
+                                        .AddText($"{application} is on the " + blacklist.BlacklistName + " blacklist")
+                                        .AddText("please wait until " + endTime.TimeOfDay + ".")
+                                        .Show();
+                                    }
+                                }
                             }
                         }
                     }
                 }
-                catch
+                catch(Exception ex)
                 {
-                    Console.WriteLine("An exception occurred");
+                    Console.WriteLine("An exception occurred" + ex.Message);
                 }
             }
         }

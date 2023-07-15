@@ -1,4 +1,9 @@
-﻿using System.Windows;
+﻿using CsvHelper;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace TrackIt
@@ -8,11 +13,21 @@ namespace TrackIt
     /// </summary>
     public partial class Scheduler : Window
     {
+        bool Fileexists;
+        public class NewBlacklists
+        {
+            public string EventName { get; set; }
+            public string BlacklistName { get; set; }
+            public string Applications { get; set; }
+
+            public string DateRange { get; set; }
+        }
         public Scheduler()
         {
             InitializeComponent();
             DateTitle();
             Screenscale();
+            ListofEvents();
         }
         void Screenscale()
         {
@@ -70,6 +85,46 @@ namespace TrackIt
         {
             Properties.Settings.Default.MiniWindowOpened = false;
             Properties.Settings.Default.Save();
+        }
+        void ListofEvents()
+        {
+            string filePath = "C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\BlacklistsCombined.csv";
+            if (File.Exists(filePath))
+            {
+                Fileexists = true;
+            }
+            else
+            {
+                Fileexists = false;
+            }
+            if (Fileexists == true)
+            {
+                var BlacklistRecords = new Dictionary<string, long>();
+                using (var reader = new StreamReader("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\BlacklistsCombined.csv"))
+                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                {
+                    var Blacklists = csv.GetRecords<NewBlacklists>();
+                    foreach (var blacklist in Blacklists)
+                    {
+                        var dateRange = blacklist.DateRange.Split('-');
+                        if (dateRange.Length != 2)
+                        {
+                            continue;
+                        }
+
+                        var startTime = DateTime.Parse(dateRange[0].Trim());
+                        var endTime = DateTime.Parse(dateRange[1].Trim());
+                        foreach (var events in Blacklists)
+                        {
+                            if (startTime.Date == Properties.Settings.Default.DatePicked)
+                            {
+                                var name = blacklist.EventName;
+                                EventList.Items.Add(name + " " + startTime.TimeOfDay + " - " + endTime.TimeOfDay);
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

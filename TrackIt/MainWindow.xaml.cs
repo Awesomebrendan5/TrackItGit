@@ -24,13 +24,23 @@ using System.Reflection;
 using System.Drawing.Drawing2D;
 using System.Windows.Media.Media3D;
 
-namespace TrackIt   
+namespace TrackIt
 {
-    /// <summary>
+    
+    // <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+        bool Fileexists;
+        public class NewBlacklists
+        {
+            public string EventName { get; set; }
+            public string BlacklistName { get; set; }
+            public string Applications { get; set; }
+
+            public string DateRange { get; set; }
+        }
         public MainWindow()
         {
             InitializeComponent();
@@ -39,20 +49,21 @@ namespace TrackIt
             ScreenScale();
             StoreRecords();
             Startup();
+            ListofEvents();
         }
 
         void Startup()
         {
-            if (Properties.Settings.Default.StartupSet == false)
+            /*if (Properties.Settings.Default.StartupSet == false)
             {
-                Process.Start("ConsoleApp12.exe");
+                Process.Start("TrackItMonitor.exe");
                 Properties.Settings.Default.StartupSet = true;
                 Properties.Settings.Default.Save();
-            }
+            }*/
 
         }
 
-            void ScreenScale()
+        void ScreenScale()
         {
             if (SystemParameters.PrimaryScreenHeight != 1080)
             {
@@ -61,8 +72,8 @@ namespace TrackIt
                 Line.SetValue(Canvas.LeftProperty, 324.0 * (SystemParameters.PrimaryScreenWidth / 1920));
 
                 CalendarIcon.SetValue(Canvas.TopProperty, 182 * (SystemParameters.PrimaryScreenHeight / 1080));
-                CalendarIcon.Height = SystemParameters.PrimaryScreenHeight * (CalendarIcon.Height/1080);
-                CalendarIcon.Width = SystemParameters.PrimaryScreenWidth * (CalendarIcon.Width/1920);
+                CalendarIcon.Height = SystemParameters.PrimaryScreenHeight * (CalendarIcon.Height / 1080);
+                CalendarIcon.Width = SystemParameters.PrimaryScreenWidth * (CalendarIcon.Width / 1920);
                 CalendarIcon.SetValue(Canvas.LeftProperty, 5.0 * (SystemParameters.PrimaryScreenWidth / 1920));
 
                 Calendar.SetValue(Canvas.TopProperty, 207.0 * (SystemParameters.PrimaryScreenHeight / 1080));
@@ -135,12 +146,12 @@ namespace TrackIt
                     }
                 }
             }
-            using (var writer = new StreamWriter("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Storage6.csv"))
+            using (var writer = new StreamWriter("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Storage7.csv"))
             using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
             {
                 csv.WriteRecords(mergedRecords.Values);
             }
-            using (var reader = new StreamReader("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Storage6.csv"))
+            using (var reader = new StreamReader("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Storage7.csv"))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
                 var records = csv.GetRecords<ScreentimeStats>().ToList();
@@ -161,7 +172,7 @@ namespace TrackIt
                 Properties.Settings.Default.Save();
             }
         }
-        void CalendarButtonClick(object sender, RoutedEventArgs e) 
+        void CalendarButtonClick(object sender, RoutedEventArgs e)
         {
             string messageBoxText = Properties.Settings.Default.e;
             string caption = "Word Processor";
@@ -175,7 +186,7 @@ namespace TrackIt
             this.Close();
 
         }
-        void ScreenTimeButtonClick(object sender, RoutedEventArgs e) 
+        void ScreenTimeButtonClick(object sender, RoutedEventArgs e)
         {
             var newForm = new ScreentimeMenu();
             newForm.Show();
@@ -191,6 +202,46 @@ namespace TrackIt
         {
 
         }
-    }
+        void ListofEvents()
+        {
+            string filePath = "C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\BlacklistsCombined.csv";
+            if (File.Exists(filePath))
+            {
+                Fileexists = true;
+            }
+            else
+            {
+                Fileexists = false;
+            }
+            if (Fileexists == true)
+            {
+                var BlacklistRecords = new Dictionary<string, long>();
+                using (var reader = new StreamReader("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\BlacklistsCombined.csv"))
+                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                {
+                    var Blacklists = csv.GetRecords<NewBlacklists>();
+                    foreach (var blacklist in Blacklists)
+                    {
+                        var dateRange = blacklist.DateRange.Split('-');
+                        if (dateRange.Length != 2)
+                        {
+                            continue;
+                        }
 
+                        var startTime = DateTime.Parse(dateRange[0].Trim());
+                        var endTime = DateTime.Parse(dateRange[1].Trim());
+                        foreach (var events in Blacklists)
+                        {
+                            if (startTime.Date == Properties.Settings.Default.DatePicked)
+                            {
+                                var name = blacklist.EventName;
+                                EventList.Items.Add(name + " " + startTime.TimeOfDay + " - " + endTime.TimeOfDay);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    }
 }

@@ -7,19 +7,27 @@
         mc:Ignorable="d"
         WindowState="Maximized"
         WindowStyle="None"
-        Height="{Binding SystemParameters.PrimaryScreenHeight}"
-        Width="{Binding SystemParameters.PrimaryScreenHeight}"
+        Height="1080"
+        Width="1920"
         Title="MainWindow" >
     <Canvas Name="MainMenu" Focusable="true" Background="#75A0D8">
-        <Button Name="Calendar" Click="CalendarButtonClick" Height="54" Width ="170" Canvas.Top="207" RenderTransformOrigin="0.37,-2.518" Background="Transparent" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Narkisim" FontSize="40" Content="Calendar" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="95"/>
-        <Image Name="Line" Height="1080" Source="/Images/Line.png" Stretch="Fill" Width="6" HorizontalAlignment="Left" Canvas.Left="324" VerticalAlignment="Center"/>
-        <Image Name ="CalendarIcon" Height="104" Source="/Images/Calendar.png" Stretch="Fill" Width="85" Canvas.Top="182" Canvas.Left="5" HorizontalAlignment="Left" VerticalAlignment="Center" RenderTransformOrigin="0.306,0.539"/>
-        <Button Name="ScreenTime" Click="ScreenTimeButtonClick" Height="54" Width ="224" Canvas.Top="404" RenderTransformOrigin="0.37,-2.518" Background="Transparent" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Narkisim" FontSize="40" Content="Screentime" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="93"/>
-        <Image Name="SccreenTimeIcon"  Height="80" Source="/Images/Screentime.png" Stretch="Fill" Width="80" Canvas.Left="10" Canvas.Top="404" HorizontalAlignment="Center" VerticalAlignment="Top" RenderTransformOrigin="0.494,0.644"/>
-        <Image Name ="PasswordIcon" Height="88" Source="/Images/Password.png" Stretch="Fill" Canvas.Top="621" Width="75" Canvas.Left="12" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <Button Name="Password" Click="PasswordButtonClick" Height="54" Width ="192" Canvas.Top="646" RenderTransformOrigin="0.37,-2.518" Background="Transparent" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Narkisim" FontSize="40" Content="Password" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="93"/>
-        <Image Name ="HomeIcon" Height="76" Source="/Images/Home.png" Stretch="Fill" Canvas.Top="848" Width="76" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="12"/>
-        <Button Name="Home" Click="HomeButtonClick" Height="54" Width ="120" Canvas.Top="864" RenderTransformOrigin="0.37,-2.518" Background="Transparent" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Narkisim" FontSize="40" Content="Home" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="93"/>
-        <TextBlock Name="TrackIt" Height="48" Width="154" Text="TrackIt" FontFamily="Narkisim" FontSize="40" Foreground="#FF0000" Canvas.Left="95" HorizontalAlignment="Left" VerticalAlignment="Center" />
+        <ItemsControl x:Name="EventList" Height="712" Width="401" Background="#E9DBDB" FontFamily="Calibri" FontSize="20" Foreground="Black" Canvas.Left="1485" Canvas.Top="268" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel HorizontalAlignment="Center" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+        <Button x:Name="Calendar" Click="CalendarButtonClick" Height="54" Width ="170" Canvas.Top="207" RenderTransformOrigin="0.37,-2.518" Background="Transparent" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Narkisim" FontSize="40" Content="Calendar" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="95"/>
+        <Image x:Name="Line" Height="1080" Source="/Images/Line.png" Stretch="Fill" Width="6" HorizontalAlignment="Left" Canvas.Left="324" VerticalAlignment="Center"/>
+        <Image x:Name ="CalendarIcon" Height="104" Source="/Images/Calendar.png" Stretch="Fill" Width="85" Canvas.Top="182" Canvas.Left="5" HorizontalAlignment="Left" VerticalAlignment="Center" RenderTransformOrigin="0.306,0.539"/>
+        <Button x:Name="ScreenTime" Click="ScreenTimeButtonClick" Height="54" Width ="224" Canvas.Top="404" RenderTransformOrigin="0.37,-2.518" Background="Transparent" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Narkisim" FontSize="40" Content="Screentime" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="93"/>
+        <Image x:Name="SccreenTimeIcon"  Height="80" Source="/Images/Screentime.png" Stretch="Fill" Width="80" Canvas.Left="10" Canvas.Top="404" HorizontalAlignment="Center" VerticalAlignment="Top" RenderTransformOrigin="0.494,0.644"/>
+        <Image x:Name ="PasswordIcon" Height="88" Source="/Images/Password.png" Stretch="Fill" Canvas.Top="621" Width="75" Canvas.Left="12" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Button x:Name="Password" Click="PasswordButtonClick" Height="54" Width ="192" Canvas.Top="646" RenderTransformOrigin="0.37,-2.518" Background="Transparent" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Narkisim" FontSize="40" Content="Password" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="93"/>
+        <Image x:Name ="HomeIcon" Height="76" Source="/Images/Home.png" Stretch="Fill" Canvas.Top="848" Width="76" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="12"/>
+        <Button x:Name="Home" Click="HomeButtonClick" Height="54" Width ="120" Canvas.Top="864" RenderTransformOrigin="0.37,-2.518" Background="Transparent" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Narkisim" FontSize="40" Content="Home" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="93"/>
+        <Label x:Name="UpcomingEvents" FontSize="40" Content="Upcoming Events" Canvas.Left="1525" Canvas.Top="182" Height="77" Width="321" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <TextBlock x:Name="TrackIt" Height="48" Width="154" Text="TrackIt" FontFamily="Narkisim" FontSize="40" Foreground="#FF0000" Canvas.Left="95" HorizontalAlignment="Left" VerticalAlignment="Center" />
     </Canvas>
 </Window>

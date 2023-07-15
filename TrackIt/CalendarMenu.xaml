@@ -9,20 +9,24 @@
         WindowStyle="None"
         Title="TrackIt" Height="1080" Width="1920">
     <Canvas Name="CalendarScreen" Focusable="true" Background="#75A0D8">
-        <Button Name="Calendar" Click="CalendarButtonClick" Height="54" Width ="170" Canvas.Top="207" RenderTransformOrigin="0.37,-2.518" Background="Transparent" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Narkisim" FontSize="40" Content="Calendar" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="95"/>
-        <Image Name="Line" Height="1080" Source="/Images/Line.png" Stretch="Fill" Width="6" HorizontalAlignment="Left" Canvas.Left="324" VerticalAlignment="Center"/>
-        <Image Name ="CalendarIcon" Height="104" Source="/Images/Calendar.png" Stretch="Fill" Width="85" Canvas.Top="182" Canvas.Left="5" HorizontalAlignment="Left" VerticalAlignment="Center" RenderTransformOrigin="0.306,0.539"/>
-        <Button Name="ScreenTime" Click="ScreenTimeButtonClick" Height="54" Width ="224" Canvas.Top="404" RenderTransformOrigin="0.37,-2.518" Background="Transparent" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Narkisim" FontSize="40" Content="Screentime" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="93"/>
-        <Image Name="SccreenTimeIcon"  Height="80" Source="/Images/Screentime.png" Stretch="Fill" Width="80" Canvas.Left="10" Canvas.Top="404" HorizontalAlignment="Center" VerticalAlignment="Top" RenderTransformOrigin="0.494,0.644"/>
-        <Image Name ="PasswordIcon" Height="88" Source="/Images/Password.png" Stretch="Fill" Canvas.Top="621" Width="75" Canvas.Left="12" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <Button Name="Password" Click="PasswordButtonClick" Height="54" Width ="192" Canvas.Top="646" RenderTransformOrigin="0.37,-2.518" Background="Transparent" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Narkisim" FontSize="40" Content="Password" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="93"/>
-        <Image Name ="HomeIcon" Height="76" Source="/Images/Home.png" Stretch="Fill" Canvas.Top="848" Width="76" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="12"/>
-        <Button Name="Home" Click="HomeButtonClick" Height="54" Width ="120" Canvas.Top="864" RenderTransformOrigin="0.37,-2.518" Background="Transparent" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Narkisim" FontSize="40" Content="Home" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="93"/>
-        <TextBlock Name="TrackIt" Height="48" Width="154" Text="TrackIt" FontFamily="Narkisim" FontSize="40" Foreground="#FF0000" Canvas.Left="95" HorizontalAlignment="Left" VerticalAlignment="Center" />
-        <TextBlock Name = "CalendarLabel" Height="61" Width="204" Text="Calendar" FontFamily="Narkisim" Canvas.Left="771" FontSize="50" Canvas.Top="79" HorizontalAlignment="Center" VerticalAlignment="Top" ></TextBlock>
-        <Viewbox Name="CalendarContainer" Height="895" Width="1141" Canvas.Left="396" Canvas.Top="145" HorizontalAlignment="Left" VerticalAlignment="Center" >
-            
-            <Calendar Name ="DateSelector" Background="#FFE9DBDB" SelectedDatesChanged="Calendar_SelectedDatesChanged" BorderThickness="0,0,0,0">
+        <Image x:Name="BlacklistBox" Height="755" Canvas.Left="1603" Source="Images/BlacklistBox.png" Stretch="Fill" Canvas.Top="235" Width="272" HorizontalAlignment="Left" VerticalAlignment="Center" Opacity="100"/>
+        <Button x:Name="Calendar" Click="CalendarButtonClick" Height="54" Width ="170" Canvas.Top="207" RenderTransformOrigin="0.37,-2.518" Background="Transparent" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Narkisim" FontSize="40" Content="Calendar" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="95"/>
+        <Image x:Name="Line" Height="1080" Source="/Images/Line.png" Stretch="Fill" Width="6" HorizontalAlignment="Left" Canvas.Left="324" VerticalAlignment="Center"/>
+        <Image x:Name ="CalendarIcon" Height="104" Source="/Images/Calendar.png" Stretch="Fill" Width="85" Canvas.Top="182" Canvas.Left="5" HorizontalAlignment="Left" VerticalAlignment="Center" RenderTransformOrigin="0.306,0.539"/>
+        <Button x:Name="ScreenTime" Click="ScreenTimeButtonClick" Height="54" Width ="224" Canvas.Top="404" RenderTransformOrigin="0.37,-2.518" Background="Transparent" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Narkisim" FontSize="40" Content="Screentime" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="93"/>
+        <Image x:Name="SccreenTimeIcon"  Height="80" Source="/Images/Screentime.png" Stretch="Fill" Width="80" Canvas.Left="10" Canvas.Top="404" HorizontalAlignment="Center" VerticalAlignment="Top" RenderTransformOrigin="0.494,0.644"/>
+        <Image x:Name ="PasswordIcon" Height="88" Source="/Images/Password.png" Stretch="Fill" Canvas.Top="621" Width="75" Canvas.Left="12" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Button x:Name="Password" Click="PasswordButtonClick" Height="54" Width ="192" Canvas.Top="646" RenderTransformOrigin="0.37,-2.518" Background="Transparent" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Narkisim" FontSize="40" Content="Password" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="93"/>
+        <Image x:Name ="HomeIcon" Height="76" Source="/Images/Home.png" Stretch="Fill" Canvas.Top="848" Width="76" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="12"/>
+        <Button x:Name="Home" Click="HomeButtonClick" Height="54" Width ="120" Canvas.Top="864" RenderTransformOrigin="0.37,-2.518" Background="Transparent" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Narkisim" FontSize="40" Content="Home" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="93"/>
+        <TextBlock x:Name="TrackIt" Height="48" Width="154" Text="TrackIt" FontFamily="Narkisim" FontSize="40" Foreground="#FF0000" Canvas.Left="95" HorizontalAlignment="Left" VerticalAlignment="Center" />
+
+
+        <TextBlock x:Name = "CalendarLabel" Height="61" Width="204" Text="Calendar" FontFamily="Narkisim" Canvas.Left="771" FontSize="50" Canvas.Top="79" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        <ItemsControl x:Name="BlacklistList" Height="572" Width="228" Background="#E9DBDB" FontFamily="Calibri" FontSize="20" Foreground="Black" Canvas.Left="1624" Canvas.Top="306" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible">
+        </ItemsControl>
+        <Viewbox x:Name="CalendarContainer" Height="895" Width="1141" Canvas.Left="396" Canvas.Top="145" HorizontalAlignment="Left" VerticalAlignment="Center" >
+            <Calendar x:Name ="DateSelector" Background="#FFE9DBDB" SelectedDatesChanged="Calendar_SelectedDatesChanged" BorderThickness="0,0,0,0">
                 <Calendar.Foreground>
                     <SolidColorBrush Color="#FFE9DBDB" Opacity="0"/>
                 </Calendar.Foreground>
@@ -36,8 +40,7 @@
                 </Calendar.BorderBrush>
             </Calendar>
         </Viewbox>
-        <Image Name="BlacklistBox" Height="755" Canvas.Left="1603" Source="Images/BlacklistBox.png" Stretch="Fill" Canvas.Top="235" Width="272" HorizontalAlignment="Left" VerticalAlignment="Center" Opacity="100"/>
-        <Label Name ="BlacklistLabel" Height="61" Width="204" Content="Blacklist" FontFamily="Narkisim" Canvas.Left="1636" FontSize="50" Canvas.Top="157" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <Button Name ="CreateBlacklist" Click="CreateBlacklistClick" Content="Create New" Canvas.Left="1644" Canvas.Top="891" Height="52" Width="190" Background="#5FB72E" FontSize="35" FontFamily="Narkism"></Button>
+        <Label x:Name ="BlacklistLabel" Height="61" Width="204" Content="Blacklist" FontFamily="Narkisim" Canvas.Left="1636" FontSize="50" Canvas.Top="157" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Button x:Name ="CreateBlacklist" Click="CreateBlacklistClick" Content="Create New" Canvas.Left="1644" Canvas.Top="891" Height="52" Width="190" Background="#5FB72E" FontSize="35" FontFamily="Narkism"/>
     </Canvas>
 </Window> 

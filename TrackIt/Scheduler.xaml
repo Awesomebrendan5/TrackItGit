@@ -13,5 +13,12 @@
         <TextBlock TextAlignment ="Center" x:Name="Schedule" Height="48" Width="130" Text="- Schedule" FontFamily="Calibri" FontSize="30" Foreground="Black" Canvas.Left="214" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Top="10"/>
         <Button x:Name="CreateNewEvent" Click="NewEventClick" Height="43" Width ="124" Canvas.Top="418" Background="#5FB72E" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Calibri" FontSize="20" Content="Create New" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="155"/>
         <Button x:Name="Back" Click="BackButtonClick" Height="43" Width ="124" Canvas.Top="651" Background="#E14026" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Calibri" FontSize="20" Content="Back" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="-4"/>
+        <ItemsControl x:Name="EventList" Height="263" Width="208" Background="#E9DBDB" FontFamily="Calibri" FontSize="20" Foreground="Black" Canvas.Left="110" Canvas.Top="122" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel HorizontalAlignment="Center" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
     </Canvas>
 </Window>

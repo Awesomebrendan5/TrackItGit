@@ -9,6 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Drawing.Drawing2D;
+using System.Windows.Shapes;
+using System.Globalization;
+using static TrackIt.BlacklistCreation;
 
 namespace TrackIt
 {
@@ -17,6 +20,8 @@ namespace TrackIt
     /// </summary>
     public partial class BlacklistCreation : Window
     {
+        public bool Fileexists;
+        private List<string> ListofApps;
         [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         static extern IntPtr GetForegroundWindow();
         [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
@@ -26,15 +31,14 @@ namespace TrackIt
         public BlacklistCreation()
         {
             InitializeComponent();
-            List<string> items = new List<string> { "Item 1", "Item 2", "Item 3" };
-            Applications.ItemsSource = items;
+            ListofApps = new List<string>();
             ListofApplications();
             Screenscale();
         }
         public class Blacklists
         {
             public string BlacklistName { get; set; }
-            public string ApplicationName { get; set; }
+            public string Applications { get; set; }
         }
 
         void Screenscale()
@@ -100,19 +104,42 @@ namespace TrackIt
                 if (Applications.SelectedItem != null && EnterBlacklistName.Text != null)
                 {
                     string BlacklistName = EnterBlacklistName.Text;
-                    string filePath = "C:\\Users\\brend\\source\\repos\\TrackIt\\"+BlacklistName + ".txt";
-                    string messageBoxText = filePath;
-                    string caption = "Word Processor";
-                    MessageBoxButton button = MessageBoxButton.YesNoCancel;
-                    MessageBoxImage icon = MessageBoxImage.Warning;
-                    MessageBoxResult result;
-
-                    result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
-                    using (StreamWriter writer = new StreamWriter(filePath))
+                    ListofApps.Clear();
+                    string filePath = "C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Blacklists.csv";
+                    if (File.Exists(filePath))
                     {
-                        foreach (var item in Applications.SelectedItems)
+                        Fileexists = true;
+                    }
+                    else
+                    {
+                        Fileexists = false;
+                    }
+                    foreach (var item in Applications.SelectedItems)
+                    {
+                        ListofApps.Add(item.ToString());
+                    }
+                    var records = new List<Blacklists>();
+                    records.Add(new Blacklists { BlacklistName = BlacklistName, Applications = string.Join(",", ListofApps) });
+                    if (Fileexists == false)
+                    {
+                        using (var writer = new StreamWriter("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Blacklists.csv"))
+                        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
                         {
-                            writer.WriteLine(item.ToString());
+                            csv.WriteRecords(records);
+                        }
+                        Fileexists = true;
+                    }
+                    if (Fileexists == true)
+                    {
+                        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+                        {
+                            HasHeaderRecord = false,
+                        };
+                        using (var stream = File.Open("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Blacklists.csv", FileMode.Append))
+                        using (var writer = new StreamWriter(stream))
+                        using (var csv = new CsvWriter(writer, config))
+                        {
+                            csv.WriteRecords(records);
                         }
                     }
                 }

@@ -1,5 +1,14 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System;
+using CsvHelper;
+using LiveChartsCore;
+using static TrackIt.BlacklistCreation;
+using System.Globalization;
+using System.IO;
+using CsvHelper.Configuration;
+using CsvHelper;
+using System.Formats.Asn1;
 
 namespace TrackIt
 {
@@ -8,11 +17,25 @@ namespace TrackIt
     /// </summary>
     public partial class DateCreator : Window
     {
+        public bool Fileexists;
         public DateCreator()
         {
             InitializeComponent();
             DateTitle();
             Screenscale();
+        }
+        public class Blacklists
+        {
+            public string BlacklistName { get; set; }
+            public string Applications { get; set; }
+        }
+        public class NewBlacklists
+        {
+            public string EventName { get; set; }
+            public string BlacklistName { get; set; }
+            public string Applications { get; set; }
+            
+            public string DateRange { get; set; }
         }
         void Screenscale()
         {
@@ -96,7 +119,77 @@ namespace TrackIt
         }
         private void ConfirmButtonClick(object sender, RoutedEventArgs e)
         {
+            int hour, minute, second, hour1, minute1, second1;
+            string filePath = "C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\BlacklistsCombined.csv";
+            if (int.TryParse(HourBox.Text, out hour) && int.TryParse(MinuteBox.Text, out minute) && int.TryParse(SecondBox.Text, out second) & int.TryParse(HourBox_Copy.Text, out hour1) && int.TryParse(MinuteBox_Copy.Text, out minute1) && int.TryParse(SecondBox_Copy.Text, out second1) & !String.IsNullOrEmpty(EventInput.Text))
+            {
+                DateTime currentDate = DateTime.Now.Date;
+                DateTime FirstDateTime = currentDate.AddHours(hour).AddMinutes(minute).AddSeconds(second);
+                DateTime SecondDateTime = currentDate.AddHours(hour1).AddMinutes(minute1).AddSeconds(second1);
+                string dateRange = FirstDateTime.ToString() + " - " + SecondDateTime.ToString();
+                string NameofEvent = EventInput.Text;
+                using (var reader = new StreamReader("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Blacklists.csv"))
+                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                {
+                    if (File.Exists(filePath))
+                    {
+                        Fileexists = true;
+                    }
+                    else
+                    {
+                        Fileexists = false;
+                    }
+                    var records = csv.GetRecords<Blacklists>();
+                    if (Fileexists == false)
+                    {
+                        using (var writer = new StreamWriter("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\BlacklistsCombined.csv"))
+                        using (var csvWriter = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                        {
+                            csvWriter.WriteHeader<NewBlacklists>();
+                            csvWriter.NextRecord();
+                            foreach (var record in records)
+                            {
+                                var newRecord = new NewBlacklists
+                                {
+                                    BlacklistName = record.BlacklistName,
+                                    EventName = NameofEvent,
+                                    Applications = record.Applications,
+                                    DateRange = dateRange
+                                };
 
+                                csvWriter.WriteRecord(newRecord);
+                                csvWriter.NextRecord();
+                            }
+                        }
+                        Fileexists = true;
+                    }
+                    if (Fileexists == true)
+                    {
+                        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+                        {
+                            HasHeaderRecord = false,
+                        };
+                        using (var stream = File.Open("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\BlacklistsCombined.csv", FileMode.Append))
+                        using (var writer = new StreamWriter(stream))
+                        using (var csvWriter = new CsvWriter(writer, config))
+                        {
+                            foreach (var record in records)
+                            {
+                                var newRecord = new NewBlacklists
+                                {
+                                    BlacklistName = record.BlacklistName,
+                                    EventName = NameofEvent,
+                                    Applications = record.Applications,
+                                    DateRange = dateRange
+                                };
+
+                                csvWriter.WriteRecord(newRecord);
+                                csvWriter.NextRecord();
+                            }
+                        }
+                    }
+                }
+            }
         }
         private void BackButtonClick(object sender, RoutedEventArgs e)
         {

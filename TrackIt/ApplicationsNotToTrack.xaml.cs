@@ -1,4 +1,10 @@
-﻿using Microsoft.Win32;
+﻿using CsvHelper.Configuration;
+using CsvHelper;
+using Microsoft.Win32;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -9,10 +15,17 @@ namespace TrackIt
     /// </summary>
     public partial class ApplicationsNotToTrack : Window
     {
+        public bool Fileexists;
+        private List<string> ListofApps;
+        public class ApplicationsNotToMonitor
+        {
+            public string Apps { get; set; }
+        }
         public ApplicationsNotToTrack()
         {
             InitializeComponent();
             ListofApplications();
+            ListofApps = new List<string>();
             Screenscale();
         }
         void Screenscale()
@@ -56,11 +69,61 @@ namespace TrackIt
 
         private void ConfirmButtonClick(object sender, RoutedEventArgs e)
         {
-            Properties.Settings.Default.MiniWindowOpened = false;
+            SelectedItems();
+            void SelectedItems()
+            {
+                if (Applications.SelectedItem != null)
+                {
+                    ListofApps.Clear();
+                    string filePath = "C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\ApplicationsNotToTrack.csv";
+                    if (File.Exists(filePath))
+                    {
+                        Fileexists = true;
+                    }
+                    else
+                    {
+                        Fileexists = false;
+                    }
+                    foreach (var item in Applications.SelectedItems)
+                    {
+                        ListofApps.Add(item.ToString());
+                    }
+                    var records = new List<ApplicationsNotToMonitor>();
+                    records.Add(new ApplicationsNotToMonitor {Apps = string.Join(",", ListofApps) });
+                    if (Fileexists == false)
+                    {
+                        using (var writer = new StreamWriter("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\ApplicationsNotToTrack.csv"))
+                        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                        {
+                            csv.WriteRecords(records);
+                        }
+                        Fileexists = true;
+                    }
+                    if (Fileexists == true)
+                    {
+                        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+                        {
+                            HasHeaderRecord = false,
+                        };
+                        using (var stream = File.Open("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\ApplicationsNotToTrack.csv", FileMode.Append))
+                        using (var writer = new StreamWriter(stream))
+                        using (var csv = new CsvWriter(writer, config))
+                        {
+                            csv.WriteRecords(records);
+                        }
+                    }
+                }
+            }
         }
         private void BackButtonClick(object sender, RoutedEventArgs e)
         {
             Properties.Settings.Default.MiniWindowOpened = false;
+            this.Close();
+        }
+        void Add_AnotherClick(object sender, RoutedEventArgs e)
+        {
+            var newForm = new AddMoreApplications();
+            newForm.Show();
             this.Close();
         }
         void ListofApplications()

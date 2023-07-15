@@ -1,0 +1,15 @@
+﻿<Window x:Class="TrackIt.AddMoreApplications"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TrackIt"
+        mc:Ignorable="d"
+        Title="AddMoreApplications" Height="720" Width="428">
+    <Canvas Focusable="true" Background="#75A0D8">
+        <TextBlock x:Name="AddMore" TextAlignment ="Center" Height="48" Width="396" Text="Add More Applications" FontFamily="Calibri" FontSize="30" Foreground="Black" Canvas.Left="16" Canvas.Top="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock x:Name="EnterApplication" TextAlignment ="Center" Height="48" Width="232" Text="Enter Application Name" FontFamily="Calibri" FontSize="20" Foreground="Black" Canvas.Left="98" Canvas.Top="118" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBox x:Name="InputApplication" Height="46" Width="168" Canvas.Left="125" Canvas.Top="171" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+    </Canvas>
+</Window>

@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackIt", "TrackIt\TrackIt.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackItMonitor", "ConsoleApp12\TrackItMonitor.csproj", "{672FF17C-C8B1-4B89-B70B-9CBB0F93B10E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeLimitExceeded", "TimeLimitExceeded\TimeLimitExceeded.csproj", "{43C2ACEB-34F3-417A-9B3D-19990B820625}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{672FF17C-C8B1-4B89-B70B-9CBB0F93B10E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{672FF17C-C8B1-4B89-B70B-9CBB0F93B10E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{672FF17C-C8B1-4B89-B70B-9CBB0F93B10E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{43C2ACEB-34F3-417A-9B3D-19990B820625}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{43C2ACEB-34F3-417A-9B3D-19990B820625}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{43C2ACEB-34F3-417A-9B3D-19990B820625}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{43C2ACEB-34F3-417A-9B3D-19990B820625}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

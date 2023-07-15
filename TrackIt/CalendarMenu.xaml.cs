@@ -1,7 +1,13 @@
-﻿using System;
+﻿using CsvHelper;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using static System.Net.Mime.MediaTypeNames;
+using static TheTracker.TheTrackerService;
 
 namespace TrackIt
 {
@@ -10,17 +16,24 @@ namespace TrackIt
     /// </summary>
     public partial class CalendarMenu : Window
     {
+        bool Fileexists;
+        public class BlacklistsRecords
+        {
+            public string EventName { get; set; }
+            public string BlacklistName { get; set; }
+            public string Applications { get; set; }
+
+            public string DateRange { get; set; }
+        }
         public CalendarMenu()
         {
             InitializeComponent();
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             WindowState = WindowState.Maximized;
+            ListofBlacklists();
+            /*if (SystemParameters.PrimaryScreenHeight != 1080)
             {
-                
-            }
-            if (SystemParameters.PrimaryScreenHeight != 1080)
-            {
-                Line.Height = SystemParameters.PrimaryScreenHeight * 1;
+                /*Line.Height = SystemParameters.PrimaryScreenHeight * 1;
                 Line.Width = SystemParameters.PrimaryScreenWidth * 0.0031;
                 Line.SetValue(Canvas.LeftProperty, 324.0 * (SystemParameters.PrimaryScreenWidth / 1920));
 
@@ -105,7 +118,7 @@ namespace TrackIt
                 BlacklistLabel.FontSize = (50 * SystemParameters.PrimaryScreenHeight / 1080);
                 BlacklistLabel.SetValue(Canvas.LeftProperty, 1636 * (SystemParameters.PrimaryScreenWidth / 1920));
 
-            }
+            }*/
         }
         void CalendarButtonClick(object sender, RoutedEventArgs e)
         {
@@ -147,10 +160,9 @@ namespace TrackIt
             }
         }
 
-            void Calendar_SelectedDatesChanged(object sender,
-               SelectionChangedEventArgs e)
+            void Calendar_SelectedDatesChanged(object sender,SelectionChangedEventArgs e)
                 {
-                    var calendar = sender as Calendar;
+                    var calendar = sender as System.Windows.Controls.Calendar;
                     Properties.Settings.Default.DatePicked = calendar.SelectedDate.Value;
                     
                     if (calendar.SelectedDate.HasValue)
@@ -164,8 +176,34 @@ namespace TrackIt
                             newForm.Show();
                         }
                     }
+                 }
+        void ListofBlacklists()
+        {
+            string filePath = "C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\BlacklistsCombined.csv";
+            if (File.Exists(filePath))
+            {
+                Fileexists = true;
+            }
+            else
+            {
+                Fileexists = false;
+            }
+            if (Fileexists == true)
+            {
+                var BlacklistRecords = new Dictionary<string, long>();
+                using (var reader = new StreamReader("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\BlacklistsCombined.csv"))
+                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                {
+                    var Blacklists = csv.GetRecords<BlacklistsRecords>();
+                    foreach (var blacklist in Blacklists)
+                    {
+                        var name = blacklist.BlacklistName;
+                        BlacklistList.Items.Add(name);
+                    }
                 }
-
+            }
         }
+            
     }
+}
 
