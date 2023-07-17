@@ -5,9 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TrackIt"
         mc:Ignorable="d"
-        ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
-        Title="LimitSaved" Height="282" Width="461">
+        Title="TrackIt" SizeToContent="WidthAndHeight" MinWidth="461" MinHeight="282" ResizeMode="NoResize">
     <Canvas Focusable="true" Background="#75A0D8">
         <TextBlock Name="SavedMessage" Height="48" Width="257" Text="Saved" FontFamily="Narkisim" FontSize="30" Foreground="Black" Canvas.Left="102" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Top="10" TextAlignment="Center"/>
         <TextBlock Name="Information" Height="53" Width="361" FontFamily="Narkisim" FontSize="20" Foreground="Black" Canvas.Left="50"  VerticalAlignment="Top" Canvas.Top="95" TextAlignment="Left" HorizontalAlignment="Center"><Run Text="   The Application limit has been saved"/><LineBreak/></TextBlock>

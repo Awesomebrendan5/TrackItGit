@@ -1,4 +1,5 @@
 ﻿using CsvHelper;
+using CsvHelper.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -33,25 +34,25 @@ namespace TrackIt
         {
             if (SystemParameters.PrimaryScreenHeight != 1080)
             {
-                Height = SystemParameters.PrimaryScreenHeight * 0.6667;
-                Width = SystemParameters.PrimaryScreenWidth * 0.2229;
+                MinHeight = SystemParameters.PrimaryScreenHeight * (740.0 / 1080.0);
+                MinWidth = SystemParameters.PrimaryScreenWidth * (428.0 / 1920);
 
                 Box.SetValue(Canvas.TopProperty, 106 * (SystemParameters.PrimaryScreenHeight / 1080));
                 Box.Height = SystemParameters.PrimaryScreenHeight * 0.3407;
                 Box.Width = SystemParameters.PrimaryScreenWidth * 0.1229; 
                 Box.SetValue(Canvas.LeftProperty, 96 * (SystemParameters.PrimaryScreenWidth / 1920));
 
-                DateToday.SetValue(Canvas.TopProperty, 10 * (SystemParameters.PrimaryScreenHeight / 1080));
-                DateToday.Height = SystemParameters.PrimaryScreenHeight * 0.0445;
-                DateToday.Width = SystemParameters.PrimaryScreenWidth * 0.0828;
-                DateToday.SetValue(Canvas.LeftProperty, 80 * (SystemParameters.PrimaryScreenWidth / 1920));
-                DateToday.FontSize = (30 * SystemParameters.PrimaryScreenHeight / 1080);
+                DateToday.SetValue(Canvas.TopProperty, 63 * (SystemParameters.PrimaryScreenHeight / 1080));
+                DateToday.Height = SystemParameters.PrimaryScreenHeight * 0.0352;
+                DateToday.Width = SystemParameters.PrimaryScreenWidth * 0.1344;
+                DateToday.SetValue(Canvas.LeftProperty, 106 * (SystemParameters.PrimaryScreenWidth / 1920));
+                DateToday.FontSize = (25 * SystemParameters.PrimaryScreenHeight / 1080);
 
-                Schedule.SetValue(Canvas.TopProperty, 10 * (SystemParameters.PrimaryScreenHeight / 1080));
-                Schedule.Height = SystemParameters.PrimaryScreenHeight * 0.0445;
-                Schedule.Width = SystemParameters.PrimaryScreenWidth * 0.0677;
-                Schedule.SetValue(Canvas.LeftProperty, 214 * (SystemParameters.PrimaryScreenWidth / 1920));
-                Schedule.FontSize = (30 * SystemParameters.PrimaryScreenHeight / 1080);
+                EventList.SetValue(Canvas.TopProperty, 122 * (SystemParameters.PrimaryScreenHeight / 1080));
+                EventList.Height = SystemParameters.PrimaryScreenHeight * 0.2435;
+                EventList.Width = SystemParameters.PrimaryScreenWidth * 0.1083;
+                EventList.SetValue(Canvas.LeftProperty, 110 * (SystemParameters.PrimaryScreenWidth / 1920));
+                EventList.FontSize = (20 * SystemParameters.PrimaryScreenHeight / 1080);
 
                 CreateNewEvent.SetValue(Canvas.TopProperty, 418 * (SystemParameters.PrimaryScreenHeight / 1080));
                 CreateNewEvent.Height = SystemParameters.PrimaryScreenHeight * 0.0398;
@@ -59,16 +60,16 @@ namespace TrackIt
                 CreateNewEvent.SetValue(Canvas.LeftProperty, 155 * (SystemParameters.PrimaryScreenWidth / 1920));
                 CreateNewEvent.FontSize = (20 * SystemParameters.PrimaryScreenHeight / 1080);
 
-                Back.SetValue(Canvas.TopProperty, 651 * (SystemParameters.PrimaryScreenHeight / 1080));
-                Back.Height = SystemParameters.PrimaryScreenHeight * 0.0398;
-                Back.Width = SystemParameters.PrimaryScreenWidth * 0.0646;
-                Back.SetValue(Canvas.LeftProperty, -4 * (SystemParameters.PrimaryScreenWidth / 1920));
+                Back.SetValue(Canvas.TopProperty, 665 * (SystemParameters.PrimaryScreenHeight / 1080));
+                Back.Height = SystemParameters.PrimaryScreenHeight * (43.0 / 1080.0);
+                Back.Width = SystemParameters.PrimaryScreenWidth * (124.0 / 1920.0);
+                Back.SetValue(Canvas.LeftProperty, 0 * (SystemParameters.PrimaryScreenWidth / 1920));
                 Back.FontSize = (20 * SystemParameters.PrimaryScreenHeight / 1080);
             }
         }
         void DateTitle()
         {
-            DateToday.Text = Properties.Settings.Default.DatePicked.ToShortDateString();
+            DateToday.Text = Properties.Settings.Default.DatePicked.ToShortDateString() + "- Schedule";
         }
         private void NewEventClick(object sender, RoutedEventArgs e)
         {
@@ -88,8 +89,10 @@ namespace TrackIt
         }
         void ListofEvents()
         {
-            string filePath = "C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\BlacklistsCombined.csv";
-            if (File.Exists(filePath))
+            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string directoryPath = Path.Combine(documentsPath, "TrackIt");
+            string FilePath = Path.Combine(directoryPath, "BlacklistsCombined.csv");
+            if (File.Exists(FilePath))
             {
                 Fileexists = true;
             }
@@ -100,7 +103,12 @@ namespace TrackIt
             if (Fileexists == true)
             {
                 var BlacklistRecords = new Dictionary<string, long>();
-                using (var reader = new StreamReader("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\BlacklistsCombined.csv"))
+                var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+                {
+                    // Don't write the header again.
+                    HasHeaderRecord = false,
+                };
+                using (var reader = new StreamReader(FilePath))
                 using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                 {
                     var Blacklists = csv.GetRecords<NewBlacklists>();
@@ -114,16 +122,17 @@ namespace TrackIt
 
                         var startTime = DateTime.Parse(dateRange[0].Trim());
                         var endTime = DateTime.Parse(dateRange[1].Trim());
-                        foreach (var events in Blacklists)
+
+                        if (startTime.Date == Properties.Settings.Default.DatePicked)
                         {
-                            if (startTime.Date == Properties.Settings.Default.DatePicked)
-                            {
-                                var name = blacklist.EventName;
-                                EventList.Items.Add(name + " " + startTime.TimeOfDay + " - " + endTime.TimeOfDay);
-                            }
+                            var name = blacklist.EventName;
+                            EventList.Items.Add(name + " " + startTime.TimeOfDay + " - " + endTime.TimeOfDay);
                         }
                     }
                 }
+            }
+            if (!Fileexists)
+            {
             }
         }
     }

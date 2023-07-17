@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TrackIt"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="AddAnotherLimit" Height="720" Width="428">
+        Title="AddAnotherLimit" SizeToContent="WidthAndHeight" MinWidth="428" MinHeight="740" ResizeMode="NoResize">
     <Canvas Focusable="true" Background="#75A0D8">
         <TextBlock Name="UseLimit" TextAlignment ="Center" Height="48" Width="396" Text="Set Daily Application Use Limit" FontFamily="Calibri" FontSize="30" Foreground="Black" Canvas.Left="16" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Top="10"/>
         <TextBlock Name="EnterApplication" TextAlignment ="Center" Height="48" Width="232" Text="Enter Application Name" FontFamily="Calibri" FontSize="20" Foreground="Black" Canvas.Left="98" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Top="118"/>
@@ -18,7 +18,16 @@
         <TextBox Name="MinuteBox" DataObject.Pasting="MinuteBox_Pasting" PreviewTextInput="MinuteBox_PreviewTextInput" Height=" 32" Width="50" Canvas.Left="184" Canvas.Top="406" Background="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <TextBox Name="SecondBox" DataObject.Pasting="SecondBox_Pasting" PreviewTextInput="SecondBox_PreviewTextInput" Height=" 32" Width="50" Canvas.Left="270" Canvas.Top="406" Background="White" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <TextBox Name="InputApplication" Height="46" Width="168" Canvas.Left="125" Canvas.Top="171" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Button x:Name="Confirm" Click="ConfirmButtonClick" Height="43" Width ="124" Canvas.Top="578" Background="#5FB72E" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Calibri" FontSize="20" Content="Confirm" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="144"/>
-        <Button x:Name="Back" Click="BackButtonClick" Height="43" Width ="124" Canvas.Top="651" Background="#E14026" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Calibri" FontSize="20" Content="Back" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="-4"/>
+        <Button x:Name="Confirm" Click="ConfirmButtonClick" Height="43" Width ="124" Canvas.Top="578" Background="#5FB72E" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Calibri" FontSize="20" Content="Confirm" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="144">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Border Background="#5FB72E" CornerRadius="20"/>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Button Name="Back" Click="BackButtonClick" Height="43" Width ="124" Canvas.Top="665" Background="#E14026" Foreground="#000000" BorderBrush="Transparent" BorderThickness="0" FontFamily="Calibri" FontSize="20" Content="Back" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="0"/>
     </Canvas>
 </Window>

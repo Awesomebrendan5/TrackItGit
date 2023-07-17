@@ -17,8 +17,8 @@ namespace TrackIt
         {
             if (SystemParameters.PrimaryScreenHeight != 1080)
             {
-                Height = SystemParameters.PrimaryScreenHeight * 0.2611;
-                Width = SystemParameters.PrimaryScreenWidth * 0.2401;
+                MinHeight = SystemParameters.PrimaryScreenHeight * (282.0 / 1080.0);
+                MinWidth = SystemParameters.PrimaryScreenWidth * (461.0 / 1920);
 
                 SuccessMessage.SetValue(Canvas.TopProperty, 10 * (SystemParameters.PrimaryScreenHeight / 1080));
                 SuccessMessage.Height = SystemParameters.PrimaryScreenHeight * 0.0444;
@@ -34,7 +34,7 @@ namespace TrackIt
 
                 Exit.SetValue(Canvas.TopProperty, 182 * (SystemParameters.PrimaryScreenHeight / 1080));
                 Exit.Height = SystemParameters.PrimaryScreenHeight * 0.05;
-                Exit.Width = SystemParameters.PrimaryScreenWidth * 0.0948;
+                Exit.Width = SystemParameters.PrimaryScreenWidth * 0.0729;
                 Exit.SetValue(Canvas.LeftProperty, 160 * (SystemParameters.PrimaryScreenWidth / 1920));
                 Exit.FontSize = (25 * SystemParameters.PrimaryScreenHeight / 1080);
             }

@@ -136,10 +136,10 @@ namespace TrackIt
                 AddApplicationButton.SetValue(Canvas.LeftProperty, 1628 * (SystemParameters.PrimaryScreenWidth / 1920));
                 AddApplicationButton.FontSize = (30 * SystemParameters.PrimaryScreenHeight / 1080);
 
-                CreateDailyUseLimit.SetValue(Canvas.TopProperty, 964 * (SystemParameters.PrimaryScreenHeight / 1080));
+                CreateDailyUseLimit.SetValue(Canvas.TopProperty, 1020 * (SystemParameters.PrimaryScreenHeight / 1080));
                 CreateDailyUseLimit.Height = SystemParameters.PrimaryScreenHeight * 0.0556;
                 CreateDailyUseLimit.Width = SystemParameters.PrimaryScreenWidth * 0.1552;
-                CreateDailyUseLimit.SetValue(Canvas.LeftProperty, 1592 * (SystemParameters.PrimaryScreenWidth / 1920));
+                CreateDailyUseLimit.SetValue(Canvas.LeftProperty, 1622 * (SystemParameters.PrimaryScreenWidth / 1920));
                 CreateDailyUseLimit.FontSize = (30 * SystemParameters.PrimaryScreenHeight / 1080);
 
                 Chart.SetValue(Canvas.TopProperty, 97 * (SystemParameters.PrimaryScreenHeight / 1080));
@@ -235,6 +235,7 @@ namespace TrackIt
                 {
                 new ColumnSeries<int>
                 {
+                    Name="",
                     Values = new[]
                     {
                         Convert.ToInt32(Properties.Settings.Default.avalue),
@@ -244,6 +245,143 @@ namespace TrackIt
                         Convert.ToInt32(Properties.Settings.Default.evalue)
                     },
                     MaxBarWidth = double.MaxValue
+                }
+                };
+
+            public Axis[] XAxes { get; set; }
+                = new Axis[]
+                {
+                new Axis
+                {
+                    Labels = new string[] { message1, message2, message3, message4, message5 }
+                }
+                };
+
+            public Axis[] YAxes { get; set; }
+                = new Axis[]
+                {
+                new Axis
+                {
+                }
+                };
+        }
+    }
+    namespace ViewModelsSamples.Bars.Basic1
+    {
+      public class ViewModel
+        {
+            static string message1 = Properties.Settings.Default.f;
+            static string message2 = Properties.Settings.Default.g;
+            static string message3 = Properties.Settings.Default.h;
+            static string message4 = Properties.Settings.Default.i;
+            static string message5 = Properties.Settings.Default.j;
+
+            public ISeries[] Series { get; set; }
+                = new ISeries[]
+                {
+                new ColumnSeries<int>
+                {
+                    Name="",
+                    Values = new[]
+                    {
+                        Convert.ToInt32(Properties.Settings.Default.fvalue),
+                        Convert.ToInt32(Properties.Settings.Default.gvalue),
+                        Convert.ToInt32(Properties.Settings.Default.hvalue),
+                        Convert.ToInt32(Properties.Settings.Default.ivalue),
+                        Convert.ToInt32(Properties.Settings.Default.jvalue)
+                    },
+                    MaxBarWidth = double.MaxValue
+                }
+                };
+
+            public Axis[] XAxes { get; set; }
+                = new Axis[]
+                {
+                new Axis
+                {
+                    Labels = new string[] { message1, message2, message3, message4, message5 }
+                }
+                };
+
+            public Axis[] YAxes { get; set; }
+                = new Axis[]
+                {
+                new Axis
+                {
+                }
+                };
+        }
+    }
+    namespace ViewModelsSamples.Bars.Basic2
+    {
+        public class ViewModel
+        {
+            static string message1 = Properties.Settings.Default.k;
+            static string message2 = Properties.Settings.Default.l;
+            static string message3 = Properties.Settings.Default.m;
+            static string message4 = Properties.Settings.Default.n;
+            static string message5 = Properties.Settings.Default.o;
+
+            public ISeries[] Series { get; set; }
+                = new ISeries[]
+                {
+                new ColumnSeries<int>
+                {
+                    Name="",
+                    Values = new[]
+                    {
+                        Convert.ToInt32(Properties.Settings.Default.kvalue),
+                        Convert.ToInt32(Properties.Settings.Default.lvalue),
+                        Convert.ToInt32(Properties.Settings.Default.mvalue),
+                        Convert.ToInt32(Properties.Settings.Default.nvalue),
+                        Convert.ToInt32(Properties.Settings.Default.ovalue)
+                    },
+                    MaxBarWidth = double.MaxValue
+                }
+                };
+
+            public Axis[] XAxes { get; set; }
+                = new Axis[]
+                {
+                new Axis
+                {
+                    Labels = new string[] { message1, message2, message3, message4, message5 }
+                }
+                };
+
+            public Axis[] YAxes { get; set; }
+                = new Axis[]
+                {
+                new Axis
+                {
+                }
+                };
+        }
+    }
+    namespace ViewModelsSamples.Bars.Basic3
+    {
+        public class ViewModel
+        {
+            static string message1 = Properties.Settings.Default.p;
+            static string message2 = Properties.Settings.Default.q;
+            static string message3 = Properties.Settings.Default.r;
+            static string message4 = Properties.Settings.Default.s;
+            static string message5 = Properties.Settings.Default.t;
+
+            public ISeries[] Series { get; set; }
+                = new ISeries[]
+                {
+                new ColumnSeries<int>
+                {
+                    Name="",
+                    Values = new[]
+                    {
+                        Convert.ToInt32(Properties.Settings.Default.pvalue),
+                        Convert.ToInt32(Properties.Settings.Default.qvalue),
+                        Convert.ToInt32(Properties.Settings.Default.rvalue),
+                        Convert.ToInt32(Properties.Settings.Default.svalue),
+                        Convert.ToInt32(Properties.Settings.Default.tvalue)
+                    }
                 }
                 };
 

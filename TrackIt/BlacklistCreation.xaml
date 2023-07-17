@@ -6,14 +6,23 @@
         xmlns:local="clr-namespace:TrackIt"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="BlacklistCreation" Height="720" Width="428">
+        Title="BlacklistCreation" SizeToContent="WidthAndHeight" MinWidth="428" MinHeight="740" ResizeMode="NoResize">
     <Canvas Focusable="true" Background="#75A0D8">
         <TextBlock Name="BlacklistBox" TextAlignment ="Center" Height="48" Width="324" Text="Create New Blacklist" FontFamily="Calibri" FontSize="30" Foreground="Black" Canvas.Left="52" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="10"/>
         <TextBlock Name="EnterBlacklist" TextAlignment ="Center" Height="31" Width="260" Text="Enter Blacklist Name" FontFamily="Calibri" FontSize="20" Foreground="Black" Canvas.Left="84" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Top="101"/>
         <TextBox Name="EnterBlacklistName" TextAlignment ="Center" Height="48" Width="202"  FontFamily="Calibri" FontSize="20" Background="#E9DBDB" Canvas.Left="113" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Top="137" TextChanged="EnterBlacklistName_TextChanged"/>
         <TextBlock x:Name="SelectApplications" TextAlignment ="Center" Height="56" Width="320" FontFamily="Calibri" FontSize="20" Foreground="Black" Canvas.Left="54" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="216"><Run Text="Select Open Applications to "/><LineBreak/><Run Text="Add to List"/></TextBlock>
         <ListBox Name="Applications"  SelectionMode="Multiple" Height="324" Width="202" Background="#E9DBDB" FontFamily="Calibri" FontSize="20" Foreground="Black" Canvas.Left="113" Canvas.Top="272" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <Button Name="Confirm" Click="ConfirmButtonClick" Height="43" Width ="124" Canvas.Top="611" Background="#5FB72E" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Calibri" FontSize="20" Content="Confirm" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="152"/>
-        <Button Name="Back" Click="BackButtonClick" Height="43" Width ="124" Canvas.Top="651" Background="#E14026" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Calibri" FontSize="20" Content="Back" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="-4"/>
+        <Button Name="Confirm" Click="ConfirmButtonClick" Height="43" Width ="124" Canvas.Top="611" Background="#5FB72E" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Calibri" FontSize="20" Content="Confirm" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="152">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Border Background="#5FB72E" CornerRadius="20"/>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Button Name="Back" Click="BackButtonClick" Height="43" Width ="124" Canvas.Top="665" Background="#E14026" Foreground="#000000" BorderBrush="Transparent" BorderThickness="0" FontFamily="Calibri" FontSize="20" Content="Back" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="0"/>
     </Canvas>
 </Window>

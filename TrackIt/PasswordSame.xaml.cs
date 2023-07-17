@@ -17,8 +17,8 @@ namespace TrackIt
         {
             if (SystemParameters.PrimaryScreenHeight != 1080)
             {
-                Height = SystemParameters.PrimaryScreenHeight * 0.2611;
-                Width = SystemParameters.PrimaryScreenWidth * 0.2401;
+                MinHeight = SystemParameters.PrimaryScreenHeight * (282.0 / 1080.0);
+                MinWidth = SystemParameters.PrimaryScreenWidth * (461.0 / 1920);
 
                 ErrorMessage.SetValue(Canvas.TopProperty, 10 * (SystemParameters.PrimaryScreenHeight / 1080));
                 ErrorMessage.Height = SystemParameters.PrimaryScreenHeight * 0.0444;

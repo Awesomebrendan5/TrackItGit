@@ -6,13 +6,10 @@
         xmlns:local="clr-namespace:TrackIt"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
-        Title="BlacklistCreation" Height="720" Width="428">
+        Title="TrackIt" SizeToContent="WidthAndHeight" MinWidth="428" MinHeight="740" ResizeMode="NoResize">
     <Canvas Focusable="true" Background="#75A0D8">
         <Image Name="Box" Height="368" Canvas.Left="96" Source="/Images/EventSquare.png" Stretch="Fill" Canvas.Top="106" Width="236"/>
-        <TextBlock TextAlignment ="Left" x:Name="DateToday" Height="48" Width="159" Text="20/11/22" FontFamily="Calibri" FontSize="30" Foreground="Black" Canvas.Left="80" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Top="10"/>
-        <TextBlock TextAlignment ="Center" x:Name="Schedule" Height="48" Width="130" Text="- Schedule" FontFamily="Calibri" FontSize="30" Foreground="Black" Canvas.Left="214" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Top="10"/>
-        <Button x:Name="CreateNewEvent" Click="NewEventClick" Height="43" Width ="124" Canvas.Top="418" Background="#5FB72E" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Calibri" FontSize="20" Content="Create New" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="155"/>
-        <Button x:Name="Back" Click="BackButtonClick" Height="43" Width ="124" Canvas.Top="651" Background="#E14026" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Calibri" FontSize="20" Content="Back" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="-4"/>
+        <TextBlock TextAlignment ="Left" x:Name="DateToday" Height="38" Width="258" Text="20/11/22 - Schedule" FontFamily="Calibri" FontSize="25" Foreground="Black" Canvas.Left="106" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Top="63"/>
         <ItemsControl x:Name="EventList" Height="263" Width="208" Background="#E9DBDB" FontFamily="Calibri" FontSize="20" Foreground="Black" Canvas.Left="110" Canvas.Top="122" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -20,5 +17,16 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
+        <Button x:Name="CreateNewEvent" Click="NewEventClick" Height="43" Width ="124" Canvas.Top="418" Background="#5FB72E" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Calibri" FontSize="20" Content="Create New" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="155">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Border Background="#5FB72E" CornerRadius="20"/>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Button Name="Back" Click="BackButtonClick" Height="43" Width ="124" Canvas.Top="665" Background="#E14026" Foreground="#000000" BorderBrush="Transparent" BorderThickness="0" FontFamily="Calibri" FontSize="20" Content="Back" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="0"/>
     </Canvas>
 </Window>
