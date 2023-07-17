@@ -31,9 +31,9 @@ namespace TrackIt
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             WindowState = WindowState.Maximized;
             ListofBlacklists();
-            /*if (SystemParameters.PrimaryScreenHeight != 1080)
+            if (SystemParameters.PrimaryScreenHeight != 1080)
             {
-                /*Line.Height = SystemParameters.PrimaryScreenHeight * 1;
+                Line.Height = SystemParameters.PrimaryScreenHeight * 1;
                 Line.Width = SystemParameters.PrimaryScreenWidth * 0.0031;
                 Line.SetValue(Canvas.LeftProperty, 324.0 * (SystemParameters.PrimaryScreenWidth / 1920));
 
@@ -118,7 +118,13 @@ namespace TrackIt
                 BlacklistLabel.FontSize = (50 * SystemParameters.PrimaryScreenHeight / 1080);
                 BlacklistLabel.SetValue(Canvas.LeftProperty, 1636 * (SystemParameters.PrimaryScreenWidth / 1920));
 
-            }*/
+                BlacklistList.SetValue(Canvas.TopProperty, 306 * (SystemParameters.PrimaryScreenHeight / 1080));
+                BlacklistList.Height = SystemParameters.PrimaryScreenHeight * 0.5296;
+                BlacklistList.Width = SystemParameters.PrimaryScreenWidth * 0.1188;
+                BlacklistList.FontSize = (20 * SystemParameters.PrimaryScreenHeight / 1080);
+                BlacklistList.SetValue(Canvas.LeftProperty, 1624 * (SystemParameters.PrimaryScreenWidth / 1920));
+
+            }
         }
         void CalendarButtonClick(object sender, RoutedEventArgs e)
         {
@@ -179,8 +185,10 @@ namespace TrackIt
                  }
         void ListofBlacklists()
         {
-            string filePath = "C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\BlacklistsCombined.csv";
-            if (File.Exists(filePath))
+            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string directoryPath = Path.Combine(documentsPath, "TrackIt");
+            string FilePath = Path.Combine(directoryPath, "BlacklistsCombined.csv");
+            if (File.Exists(FilePath))
             {
                 Fileexists = true;
             }
@@ -191,19 +199,24 @@ namespace TrackIt
             if (Fileexists == true)
             {
                 var BlacklistRecords = new Dictionary<string, long>();
-                using (var reader = new StreamReader("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\BlacklistsCombined.csv"))
+                var uniqueBlacklistNames = new HashSet<string>();
+                using (var reader = new StreamReader(FilePath))
                 using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                 {
                     var Blacklists = csv.GetRecords<BlacklistsRecords>();
                     foreach (var blacklist in Blacklists)
                     {
                         var name = blacklist.BlacklistName;
-                        BlacklistList.Items.Add(name);
+                        if (!uniqueBlacklistNames.Contains(name))
+                        {
+                            BlacklistList.Items.Add(name);
+                            uniqueBlacklistNames.Add(name);
+                        }
                     }
                 }
             }
         }
-            
+
     }
 }
 

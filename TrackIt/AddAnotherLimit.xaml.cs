@@ -38,10 +38,10 @@ namespace TrackIt
         }
         void Screenscale()
         {
-            /*if (SystemParameters.PrimaryScreenHeight != 1080)
+            if (SystemParameters.PrimaryScreenHeight != 1080)
             {
-                Height = SystemParameters.PrimaryScreenHeight * 0.6667;
-                Width = SystemParameters.PrimaryScreenWidth * 0.2229;
+                MinHeight = SystemParameters.PrimaryScreenHeight * (740.0 / 1080.0);
+                MinWidth = SystemParameters.PrimaryScreenWidth * (428.0 / 1920);
 
                 UseLimit.SetValue(Canvas.TopProperty, 10 * (SystemParameters.PrimaryScreenHeight / 1080));
                 UseLimit.Height = SystemParameters.PrimaryScreenHeight * 0.0445;
@@ -49,38 +49,55 @@ namespace TrackIt
                 UseLimit.SetValue(Canvas.LeftProperty, 16 * (SystemParameters.PrimaryScreenWidth / 1920));
                 UseLimit.FontSize = (30 * SystemParameters.PrimaryScreenHeight / 1080);
 
-                Hour.SetValue(Canvas.TopProperty, 493 * (SystemParameters.PrimaryScreenHeight / 1080));
+                EnterApplication.SetValue(Canvas.TopProperty, 118 * (SystemParameters.PrimaryScreenHeight / 1080));
+                EnterApplication.Height = SystemParameters.PrimaryScreenHeight * 0.0445;
+                EnterApplication.Width = SystemParameters.PrimaryScreenWidth * 0.1208;
+                EnterApplication.SetValue(Canvas.LeftProperty, 98 * (SystemParameters.PrimaryScreenWidth / 1920));
+                EnterApplication.FontSize = (20 * SystemParameters.PrimaryScreenHeight / 1080);
+
+                SelectTimeLimit.SetValue(Canvas.TopProperty, 288 * (SystemParameters.PrimaryScreenHeight / 1080));
+                SelectTimeLimit.Height = SystemParameters.PrimaryScreenHeight * 0.0445;
+                SelectTimeLimit.Width = SystemParameters.PrimaryScreenWidth * 0.1333;
+                SelectTimeLimit.SetValue(Canvas.LeftProperty, 82 * (SystemParameters.PrimaryScreenWidth / 1920));
+                SelectTimeLimit.FontSize = (20 * SystemParameters.PrimaryScreenHeight / 1080);
+
+                InputApplication.SetValue(Canvas.TopProperty, 171 * (SystemParameters.PrimaryScreenHeight / 1080));
+                InputApplication.Height = SystemParameters.PrimaryScreenHeight * 0.0426;
+                InputApplication.Width = SystemParameters.PrimaryScreenWidth * 0.0875;
+                InputApplication.SetValue(Canvas.LeftProperty, 125 * (SystemParameters.PrimaryScreenWidth / 1920));
+
+                Hour.SetValue(Canvas.TopProperty, 378 * (SystemParameters.PrimaryScreenHeight / 1080));
                 Hour.Height = SystemParameters.PrimaryScreenHeight * 0.0204;
                 Hour.Width = SystemParameters.PrimaryScreenWidth * 0.0260;
-                Hour.SetValue(Canvas.LeftProperty, 95 * (SystemParameters.PrimaryScreenWidth / 1920));
+                Hour.SetValue(Canvas.LeftProperty, 100 * (SystemParameters.PrimaryScreenWidth / 1920));
                 Hour.FontSize = (20 * SystemParameters.PrimaryScreenHeight / 1080);
 
-                Minute.SetValue(Canvas.TopProperty, 493 * (SystemParameters.PrimaryScreenHeight / 1080));
+                Minute.SetValue(Canvas.TopProperty, 378 * (SystemParameters.PrimaryScreenHeight / 1080));
                 Minute.Height = SystemParameters.PrimaryScreenHeight * 0.0204;
                 Minute.Width = SystemParameters.PrimaryScreenWidth * 0.0359;
-                Minute.SetValue(Canvas.LeftProperty, 171 * (SystemParameters.PrimaryScreenWidth / 1920));
+                Minute.SetValue(Canvas.LeftProperty, 176 * (SystemParameters.PrimaryScreenWidth / 1920));
                 Minute.FontSize = (20 * SystemParameters.PrimaryScreenHeight / 1080);
 
-                Second.SetValue(Canvas.TopProperty, 493 * (SystemParameters.PrimaryScreenHeight / 1080));
+                Second.SetValue(Canvas.TopProperty, 378 * (SystemParameters.PrimaryScreenHeight / 1080));
                 Second.Height = SystemParameters.PrimaryScreenHeight * 0.0204;
                 Second.Width = SystemParameters.PrimaryScreenWidth * 0.0359;
-                Second.SetValue(Canvas.LeftProperty, 254 * (SystemParameters.PrimaryScreenWidth / 1920));
+                Second.SetValue(Canvas.LeftProperty, 258 * (SystemParameters.PrimaryScreenWidth / 1920));
                 Second.FontSize = (20 * SystemParameters.PrimaryScreenHeight / 1080);
 
-                HourBox.SetValue(Canvas.TopProperty, 520 * (SystemParameters.PrimaryScreenHeight / 1080));
+                HourBox.SetValue(Canvas.TopProperty, 406 * (SystemParameters.PrimaryScreenHeight / 1080));
                 HourBox.Height = SystemParameters.PrimaryScreenHeight * 0.0296;
                 HourBox.Width = SystemParameters.PrimaryScreenWidth * 0.0260;
-                HourBox.SetValue(Canvas.LeftProperty, 95 * (SystemParameters.PrimaryScreenWidth / 1920));
+                HourBox.SetValue(Canvas.LeftProperty, 100 * (SystemParameters.PrimaryScreenWidth / 1920));
 
-                MinuteBox.SetValue(Canvas.TopProperty, 520 * (SystemParameters.PrimaryScreenHeight / 1080));
+                MinuteBox.SetValue(Canvas.TopProperty, 406 * (SystemParameters.PrimaryScreenHeight / 1080));
                 MinuteBox.Height = SystemParameters.PrimaryScreenHeight * 0.0296;
                 MinuteBox.Width = SystemParameters.PrimaryScreenWidth * 0.0260;
-                MinuteBox.SetValue(Canvas.LeftProperty, 180 * (SystemParameters.PrimaryScreenWidth / 1920));
+                MinuteBox.SetValue(Canvas.LeftProperty, 184 * (SystemParameters.PrimaryScreenWidth / 1920));
 
-                SecondBox.SetValue(Canvas.TopProperty, 520 * (SystemParameters.PrimaryScreenHeight / 1080));
+                SecondBox.SetValue(Canvas.TopProperty, 406 * (SystemParameters.PrimaryScreenHeight / 1080));
                 SecondBox.Height = SystemParameters.PrimaryScreenHeight * 0.0296;
                 SecondBox.Width = SystemParameters.PrimaryScreenWidth * 0.0260;
-                SecondBox.SetValue(Canvas.LeftProperty, 265 * (SystemParameters.PrimaryScreenWidth / 1920));
+                SecondBox.SetValue(Canvas.LeftProperty, 270 * (SystemParameters.PrimaryScreenWidth / 1920));
 
                 Confirm.SetValue(Canvas.TopProperty, 578 * (SystemParameters.PrimaryScreenHeight / 1080));
                 Confirm.Height = SystemParameters.PrimaryScreenHeight * 0.0398;
@@ -88,12 +105,12 @@ namespace TrackIt
                 Confirm.SetValue(Canvas.LeftProperty, 144 * (SystemParameters.PrimaryScreenWidth / 1920));
                 Confirm.FontSize = (20 * SystemParameters.PrimaryScreenHeight / 1080);
 
-                Back.SetValue(Canvas.TopProperty, 651 * (SystemParameters.PrimaryScreenHeight / 1080));
-                Back.Height = SystemParameters.PrimaryScreenHeight * 0.0398;
-                Back.Width = SystemParameters.PrimaryScreenWidth * 0.0646;
-                Back.SetValue(Canvas.LeftProperty, -4 * (SystemParameters.PrimaryScreenWidth / 1920));
+                Back.SetValue(Canvas.TopProperty, 665 * (SystemParameters.PrimaryScreenHeight / 1080));
+                Back.Height = SystemParameters.PrimaryScreenHeight * (43.0 / 1080.0);
+                Back.Width = SystemParameters.PrimaryScreenWidth * (124.0 / 1920.0);
+                Back.SetValue(Canvas.LeftProperty, 0 * (SystemParameters.PrimaryScreenWidth / 1920));
                 Back.FontSize = (20 * SystemParameters.PrimaryScreenHeight / 1080);
-            }*/
+            }
         }
         private void ConfirmButtonClick(object sender, RoutedEventArgs e)
         {
@@ -101,8 +118,10 @@ namespace TrackIt
             {
                 string ApplicationNamed = InputApplication.Text;
                 long SetLength = Convert.ToInt32(HourBox.Text) * 3600000 + Convert.ToInt32(MinuteBox.Text) * 60000 + Convert.ToInt32(SecondBox.Text) * 1000;
-                String path = "C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Limits.csv";
-                if (File.Exists(path))
+                string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                string directoryPath = System.IO.Path.Combine(documentsPath, "TrackIt");
+                string FilePath = System.IO.Path.Combine(directoryPath, "Limits.csv");
+                if (File.Exists(FilePath))
                 {
                     Fileexists = true;
                 }
@@ -117,7 +136,8 @@ namespace TrackIt
                 };
                 if (Fileexists == false)
                 {
-                    using (var writer = new StreamWriter("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Limits.csv"))
+                    Directory.CreateDirectory(directoryPath);
+                    using (var writer = new StreamWriter(FilePath))
                     using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
                     {
                         csv.WriteRecords(records);
@@ -132,7 +152,7 @@ namespace TrackIt
                         // Don't write the header again.
                         HasHeaderRecord = false,
                     };
-                    using (var stream = File.Open("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Limits.csv", FileMode.Append))
+                    using (var stream = File.Open(FilePath, FileMode.Append))
                     using (var writer = new StreamWriter(stream))
                     using (var csv = new CsvWriter(writer, config))
                     {

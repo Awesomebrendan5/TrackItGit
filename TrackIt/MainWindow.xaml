@@ -9,7 +9,7 @@
         WindowStyle="None"
         Height="1080"
         Width="1920"
-        Title="MainWindow" >
+        Title="TrackIt" >
     <Canvas Name="MainMenu" Focusable="true" Background="#75A0D8">
         <ItemsControl x:Name="EventList" Height="712" Width="401" Background="#E9DBDB" FontFamily="Calibri" FontSize="20" Foreground="Black" Canvas.Left="1485" Canvas.Top="268" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible">
             <ItemsControl.ItemsPanel>
@@ -29,5 +29,7 @@
         <Button x:Name="Home" Click="HomeButtonClick" Height="54" Width ="120" Canvas.Top="864" RenderTransformOrigin="0.37,-2.518" Background="Transparent" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Narkisim" FontSize="40" Content="Home" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="93"/>
         <Label x:Name="UpcomingEvents" FontSize="40" Content="Upcoming Events" Canvas.Left="1525" Canvas.Top="182" Height="77" Width="321" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <TextBlock x:Name="TrackIt" Height="48" Width="154" Text="TrackIt" FontFamily="Narkisim" FontSize="40" Foreground="#FF0000" Canvas.Left="95" HorizontalAlignment="Left" VerticalAlignment="Center" />
+        <Image Name="SettingsIcon" Source="/Images/Settings.png" Height="77" Canvas.Top="981" Width="80" Canvas.Left="12" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Button x:Name="SettingsButton" Click="SettingsButtonClick" Height="54" Width ="168" Canvas.Top="995" RenderTransformOrigin="0.37,-2.518" Background="Transparent" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Narkisim" FontSize="40" Content="Settings" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="97"/>
     </Canvas>
 </Window>

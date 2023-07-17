@@ -20,8 +20,6 @@
         <Image x:Name ="HomeIcon" Height="76" Source="/Images/Home.png" Stretch="Fill" Canvas.Top="848" Width="76" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="12"/>
         <Button x:Name="Home" Click="HomeButtonClick" Height="54" Width ="120" Canvas.Top="864" RenderTransformOrigin="0.37,-2.518" Background="Transparent" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Narkisim" FontSize="40" Content="Home" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="93"/>
         <TextBlock x:Name="TrackIt" Height="48" Width="154" Text="TrackIt" FontFamily="Narkisim" FontSize="40" Foreground="#FF0000" Canvas.Left="95" HorizontalAlignment="Left" VerticalAlignment="Center" />
-
-
         <TextBlock x:Name = "CalendarLabel" Height="61" Width="204" Text="Calendar" FontFamily="Narkisim" Canvas.Left="771" FontSize="50" Canvas.Top="79" HorizontalAlignment="Center" VerticalAlignment="Top" />
         <ItemsControl x:Name="BlacklistList" Height="572" Width="228" Background="#E9DBDB" FontFamily="Calibri" FontSize="20" Foreground="Black" Canvas.Left="1624" Canvas.Top="306" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible">
         </ItemsControl>
@@ -41,6 +39,15 @@
             </Calendar>
         </Viewbox>
         <Label x:Name ="BlacklistLabel" Height="61" Width="204" Content="Blacklist" FontFamily="Narkisim" Canvas.Left="1636" FontSize="50" Canvas.Top="157" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <Button x:Name ="CreateBlacklist" Click="CreateBlacklistClick" Content="Create New" Canvas.Left="1644" Canvas.Top="891" Height="52" Width="190" Background="#5FB72E" FontSize="35" FontFamily="Narkism"/>
+        <Button x:Name ="CreateBlacklist" Click="CreateBlacklistClick" Content="Create New" Canvas.Left="1644" Canvas.Top="891" Height="52" Width="190" Background="#5FB72E" FontSize="35" FontFamily="Narkism">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Border Background="#5FB72E" CornerRadius="20"/>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
     </Canvas>
 </Window> 

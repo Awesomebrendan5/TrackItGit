@@ -34,8 +34,8 @@ namespace TrackIt
         {
             if (SystemParameters.PrimaryScreenHeight != 1080)
             {
-                Height = SystemParameters.PrimaryScreenHeight * 0.6667;
-                Width = SystemParameters.PrimaryScreenWidth * 0.2229;
+                MinHeight = SystemParameters.PrimaryScreenHeight * (740.0 / 1080.0);
+                MinWidth = SystemParameters.PrimaryScreenWidth * (428.0 / 1920);
 
                 UseLimit.SetValue(Canvas.TopProperty, 10 * (SystemParameters.PrimaryScreenHeight / 1080));
                 UseLimit.Height = SystemParameters.PrimaryScreenHeight * 0.0445;
@@ -100,11 +100,17 @@ namespace TrackIt
                 Confirm.SetValue(Canvas.LeftProperty, 144 * (SystemParameters.PrimaryScreenWidth / 1920));
                 Confirm.FontSize = (20 * SystemParameters.PrimaryScreenHeight / 1080);
 
-                Back.SetValue(Canvas.TopProperty, 651 * (SystemParameters.PrimaryScreenHeight / 1080));
-                Back.Height = SystemParameters.PrimaryScreenHeight * 0.0398;
-                Back.Width = SystemParameters.PrimaryScreenWidth * 0.0646;
-                Back.SetValue(Canvas.LeftProperty, -4 * (SystemParameters.PrimaryScreenWidth / 1920));
+                Back.SetValue(Canvas.TopProperty, 665 * (SystemParameters.PrimaryScreenHeight / 1080));
+                Back.Height = SystemParameters.PrimaryScreenHeight * (43.0 / 1080.0);
+                Back.Width = SystemParameters.PrimaryScreenWidth * (124.0 / 1920.0);
+                Back.SetValue(Canvas.LeftProperty, 0 * (SystemParameters.PrimaryScreenWidth / 1920));
                 Back.FontSize = (20 * SystemParameters.PrimaryScreenHeight / 1080);
+
+                Add_Another.SetValue(Canvas.TopProperty, 665 * (SystemParameters.PrimaryScreenHeight / 1080));
+                Add_Another.Height = SystemParameters.PrimaryScreenHeight * (43.0 / 1080.0);
+                Add_Another.Width = SystemParameters.PrimaryScreenWidth * (124.0 / 1920.0);
+                Add_Another.SetValue(Canvas.LeftProperty, 294 * (SystemParameters.PrimaryScreenWidth / 1920));
+                Add_Another.FontSize = (20 * SystemParameters.PrimaryScreenHeight / 1080);
             }
         }
         private void ConfirmButtonClick(object sender, RoutedEventArgs e)
@@ -113,8 +119,10 @@ namespace TrackIt
                 {
                 string ApplicationNamed = Applications.SelectedItem.ToString();
                 long SetLength = Convert.ToInt32(HourBox.Text) * 3600000 + Convert.ToInt32(MinuteBox.Text) * 60000 + Convert.ToInt32(SecondBox.Text) * 1000;
-                String path = "C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Limits.csv";
-                if (File.Exists(path))
+                string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                string directoryPath = Path.Combine(documentsPath, "TrackIt");
+                string FilePath = Path.Combine(directoryPath, "Limits.csv");
+                if (File.Exists(FilePath))
                 {
                     Fileexists = true;
                 }
@@ -129,7 +137,8 @@ namespace TrackIt
                 };
                 if (Fileexists == false)
                 {
-                    using (var writer = new StreamWriter("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Limits.csv"))
+                    Directory.CreateDirectory(directoryPath);
+                    using (var writer = new StreamWriter(FilePath))
                     using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
                     {
                         csv.WriteRecords(records);
@@ -142,7 +151,7 @@ namespace TrackIt
                     {
                         HasHeaderRecord = false,
                     };
-                    using (var stream = File.Open("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Limits.csv", FileMode.Append))
+                    using (var stream = File.Open(FilePath, FileMode.Append))
                     using (var writer = new StreamWriter(stream))
                     using (var csv = new CsvWriter(writer, config))
                     {
@@ -162,6 +171,7 @@ namespace TrackIt
         {
             var newForm = new AddAnotherLimit();
             newForm.Show();
+            this.Close();
         }
         void ListofApplications()
         {

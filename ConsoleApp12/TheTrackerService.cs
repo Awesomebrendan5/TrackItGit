@@ -63,8 +63,9 @@ namespace TheTracker
             Stopwatch ScreenTimer = new Stopwatch();
             Startup();
             ScreenTimer.Start();
-            String path = "C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Storage7.csv";
-            if (File.Exists(path))
+            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string FilePath = Path.Combine(documentsPath, "TrackIt", "ScreentimeData.csv");
+            if (File.Exists(FilePath))
             {
                 Fileexists = true;
             }
@@ -176,7 +177,9 @@ namespace TheTracker
                             Console.WriteLine("works");
                         }
                         Dictionary<string, ApplicationsNotToMonitor> DoNotMonitor = new Dictionary<string, ApplicationsNotToMonitor>();
-                            using (var reader = new StreamReader("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\ApplicationsNotToTrack.csv"))
+                            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                            string FilePath = Path.Combine(documentsPath, "TrackIt", "ApplicationsNotToTrack.csv");
+                            using (var reader = new StreamReader(FilePath))
                             using (var csv1 = new CsvReader(reader, CultureInfo.InvariantCulture))
                             {
                             var records = csv1.GetRecords<ApplicationsNotToMonitor>().ToList();
@@ -199,7 +202,11 @@ namespace TheTracker
                                     };
                                         if (Fileexists == false)
                                         {
-                                            using (var writer = new StreamWriter("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Storage7.csv"))
+                                            string documentPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                                            string directoryPath = Path.Combine(documentsPath, "TrackIt");
+                                            string ScreentimePath = Path.Combine(directoryPath, "ScreentimeData.csv");
+                                            Directory.CreateDirectory(directoryPath);
+                                            using (var writer = new StreamWriter(ScreentimePath))
                                             using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
                                             {
                                                 csv.WriteRecords(records);
@@ -214,7 +221,10 @@ namespace TheTracker
                                                 // Don't write the header again.
                                                 HasHeaderRecord = false,
                                             };
-                                            using (var stream = File.Open("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Storage7.csv", FileMode.Append))
+                                            string documentPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                                            string directoryPath = Path.Combine(documentsPath, "TrackIt");
+                                            string ScreentimePath = Path.Combine(directoryPath, "ScreentimeData.csv");
+                                            using (var stream = File.Open(ScreentimePath, FileMode.Append))
                                             using (var writer = new StreamWriter(stream))
                                             using (var csv = new CsvWriter(writer, config))
                                             {
@@ -234,7 +244,11 @@ namespace TheTracker
                                     };
                                     if (Fileexists == false)
                                     {
-                                        using (var writer = new StreamWriter("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Storage7.csv"))
+                                        string documentPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                                        string directoryPath = Path.Combine(documentsPath, "TrackIt");
+                                        string ScreentimePath = Path.Combine(directoryPath, "ScreentimeData.csv");
+                                        Directory.CreateDirectory(directoryPath);
+                                        using (var writer = new StreamWriter(ScreentimePath))
                                         using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
                                         {
                                             csv.WriteRecords(records);
@@ -247,7 +261,10 @@ namespace TheTracker
                                         {
                                             HasHeaderRecord = false,
                                         };
-                                        using (var stream = File.Open("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Storage7.csv", FileMode.Append))
+                                        string documentPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                                        string directoryPath = Path.Combine(documentsPath, "TrackIt");
+                                        string ScreentimePath = Path.Combine(directoryPath, "ScreentimeData.csv");
+                                        using (var stream = File.Open(ScreentimePath, FileMode.Append))
                                         using (var writer = new StreamWriter(stream))
                                         using (var csv = new CsvWriter(writer, config))
                                         {
@@ -261,8 +278,10 @@ namespace TheTracker
                             }
                         }
                     }
+                    string DocumentedPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                    string ScreentimesPath = Path.Combine(documentsPath, "TrackIt", "ScreentimeData.csv");
                     Dictionary<string, ScreentimeStats> mergedRecords = new Dictionary<string, ScreentimeStats>();
-                    using (var reader = new StreamReader("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Storage7.csv"))
+                    using (var reader = new StreamReader(ScreentimesPath))
                     using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                     {
                         var records = csv.GetRecords<ScreentimeStats>().ToList();
@@ -280,118 +299,136 @@ namespace TheTracker
                             }
                         }
                     }
-                    using (var writer = new StreamWriter("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Storage7.csv"))
+                    using (var writer = new StreamWriter(ScreentimesPath))
                     using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
                     {
                         csv.WriteRecords(mergedRecords.Values);
                     }
-                    var limitRecords = new Dictionary<string, long>(); // Dictionary to store the limits
-                    using (var reader = new StreamReader("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Limits.csv"))
-                    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                    try
                     {
-                        var limits = csv.GetRecords<ScreentimeLimits>();
-                        foreach (var limit in limits)
+                        var limitRecords = new Dictionary<string, long>(); // Dictionary to store the limits
+                        string UserDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                        string LimitsPath = Path.Combine(documentsPath, "TrackIt", "Limits.csv");
+                        using (var reader = new StreamReader(LimitsPath))
+                        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                         {
-                            limitRecords[limit.ApplicationName] = limit.ScreenTimeLimit;
-                        }
-                    }
-
-                    var currentDate = DateTime.Today;
-                    var usageRecords = new Dictionary<string, long>();
-                    using (var reader = new StreamReader("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\Storage7.csv"))
-                    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-                    {
-                        var usages = csv.GetRecords<ScreentimeStats>()
-                                         .Where(record => record.DateCollected.Date == currentDate);
-                        foreach (var usage in usages)
-                        {
-                            if (usageRecords.ContainsKey(usage.ApplicationName))
+                            var limits = csv.GetRecords<ScreentimeLimits>();
+                            foreach (var limit in limits)
                             {
-                                usageRecords[usage.ApplicationName] += usage.ScreenTimeCollect;
-                            }
-                            else
-                            {
-                                usageRecords[usage.ApplicationName] = usage.ScreenTimeCollect;
+                                limitRecords[limit.ApplicationName] = limit.ScreenTimeLimit;
                             }
                         }
-                    }
 
-                    foreach (var usageRecord in usageRecords)
-                    {
-                        string applicationName = usageRecord.Key;
-                        long screenTime = usageRecord.Value;
-
-                        if (limitRecords.ContainsKey(applicationName))
+                        var currentDate = DateTime.Today;
+                        var usageRecords = new Dictionary<string, long>();
+                        using (var reader = new StreamReader(ScreentimesPath))
+                        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                         {
-                            IntPtr CurrentWindow1 = GetForegroundWindow();
-                            long screenTimeLimit = limitRecords[applicationName];
-                            int textLength = GetWindowTextLength(CurrentWindow1);
-                            StringBuilder ApplicationNames = new StringBuilder(textLength + 1);
-                            GetWindowText(CurrentWindow1, ApplicationNames, ApplicationNames.Capacity);
-                            String ApplicationNamed = ApplicationNames.ToString();
-                            if (screenTime > screenTimeLimit & ApplicationNamed == applicationName)
+                            var usages = csv.GetRecords<ScreentimeStats>()
+                                             .Where(record => record.DateCollected.Date == currentDate);
+                            foreach (var usage in usages)
                             {
-                                const int WM_CLOSE = 0x10;
-                                SendMessage(CurrentWindow1, WM_CLOSE, 0, 0);
-                                new ToastContentBuilder()
-                                .AddArgument("action", "viewConversation")
-                                .AddArgument("conversationId", 9813)
-                                .AddText($"Screen time limit exceeded for {applicationName}.")
-                                .AddText("Wait until tomorrow or turn off screentime limits.")
-                                .Show();
-                            }
-                            if (screenTimeLimit - screenTime < 600000 & screenTimeLimit - screenTime > 590001 & ApplicationNamed == applicationName)
-                            {
-                                new ToastContentBuilder()
-                                .AddArgument("action", "viewConversation")
-                                .AddArgument("conversationId", 9813)
-                                .AddText($"Within 10 minutes of limit for {applicationName}.")
-                                .AddText("Wrap up what you are doing.")
-                                .Show();
-                            }
-                        }
-                    }
-                    var currentDate1 = DateTime.Now;
-                    var BlacklistRecords = new Dictionary<string, long>();
-                    using (var reader = new StreamReader("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\BlacklistsCombined.csv"))
-                    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-                    {
-                        var Blacklists = csv.GetRecords<BlacklistsRecords>();
-                        foreach (var blacklist in Blacklists)
-                        {
-                            var dateRange = blacklist.DateRange.Split('-');
-                            if (dateRange.Length != 2)
-                            {
-                                continue;
-                            }
-
-                            var startTime = DateTime.Parse(dateRange[0].Trim());
-                            var endTime = DateTime.Parse(dateRange[1].Trim());
-
-                            if (currentDate1 >= startTime && currentDate1 <= endTime)
-                            {
-                                var lockedApplications = blacklist.Applications.Split(',');
-                                IntPtr CurrentWindow2 = GetForegroundWindow();
-                                int textLength = GetWindowTextLength(CurrentWindow2);
-                                StringBuilder ApplicationNames = new StringBuilder(textLength + 1);
-                                GetWindowText(CurrentWindow2, ApplicationNames, ApplicationNames.Capacity);
-                                String ApplicationNamed = ApplicationNames.ToString();
-                                foreach (var application in lockedApplications)
+                                if (usageRecords.ContainsKey(usage.ApplicationName))
                                 {
-                                    if (Convert.ToString(application) == ApplicationNamed)
+                                    usageRecords[usage.ApplicationName] += usage.ScreenTimeCollect;
+                                }
+                                else
+                                {
+                                    usageRecords[usage.ApplicationName] = usage.ScreenTimeCollect;
+                                }
+                            }
+                        }
+
+                        foreach (var usageRecord in usageRecords)
+                        {
+                            string applicationName = usageRecord.Key;
+                            long screenTime = usageRecord.Value;
+
+                            if (limitRecords.ContainsKey(applicationName))
+                            {
+                                IntPtr CurrentWindow1 = GetForegroundWindow();
+                                long screenTimeLimit = limitRecords[applicationName];
+                                int textLength = GetWindowTextLength(CurrentWindow1);
+                                StringBuilder ApplicationNames = new StringBuilder(textLength + 1);
+                                GetWindowText(CurrentWindow1, ApplicationNames, ApplicationNames.Capacity);
+                                String ApplicationNamed = ApplicationNames.ToString();
+                                if (screenTime > screenTimeLimit & ApplicationNamed == applicationName)
+                                {
+                                    const int WM_CLOSE = 0x10;
+                                    SendMessage(CurrentWindow1, WM_CLOSE, 0, 0);
+                                    new ToastContentBuilder()
+                                    .AddArgument("action", "viewConversation")
+                                    .AddArgument("conversationId", 9813)
+                                    .AddText($"Screen time limit exceeded for {applicationName}.")
+                                    .AddText("Wait until tomorrow or turn off screentime limits.")
+                                    .Show();
+                                }
+                                if (screenTimeLimit - screenTime < 600000 & screenTimeLimit - screenTime > 590001 & ApplicationNamed == applicationName)
+                                {
+                                    new ToastContentBuilder()
+                                    .AddArgument("action", "viewConversation")
+                                    .AddArgument("conversationId", 9813)
+                                    .AddText($"Within 10 minutes of limit for {applicationName}.")
+                                    .AddText("Wrap up what you are doing.")
+                                    .Show();
+                                }
+                            }
+                        }
+                    }
+                    catch
+                    {
+
+                    }
+                    try
+                    {
+                        var currentDate1 = DateTime.Now;
+                        var BlacklistRecords = new Dictionary<string, long>();
+                        string BlacklistsDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                        string BlacklistsPath = Path.Combine(documentsPath, "TrackIt", "BlacklistsCombined.csv");
+                        using (var reader = new StreamReader(BlacklistsPath))
+                        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                        {
+                            var Blacklists = csv.GetRecords<BlacklistsRecords>();
+                            foreach (var blacklist in Blacklists)
+                            {
+                                var dateRange = blacklist.DateRange.Split('-');
+                                if (dateRange.Length != 2)
+                                {
+                                    continue;
+                                }
+
+                                var startTime = DateTime.Parse(dateRange[0].Trim());
+                                var endTime = DateTime.Parse(dateRange[1].Trim());
+
+                                if (currentDate1 >= startTime && currentDate1 <= endTime)
+                                {
+                                    var lockedApplications = blacklist.Applications.Split(',');
+                                    IntPtr CurrentWindow2 = GetForegroundWindow();
+                                    int textLength = GetWindowTextLength(CurrentWindow2);
+                                    StringBuilder ApplicationNames = new StringBuilder(textLength + 1);
+                                    GetWindowText(CurrentWindow2, ApplicationNames, ApplicationNames.Capacity);
+                                    String ApplicationNamed = ApplicationNames.ToString();
+                                    foreach (var application in lockedApplications)
                                     {
-                                        const int WM_CLOSE = 0x10;
-                                        SendMessage(CurrentWindow2, WM_CLOSE, 0, 0);
-                                        new ToastContentBuilder()
-                                        .AddArgument("action", "viewConversation") 
-                                        .AddArgument("conversationId", 9813)
-                                        .AddText($"{application} is on the " + blacklist.BlacklistName + " blacklist")
-                                        .AddText("please wait until " + endTime.TimeOfDay + ".")
-                                        .Show();
+                                        if (Convert.ToString(application) == ApplicationNamed)
+                                        {
+                                            const int WM_CLOSE = 0x10;
+                                            SendMessage(CurrentWindow2, WM_CLOSE, 0, 0);
+                                            new ToastContentBuilder()
+                                            .AddArgument("action", "viewConversation")
+                                            .AddArgument("conversationId", 9813)
+                                            .AddText($"{application} is on the " + blacklist.BlacklistName + " blacklist")
+                                            .AddText("please wait until " + endTime.TimeOfDay + ".")
+                                            .Show();
+                                        }
                                     }
                                 }
                             }
                         }
+                    }
+                    catch
+                    {
+
                     }
                 }
                 catch(Exception ex)
