@@ -1,0 +1,28 @@
+﻿<Window x:Class="TrackIt.DeleteLimits"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TrackIt"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="TrackIt" SizeToContent="WidthAndHeight" MinWidth="428" MinHeight="740" ResizeMode="NoResize">
+    <Canvas Focusable="true" Background="#75A0D8">
+        <TextBlock TextAlignment ="Center" Name="PasswordLabel" Height="48" Width="324" Text="Delete Blacklist" FontFamily="Calibri" FontSize="30" Foreground="Black" Canvas.Left="52" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="10"/>
+        <TextBlock x:Name="EnterPasswordInfo" TextAlignment ="Center" Height="31" Width="176" FontFamily="Calibri" FontSize="20" Foreground="Black" Canvas.Left="126" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Top="101"><Run Text="Enter Password"/></TextBlock>
+        <PasswordBox MaxLength="20" Name="Password" Height="45" Width="202" Canvas.Left="113" Canvas.Top="137" Background="#E9DBDB" HorizontalAlignment="Center" VerticalAlignment="Center"></PasswordBox>
+        <TextBlock x:Name="Warning" TextAlignment ="Center" Height="40" Width="176" FontFamily="Calibri" FontSize="30" Foreground="DarkRed" Canvas.Left="126" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="362"><Run Text="Warning"/></TextBlock>
+        <TextBlock x:Name="Disclaimer" TextAlignment ="Center" Height="64" Width="340" FontFamily="Calibri" FontSize="20" Foreground="Black" Canvas.Left="44" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Top="417"><Run Text="Confirming will remove all your set."/><LineBreak/><Run/><Run Text="application limits."/><LineBreak/></TextBlock>
+        <Button Name="Confirm" Click="ConfirmButtonClick" Height="43" Width ="124" Canvas.Top="482" Background="#5FB72E" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Calibri" FontSize="20" Content="Confirm" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="152">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Border Background="#5FB72E" CornerRadius="20"/>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Button Name="Back" Click="BackButtonClick" Height="43" Width ="124" Canvas.Top="665" Background="#E14026" Foreground="#000000" BorderBrush="Transparent" BorderThickness="0" FontFamily="Calibri" FontSize="20" Content="Back" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="0"/>
+    </Canvas>
+</Window>

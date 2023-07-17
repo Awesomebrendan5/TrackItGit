@@ -5,6 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
         xmlns:vms="clr-namespace:TrackIt.ViewModelsSamples.Bars.Basic"
+        xmlns:vmd="clr-namespace:TrackIt.ViewModelsSamples.Bars.Basic1"
+        xmlns:vme="clr-namespace:TrackIt.ViewModelsSamples.Bars.Basic2"
+        xmlns:vmf="clr-namespace:TrackIt.ViewModelsSamples.Bars.Basic3"
         mc:Ignorable="lvc"
         WindowState="Maximized"
         WindowStyle="None"
@@ -23,8 +26,17 @@
         <TextBlock Name = "ScreenTimeLabel" Height="61" Width="272" Text="ScreenTime" FontFamily="Narkisim" Canvas.Left="947" FontSize="50" Canvas.Top="24" HorizontalAlignment="Left" VerticalAlignment="Center" ></TextBlock>
         <Label Name ="AddApplicationLabel" Height="69" Width="158" Content="Applications &#xD;&#xA;Not to Track" FontFamily="Narkisim" Canvas.Left="1662" FontSize="27" Canvas.Top="62" HorizontalAlignment="Center" VerticalAlignment="Top" />
         <Image Name="BlacklistBox" Height="755" Canvas.Left="1608" Source="Images/BlacklistBox.png" Stretch="Fill" Canvas.Top="136" Width="272" HorizontalAlignment="Left" VerticalAlignment="Top" Opacity="100"/>
-        <Button Name ="AddApplicationButton" Click="AddApplicationClick" Content="Add Application" Canvas.Left="1628" Canvas.Top="812" Height="52" Width="227" Background="#5FB72E" FontSize="30" FontFamily="Narkism" HorizontalAlignment="Left" VerticalAlignment="Center"></Button>
-        <Button Name ="CreateDailyUseLimit" Click="CreateDailyUseClick" Content="Set Daily Usage Limit" Canvas.Left="1592" Canvas.Top="964" Height="60" Width="298" Background="#5FB72E" FontSize="30" FontFamily="Narkism" HorizontalAlignment="Left" VerticalAlignment="Top"></Button>
+        <Button Name ="AddApplicationButton" Click="AddApplicationClick" Content="Add Application" Canvas.Left="1628" Canvas.Top="812" Height="52" Width="227" Background="#5FB72E" FontSize="30" FontFamily="Narkism" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Border Background="#5FB72E" CornerRadius="25"/>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Button Name ="CreateDailyUseLimit" Click="CreateDailyUseClick" Content="Set Daily Usage Limit" Canvas.Left="1622" Canvas.Top="1020" Height="60" Width="298" Background="#5FB72E" FontSize="30" FontFamily="Narkism" HorizontalAlignment="Left" VerticalAlignment="Top"></Button>
         <UserControl Name="Chart" Height="387" Width="584" Canvas.Left="350" Canvas.Top="97">
             <UserControl.DataContext>
                 <vms:ViewModel/>
@@ -41,7 +53,7 @@
         </UserControl>
         <UserControl Name="Chart1" Height="387" Width="584" Canvas.Left="1000" Canvas.Top="97">
             <UserControl.DataContext>
-                <vms:ViewModel/>
+                <vmd:ViewModel/>
             </UserControl.DataContext>
             <lvc:CartesianChart
      Focusable="True"
@@ -55,7 +67,7 @@
         </UserControl>
         <UserControl Name="Chart2" Height="387" Width="584" Canvas.Left="350" Canvas.Top="607">
             <UserControl.DataContext>
-                <vms:ViewModel/>
+                <vme:ViewModel/>
             </UserControl.DataContext>
             <lvc:CartesianChart
      Focusable="True"
@@ -69,7 +81,7 @@
         </UserControl>
         <UserControl Name="Chart3" Height="387" Width="584" Canvas.Left="1000" Canvas.Top="607">
             <UserControl.DataContext>
-                <vms:ViewModel/>
+                <vmf:ViewModel/>
             </UserControl.DataContext>
             <lvc:CartesianChart
      Focusable="True"

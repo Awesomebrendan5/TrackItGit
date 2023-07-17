@@ -1,7 +1,13 @@
-﻿using System;
+﻿using CsvHelper;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using static System.Net.Mime.MediaTypeNames;
+using static TheTracker.TheTrackerService;
 
 namespace TrackIt
 {
@@ -10,14 +16,21 @@ namespace TrackIt
     /// </summary>
     public partial class CalendarMenu : Window
     {
+        bool Fileexists;
+        public class BlacklistsRecords
+        {
+            public string EventName { get; set; }
+            public string BlacklistName { get; set; }
+            public string Applications { get; set; }
+
+            public string DateRange { get; set; }
+        }
         public CalendarMenu()
         {
             InitializeComponent();
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             WindowState = WindowState.Maximized;
-            {
-                
-            }
+            ListofBlacklists();
             if (SystemParameters.PrimaryScreenHeight != 1080)
             {
                 Line.Height = SystemParameters.PrimaryScreenHeight * 1;
@@ -105,6 +118,12 @@ namespace TrackIt
                 BlacklistLabel.FontSize = (50 * SystemParameters.PrimaryScreenHeight / 1080);
                 BlacklistLabel.SetValue(Canvas.LeftProperty, 1636 * (SystemParameters.PrimaryScreenWidth / 1920));
 
+                BlacklistList.SetValue(Canvas.TopProperty, 306 * (SystemParameters.PrimaryScreenHeight / 1080));
+                BlacklistList.Height = SystemParameters.PrimaryScreenHeight * 0.5296;
+                BlacklistList.Width = SystemParameters.PrimaryScreenWidth * 0.1188;
+                BlacklistList.FontSize = (20 * SystemParameters.PrimaryScreenHeight / 1080);
+                BlacklistList.SetValue(Canvas.LeftProperty, 1624 * (SystemParameters.PrimaryScreenWidth / 1920));
+
             }
         }
         void CalendarButtonClick(object sender, RoutedEventArgs e)
@@ -147,10 +166,9 @@ namespace TrackIt
             }
         }
 
-            void Calendar_SelectedDatesChanged(object sender,
-               SelectionChangedEventArgs e)
+            void Calendar_SelectedDatesChanged(object sender,SelectionChangedEventArgs e)
                 {
-                    var calendar = sender as Calendar;
+                    var calendar = sender as System.Windows.Controls.Calendar;
                     Properties.Settings.Default.DatePicked = calendar.SelectedDate.Value;
                     
                     if (calendar.SelectedDate.HasValue)
@@ -164,8 +182,41 @@ namespace TrackIt
                             newForm.Show();
                         }
                     }
+                 }
+        void ListofBlacklists()
+        {
+            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string directoryPath = Path.Combine(documentsPath, "TrackIt");
+            string FilePath = Path.Combine(directoryPath, "BlacklistsCombined.csv");
+            if (File.Exists(FilePath))
+            {
+                Fileexists = true;
+            }
+            else
+            {
+                Fileexists = false;
+            }
+            if (Fileexists == true)
+            {
+                var BlacklistRecords = new Dictionary<string, long>();
+                var uniqueBlacklistNames = new HashSet<string>();
+                using (var reader = new StreamReader(FilePath))
+                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                {
+                    var Blacklists = csv.GetRecords<BlacklistsRecords>();
+                    foreach (var blacklist in Blacklists)
+                    {
+                        var name = blacklist.BlacklistName;
+                        if (!uniqueBlacklistNames.Contains(name))
+                        {
+                            BlacklistList.Items.Add(name);
+                            uniqueBlacklistNames.Add(name);
+                        }
+                    }
                 }
-
+            }
         }
+
     }
+}
 

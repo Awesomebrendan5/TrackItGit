@@ -9,6 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Drawing.Drawing2D;
+using System.Windows.Shapes;
+using System.Globalization;
+using static TrackIt.BlacklistCreation;
 
 namespace TrackIt
 {
@@ -17,6 +20,8 @@ namespace TrackIt
     /// </summary>
     public partial class BlacklistCreation : Window
     {
+        public bool Fileexists;
+        private List<string> ListofApps;
         [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         static extern IntPtr GetForegroundWindow();
         [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
@@ -26,21 +31,22 @@ namespace TrackIt
         public BlacklistCreation()
         {
             InitializeComponent();
+            ListofApps = new List<string>();
             ListofApplications();
             Screenscale();
         }
         public class Blacklists
         {
             public string BlacklistName { get; set; }
-            public string ApplicationName { get; set; }
+            public string Applications { get; set; }
         }
 
         void Screenscale()
         {
             if (SystemParameters.PrimaryScreenHeight != 1080)
             {
-                Height = SystemParameters.PrimaryScreenHeight * 0.6667;
-                Width = SystemParameters.PrimaryScreenWidth * 0.2229;
+                MinHeight = SystemParameters.PrimaryScreenHeight * (740.0 / 1080.0);
+                MinWidth = SystemParameters.PrimaryScreenWidth * 0.2229;
 
                 BlacklistBox.SetValue(Canvas.TopProperty, 10 * (SystemParameters.PrimaryScreenHeight / 1080));
                 BlacklistBox.Height = SystemParameters.PrimaryScreenHeight * 0.0445;
@@ -77,11 +83,12 @@ namespace TrackIt
                 Confirm.SetValue(Canvas.LeftProperty, 152 * (SystemParameters.PrimaryScreenWidth / 1920));
                 Confirm.FontSize = (20 * SystemParameters.PrimaryScreenHeight / 1080);
 
-                Back.SetValue(Canvas.TopProperty, 651 * (SystemParameters.PrimaryScreenHeight / 1080));
-                Back.Height = SystemParameters.PrimaryScreenHeight * 0.0398;
-                Back.Width = SystemParameters.PrimaryScreenWidth * 0.0646;
-                Back.SetValue(Canvas.LeftProperty, -4 * (SystemParameters.PrimaryScreenWidth / 1920));
+                Back.SetValue(Canvas.TopProperty, 665 * (SystemParameters.PrimaryScreenHeight / 1080));
+                Back.Height = SystemParameters.PrimaryScreenHeight * (43.0 / 1080.0);
+                Back.Width = SystemParameters.PrimaryScreenWidth * (124.0 / 1920.0);
+                Back.SetValue(Canvas.LeftProperty, 0 * (SystemParameters.PrimaryScreenWidth / 1920));
                 Back.FontSize = (20 * SystemParameters.PrimaryScreenHeight / 1080);
+
             }
         }
 
@@ -98,21 +105,50 @@ namespace TrackIt
                 if (Applications.SelectedItem != null && EnterBlacklistName.Text != null)
                 {
                     string BlacklistName = EnterBlacklistName.Text;
-                    string filePath = "C:\\Users\\brend\\source\\repos\\TrackIt\\"+BlacklistName + ".txt";
-                    string messageBoxText = filePath;
-                    string caption = "Word Processor";
-                    MessageBoxButton button = MessageBoxButton.YesNoCancel;
-                    MessageBoxImage icon = MessageBoxImage.Warning;
-                    MessageBoxResult result;
-
-                    result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
-                    using (StreamWriter writer = new StreamWriter(filePath))
+                    ListofApps.Clear();
+                    string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                    string directoryPath = System.IO.Path.Combine(documentsPath, "TrackIt");
+                    string FilePath = System.IO.Path.Combine(directoryPath, "Blacklists.csv");
+                    if (File.Exists(FilePath))
                     {
-                        foreach (var item in Applications.SelectedItems)
+                        Fileexists = true;
+                    }
+                    else
+                    {
+                        Fileexists = false;
+                    }
+                    foreach (var item in Applications.SelectedItems)
+                    {
+                        ListofApps.Add(item.ToString());
+                    }
+                    var records = new List<Blacklists>();
+                    records.Add(new Blacklists { BlacklistName = BlacklistName, Applications = string.Join(",", ListofApps) });
+                    if (Fileexists == false)
+                    {
+                        Directory.CreateDirectory(directoryPath);
+                        using (var writer = new StreamWriter(FilePath))
+                        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
                         {
-                            writer.WriteLine(item.ToString());
+                            csv.WriteRecords(records);
+                        }
+                        Fileexists = true;
+                    }
+                    if (Fileexists == true)
+                    {
+                        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+                        {
+                            HasHeaderRecord = false,
+                        };
+                        using (var stream = File.Open(FilePath, FileMode.Append))
+                        using (var writer = new StreamWriter(stream))
+                        using (var csv = new CsvWriter(writer, config))
+                        {
+                            csv.WriteRecords(records);
                         }
                     }
+                    var newForm = new BlacklistSaved();
+                    newForm.Show();
+                    this.Close();
                 }
             }
         }

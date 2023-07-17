@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net6.0-windows10.0.17763.0</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -17,12 +17,14 @@
     <None Remove="Images\Password.png" />
     <None Remove="Images\PasswordBox.png" />
     <None Remove="Images\Screentime.png" />
+    <None Remove="Images\Settings.png" />
     <None Remove="Images\Splashscreen.png" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
     <PackageReference Include="CsvHelper" Version="30.0.1" />
+    <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0" />
     <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.0-beta.701" />
   </ItemGroup>
 
@@ -39,6 +41,7 @@
     <Resource Include="Images\Password.png" />
     <Resource Include="Images\PasswordBox.png" />
     <Resource Include="Images\Screentime.png" />
+    <Resource Include="Images\Settings.png" />
   </ItemGroup>
 
   <ItemGroup>

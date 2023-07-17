@@ -5,7 +5,7 @@ VisualStudioVersion = 17.1.32414.318
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackIt", "TrackIt\TrackIt.csproj", "{316EED45-96D0-4F01-BEB2-2F04DDE17D8D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp12", "ConsoleApp12\ConsoleApp12.csproj", "{672FF17C-C8B1-4B89-B70B-9CBB0F93B10E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrackItMonitor", "ConsoleApp12\TrackItMonitor.csproj", "{672FF17C-C8B1-4B89-B70B-9CBB0F93B10E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
