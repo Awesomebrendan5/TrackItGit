@@ -97,19 +97,6 @@ namespace TrackIt
                     }
                     var records = new List<ApplicationsNotToMonitor>();
                     records.Add(new ApplicationsNotToMonitor {Apps = string.Join(",", ListofApps) });
-                    if (Fileexists == false)
-                    {
-                        Directory.CreateDirectory(directoryPath);
-                        using (var writer = new StreamWriter(FilePath))
-                        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-                        {
-                            csv.WriteRecords(records);
-                        }
-                        Fileexists = true;
-                        var newForm = new ApplicationAdded();
-                        newForm.Show();
-                        this.Close();
-                    }
                     if (Fileexists == true)
                     {
                         var config = new CsvConfiguration(CultureInfo.InvariantCulture)
@@ -126,6 +113,19 @@ namespace TrackIt
                         newForm.Show();
                         this.Close();
                     }
+                    if (Fileexists == false)
+                    {
+                        Directory.CreateDirectory(directoryPath);
+                        using (var writer = new StreamWriter(FilePath))
+                        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                        {
+                            csv.WriteRecords(records);
+                        }
+                        Fileexists = true;
+                        var newForm = new ApplicationAdded();
+                        newForm.Show();
+                        this.Close();
+                    }
                 }
             }
         }
@@ -136,6 +136,7 @@ namespace TrackIt
         }
         void Add_AnotherClick(object sender, RoutedEventArgs e)
         {
+            Properties.Settings.Default.MiniWindowOpened1 = true;
             var newForm = new AddMoreApplications();
             newForm.Show();
             this.Close();

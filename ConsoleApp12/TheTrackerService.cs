@@ -287,6 +287,12 @@ namespace TheTracker
                                     OldOpenWindow = NewOpenWindow;
                                 }
                             }
+                            if (ApplicationNamed.Contains("Lock Screen"))
+                            {
+                                ScreenTimer.Restart();
+                                CurrentWindow = NewOpenWindow;
+                                OldOpenWindow = NewOpenWindow;
+                            }
                         }
                     }
                     string DocumentedPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);

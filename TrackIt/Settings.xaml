@@ -11,7 +11,7 @@
         Width="1920"
         Title="TrackIt" >
     <Canvas Name="MainMenu" Focusable="true" Background="#75A0D8">
-        <Button x:Name="Calendar" Click="CalendarButtonClick" Height="54" Width ="170" Canvas.Top="207" RenderTransformOrigin="0.37,-2.518" Background="Transparent" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Narkisim" FontSize="40" Content="Calendar" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="95"/>
+        <Button x:Name="CalendarButton" Click="CalendarButtonClick" Height="54" Width ="170" Canvas.Top="207" RenderTransformOrigin="0.37,-2.518" Background="Transparent" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Narkisim" FontSize="40" Content="Calendar" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="95"/>
         <Image x:Name="Line" Height="1080" Source="/Images/Line.png" Stretch="Fill" Width="6" HorizontalAlignment="Left" Canvas.Left="324" VerticalAlignment="Center"/>
         <Image x:Name ="CalendarIcon" Height="104" Source="/Images/Calendar.png" Stretch="Fill" Width="85" Canvas.Top="182" Canvas.Left="5" HorizontalAlignment="Left" VerticalAlignment="Center" RenderTransformOrigin="0.306,0.539"/>
         <Button x:Name="ScreenTime" Click="ScreenTimeButtonClick" Height="54" Width ="224" Canvas.Top="404" RenderTransformOrigin="0.37,-2.518" Background="Transparent" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Narkisim" FontSize="40" Content="Screentime" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="93"/>
@@ -67,5 +67,6 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
+        <TextBlock Name="Help" Canvas.Left="960" Canvas.Top="757" Text="Helpful Links" FontSize="40" Height="60" Width="246" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
     </Canvas>
 </Window>

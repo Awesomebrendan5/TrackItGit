@@ -73,6 +73,7 @@ namespace TrackIt
         }
         private void NewEventClick(object sender, RoutedEventArgs e)
         {
+            Properties.Settings.Default.MiniWindowOpened1 = true;
             var newForm = new DateCreator();
             newForm.Show();
             this.Close();
@@ -134,6 +135,6 @@ namespace TrackIt
             if (!Fileexists)
             {
             }
-        }
+    }
     }
 }

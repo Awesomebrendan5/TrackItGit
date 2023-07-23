@@ -81,11 +81,11 @@ namespace TrackIt
                 CalendarIcon.Width = SystemParameters.PrimaryScreenWidth * (CalendarIcon.Width / 1920);
                 CalendarIcon.SetValue(Canvas.LeftProperty, 5.0 * (SystemParameters.PrimaryScreenWidth / 1920));
 
-                Calendar.SetValue(Canvas.TopProperty, 207.0 * (SystemParameters.PrimaryScreenHeight / 1080));
-                Calendar.Height = SystemParameters.PrimaryScreenHeight * 0.05;
-                Calendar.Width = SystemParameters.PrimaryScreenWidth * 0.0885;
-                Calendar.FontSize = (40 * SystemParameters.PrimaryScreenHeight / 1080);
-                Calendar.SetValue(Canvas.LeftProperty, 95.0 * (SystemParameters.PrimaryScreenWidth / 1920));
+                CalendarButton.SetValue(Canvas.TopProperty, 207.0 * (SystemParameters.PrimaryScreenHeight / 1080));
+                CalendarButton.Height = SystemParameters.PrimaryScreenHeight * 0.05;
+                CalendarButton.Width = SystemParameters.PrimaryScreenWidth * 0.0885;
+                CalendarButton.FontSize = (40 * SystemParameters.PrimaryScreenHeight / 1080);
+                CalendarButton.SetValue(Canvas.LeftProperty, 95.0 * (SystemParameters.PrimaryScreenWidth / 1920));
 
                 SccreenTimeIcon.SetValue(Canvas.TopProperty, 404.0 * (SystemParameters.PrimaryScreenHeight / 1080));
                 SccreenTimeIcon.Height = SystemParameters.PrimaryScreenHeight * 0.074;
@@ -137,6 +137,18 @@ namespace TrackIt
                 EventList.Width = SystemParameters.PrimaryScreenWidth * 0.2089;
                 EventList.FontSize = (20 * SystemParameters.PrimaryScreenHeight / 1080);
                 EventList.SetValue(Canvas.LeftProperty, 1485 * (SystemParameters.PrimaryScreenWidth / 1920));
+
+                SettingsButton.SetValue(Canvas.TopProperty, 995 * (SystemParameters.PrimaryScreenHeight / 1080));
+                SettingsButton.Height = SystemParameters.PrimaryScreenHeight * 0.05;
+                SettingsButton.Width = SystemParameters.PrimaryScreenWidth * 0.0875;
+                SettingsButton.FontSize = (40 * SystemParameters.PrimaryScreenHeight / 1080);
+                SettingsButton.SetValue(Canvas.LeftProperty, 97 * (SystemParameters.PrimaryScreenWidth / 1920));
+
+                SettingsIcon.SetValue(Canvas.TopProperty, 981 * (SystemParameters.PrimaryScreenHeight / 1080));
+                SettingsIcon.Height = SystemParameters.PrimaryScreenHeight * 0.0713;
+                SettingsIcon.Width = SystemParameters.PrimaryScreenWidth * 0.04167;
+                SettingsIcon.SetValue(Canvas.LeftProperty, 12 * (SystemParameters.PrimaryScreenWidth / 1920));
+
             }
         }
         public void StoreDayRecords()
@@ -402,16 +414,19 @@ namespace TrackIt
             Dictionary<string, ScreentimeStats> mergedRecords = new Dictionary<string, ScreentimeStats>();
             if (File.Exists(FilePath))
             {
+                var today = DateTime.Today;
+                var firstDayOfMonth = new DateTime(today.Year, today.Month, 1);
                 using (var reader = new StreamReader(FilePath))
                 using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                 {
                     var records = csv.GetRecords<ScreentimeStats>().ToList(); ;
+                    records = records.Where(r => r.DateCollected >= firstDayOfMonth && r.DateCollected <= today).ToList();
                     List<ScreentimeStats> alist = records.ToList();
                     foreach (ScreentimeStats record in records)
                     {
                         int weekNumber = CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(record.DateCollected, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
                         int year = record.DateCollected.Year;
-                        string key = $"{record.ApplicationName}_{weekNumber}_{year}";
+                        string key = $"{record.ApplicationName}_{record.DateCollected.Month}_{record.DateCollected.Year}";
                         if (mergedRecords.ContainsKey(key))
                         {
                             // If the key already exists, add the ScreenTimeCollect value to the existing record
@@ -438,10 +453,10 @@ namespace TrackIt
                     using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                     {
                         var records = csv.GetRecords<ScreentimeStats>().ToList();
-                        var today = DateTime.Today;
-                        var pastWeekRecords = records.Where(r => r.DateCollected.Date >= today.AddDays(-31)).ToList();
+                        var today1 = DateTime.Today;
+                        var pastWeekRecords = records.Where(r => r.DateCollected.Date >= today1.AddDays(-31)).ToList();
                         pastWeekRecords.Sort((b, a) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
-                        records = records.Where(r => r.DateCollected.Date == today).ToList();
+                        records = records.Where(r => r.DateCollected.Date == today1).ToList();
                         try
                         {
                             Properties.Settings.Default.k = pastWeekRecords[0].ApplicationName;
@@ -502,10 +517,10 @@ namespace TrackIt
                     using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                     {
                         var records = csv.GetRecords<ScreentimeStats>().ToList();
-                        var today = DateTime.Today;
-                        var pastWeekRecords = records.Where(r => r.DateCollected.Date >= today.AddDays(-31)).ToList();
+                        var today1 = DateTime.Today;
+                        var pastWeekRecords = records.Where(r => r.DateCollected.Date >= today1.AddDays(-31)).ToList();
                         pastWeekRecords.Sort((b, a) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
-                        records = records.Where(r => r.DateCollected.Date == today).ToList();
+                        records = records.Where(r => r.DateCollected.Date == today1).ToList();
                         try
                         {
                             Properties.Settings.Default.k = pastWeekRecords[0].ApplicationName;
@@ -566,14 +581,17 @@ namespace TrackIt
             using (var reader = new StreamReader(FilePath))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
+                var today = DateTime.Today;
+                var oneYearAgo = today.AddYears(-1);
                 var records = csv.GetRecords<ScreentimeStats>().ToList();
+                records = records.Where(r => r.DateCollected >= oneYearAgo && r.DateCollected <= today).ToList();
                 List<ScreentimeStats> alist = records.ToList();
                 foreach (ScreentimeStats record in records)
                 {
                     int weekNumber = CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(record.DateCollected, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
                     int year = record.DateCollected.Year;
-                    string key = $"{record.ApplicationName}_{weekNumber}_{year}";
-                    if (mergedRecords.ContainsKey(key))
+                        string key = $"{record.ApplicationName}_{record.DateCollected.Month}_{record.DateCollected.Year}";
+                        if (mergedRecords.ContainsKey(key))
                     {
                         // If the key already exists, add the ScreenTimeCollect value to the existing record
                         mergedRecords[key].ScreenTimeCollect += record.ScreenTimeCollect;
@@ -628,8 +646,16 @@ namespace TrackIt
                     }
                     catch
                     {
+
+                    }
+                    try
+                    {
                         Properties.Settings.Default.s = pastWeekRecords[3].ApplicationName;
                         Properties.Settings.Default.svalue = (pastWeekRecords[3].ScreenTimeCollect / 60000);
+                    }
+                    catch
+                    {
+
                     }
                     try
                     {
@@ -703,13 +729,6 @@ namespace TrackIt
         }
         void CalendarButtonClick(object sender, RoutedEventArgs e)
         {
-            string messageBoxText = Properties.Settings.Default.e;
-            string caption = "Word Processor";
-            MessageBoxButton button = MessageBoxButton.YesNoCancel;
-            MessageBoxImage icon = MessageBoxImage.Warning;
-            MessageBoxResult result;
-
-            result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
             var newForm = new CalendarMenu();
             newForm.Show();
             this.Close();
@@ -767,7 +786,7 @@ namespace TrackIt
                         var endTime = DateTime.Parse(dateRange[1].Trim());
                         foreach (var events in Blacklists)
                         {
-                            if (startTime.Date == Properties.Settings.Default.DatePicked)
+                            if (startTime.Date == DateTime.Today.Date)
                             {
                                 var name = blacklist.EventName;
                                 EventList.Items.Add(name + " " + startTime.TimeOfDay + " - " + endTime.TimeOfDay);

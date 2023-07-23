@@ -173,12 +173,23 @@ namespace TrackIt
                 Chart3.FontSize = (30 * SystemParameters.PrimaryScreenHeight / 1080);
                 ChartData3.Height = SystemParameters.PrimaryScreenHeight * 0.3472;
                 ChartData3.Width = SystemParameters.PrimaryScreenWidth * 0.3323;
+
+                SettingsButton.SetValue(Canvas.TopProperty, 995 * (SystemParameters.PrimaryScreenHeight / 1080));
+                SettingsButton.Height = SystemParameters.PrimaryScreenHeight * 0.05;
+                SettingsButton.Width = SystemParameters.PrimaryScreenWidth * 0.0875;
+                SettingsButton.FontSize = (40 * SystemParameters.PrimaryScreenHeight / 1080);
+                SettingsButton.SetValue(Canvas.LeftProperty, 97 * (SystemParameters.PrimaryScreenWidth / 1920));
+
+                SettingsIcon.SetValue(Canvas.TopProperty, 981 * (SystemParameters.PrimaryScreenHeight / 1080));
+                SettingsIcon.Height = SystemParameters.PrimaryScreenHeight * 0.0713;
+                SettingsIcon.Width = SystemParameters.PrimaryScreenWidth * 0.04167;
+                SettingsIcon.SetValue(Canvas.LeftProperty, 12 * (SystemParameters.PrimaryScreenWidth / 1920));
             }
 
         }
         void CalendarButtonClick(object sender, RoutedEventArgs e)
         {
-            if (Properties.Settings.Default.MiniWindowOpened == false)
+            if (Properties.Settings.Default.MiniWindowOpened == false & Properties.Settings.Default.MiniWindowOpened1 == false)
             {
                 var newForm = new CalendarMenu();
                 newForm.Show();
@@ -191,7 +202,7 @@ namespace TrackIt
         }
         void PasswordButtonClick(object sender, RoutedEventArgs e)
         {
-            if (Properties.Settings.Default.MiniWindowOpened == false)
+            if (Properties.Settings.Default.MiniWindowOpened == false & Properties.Settings.Default.MiniWindowOpened1 == false)
             {
                 var newForm = new PasswordMenu();
                 newForm.Show();
@@ -200,16 +211,16 @@ namespace TrackIt
         }
         void HomeButtonClick(object sender, RoutedEventArgs e)
         {
-            if (Properties.Settings.Default.MiniWindowOpened == false)
+            if (Properties.Settings.Default.MiniWindowOpened == false & Properties.Settings.Default.MiniWindowOpened1 == false)
             {
                 var newForm = new MainWindow();
                 newForm.Show();
                 this.Close();
             }
         }
-        private void AddApplicationClick(object sender, RoutedEventArgs e)
+        private void AddApplicationClick(object sender, RoutedEventArgs e )
         {
-            if (Properties.Settings.Default.MiniWindowOpened == false)
+            if (Properties.Settings.Default.MiniWindowOpened == false & Properties.Settings.Default.MiniWindowOpened1 == false)
             {
                 Properties.Settings.Default.MiniWindowOpened = true;
                 var newForm = new ApplicationsNotToTrack();
@@ -218,11 +229,20 @@ namespace TrackIt
         }
         private void CreateDailyUseClick(object sender, RoutedEventArgs e)
         {
-            if (Properties.Settings.Default.MiniWindowOpened == false)
+            if (Properties.Settings.Default.MiniWindowOpened == false & Properties.Settings.Default.MiniWindowOpened1 == false)
             {
                 Properties.Settings.Default.MiniWindowOpened = true;
                 var newForm = new DailyApplicationLimitCreator();
                 newForm.Show();
+            }
+        }
+        private void SettingsButtonClick(object sender, RoutedEventArgs e)
+        {
+            if (Properties.Settings.Default.MiniWindowOpened == false & Properties.Settings.Default.MiniWindowOpened1 == false)
+            {
+                var newForm = new Settings();
+                newForm.Show();
+                this.Close();
             }
         }
     }

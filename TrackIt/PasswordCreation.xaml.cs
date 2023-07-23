@@ -13,12 +13,6 @@ namespace TrackIt
         {
             InitializeComponent();
             Screenscale();
-            Resizer();
-        }
-
-        void Resizer()
-        {
-
         }
         void Screenscale()
         {

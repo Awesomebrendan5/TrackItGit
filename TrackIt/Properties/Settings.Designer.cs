@@ -595,5 +595,17 @@ namespace TrackIt.Properties {
                 this["tvalue"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool MiniWindowOpened1 {
+            get {
+                return ((bool)(this["MiniWindowOpened1"]));
+            }
+            set {
+                this["MiniWindowOpened1"] = value;
+            }
+        }
     }
 }

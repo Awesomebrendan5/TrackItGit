@@ -8,7 +8,7 @@
         WindowStartupLocation="CenterScreen"
         Title="TrackIt" SizeToContent="WidthAndHeight" MinWidth="428" MinHeight="740" ResizeMode="NoResize">
     <Canvas Focusable="true" Background="#75A0D8">
-        <TextBlock TextAlignment ="Center" Name="PasswordLabel" Height="48" Width="324" Text="Delete Blacklist" FontFamily="Calibri" FontSize="30" Foreground="Black" Canvas.Left="52" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="10"/>
+        <TextBlock TextAlignment ="Center" Name="PasswordLabel" Height="48" Width="324" Text="Delete Blacklists" FontFamily="Calibri" FontSize="30" Foreground="Black" Canvas.Left="52" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="10"/>
         <TextBlock x:Name="EnterPasswordInfo" TextAlignment ="Center" Height="31" Width="176" FontFamily="Calibri" FontSize="20" Foreground="Black" Canvas.Left="126" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Top="101"><Run Text="Enter Password"/></TextBlock>
         <PasswordBox MaxLength="20" Name="Password" Height="45" Width="202" Canvas.Left="113" Canvas.Top="137" Background="#E9DBDB" HorizontalAlignment="Center" VerticalAlignment="Center"></PasswordBox>
         <TextBlock x:Name="Warning" TextAlignment ="Center" Height="40" Width="176" FontFamily="Calibri" FontSize="30" Foreground="DarkRed" Canvas.Left="126" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="362"><Run Text="Warning"/></TextBlock>

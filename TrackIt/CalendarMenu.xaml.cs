@@ -19,11 +19,8 @@ namespace TrackIt
         bool Fileexists;
         public class BlacklistsRecords
         {
-            public string EventName { get; set; }
             public string BlacklistName { get; set; }
             public string Applications { get; set; }
-
-            public string DateRange { get; set; }
         }
         public CalendarMenu()
         {
@@ -124,6 +121,17 @@ namespace TrackIt
                 BlacklistList.FontSize = (20 * SystemParameters.PrimaryScreenHeight / 1080);
                 BlacklistList.SetValue(Canvas.LeftProperty, 1624 * (SystemParameters.PrimaryScreenWidth / 1920));
 
+                SettingsButton.SetValue(Canvas.TopProperty, 995 * (SystemParameters.PrimaryScreenHeight / 1080));
+                SettingsButton.Height = SystemParameters.PrimaryScreenHeight * 0.05;
+                SettingsButton.Width = SystemParameters.PrimaryScreenWidth * 0.0875;
+                SettingsButton.FontSize = (40 * SystemParameters.PrimaryScreenHeight / 1080);
+                SettingsButton.SetValue(Canvas.LeftProperty, 97 * (SystemParameters.PrimaryScreenWidth / 1920));
+
+                SettingsIcon.SetValue(Canvas.TopProperty, 981 * (SystemParameters.PrimaryScreenHeight / 1080));
+                SettingsIcon.Height = SystemParameters.PrimaryScreenHeight * 0.0713;
+                SettingsIcon.Width = SystemParameters.PrimaryScreenWidth * 0.04167;
+                SettingsIcon.SetValue(Canvas.LeftProperty, 12 * (SystemParameters.PrimaryScreenWidth / 1920));
+
             }
         }
         void CalendarButtonClick(object sender, RoutedEventArgs e)
@@ -131,7 +139,7 @@ namespace TrackIt
         }
         void ScreenTimeButtonClick(object sender, RoutedEventArgs e)
         {
-            if (Properties.Settings.Default.MiniWindowOpened == false)
+            if (Properties.Settings.Default.MiniWindowOpened == false & Properties.Settings.Default.MiniWindowOpened1 == false)
             {
                 var newForm = new ScreentimeMenu();
                 newForm.Show();
@@ -140,7 +148,7 @@ namespace TrackIt
         }
         void PasswordButtonClick(object sender, RoutedEventArgs e)
         {
-            if (Properties.Settings.Default.MiniWindowOpened == false)
+            if (Properties.Settings.Default.MiniWindowOpened == false & Properties.Settings.Default.MiniWindowOpened1 == false)
             {
                 var newForm = new PasswordMenu();
                 newForm.Show();
@@ -149,7 +157,7 @@ namespace TrackIt
         }
         void HomeButtonClick(object sender, RoutedEventArgs e)
         {
-            if (Properties.Settings.Default.MiniWindowOpened == false)
+            if (Properties.Settings.Default.MiniWindowOpened == false & Properties.Settings.Default.MiniWindowOpened1 == false)
             {
                 var newForm = new MainWindow();
                 newForm.Show();
@@ -158,7 +166,7 @@ namespace TrackIt
         }
         void CreateBlacklistClick(object sender, RoutedEventArgs e)
         {
-            if (Properties.Settings.Default.MiniWindowOpened == false)
+            if (Properties.Settings.Default.MiniWindowOpened == false & Properties.Settings.Default.MiniWindowOpened1 == false)
             {
              var newForm = new BlacklistCreation();
              Properties.Settings.Default.MiniWindowOpened = true;
@@ -175,7 +183,7 @@ namespace TrackIt
                     {
                         DateTime dt = calendar.SelectedDate.Value;
                         Properties.Settings.Default.DatePicked = dt;
-                        if (Properties.Settings.Default.MiniWindowOpened == false)
+                        if (Properties.Settings.Default.MiniWindowOpened == false & Properties.Settings.Default.MiniWindowOpened1 == false)
                         {
                             Properties.Settings.Default.MiniWindowOpened = true;
                             var newForm = new Scheduler();
@@ -187,7 +195,7 @@ namespace TrackIt
         {
             string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             string directoryPath = Path.Combine(documentsPath, "TrackIt");
-            string FilePath = Path.Combine(directoryPath, "BlacklistsCombined.csv");
+            string FilePath = Path.Combine(directoryPath, "Blacklists.csv");
             if (File.Exists(FilePath))
             {
                 Fileexists = true;
@@ -214,6 +222,15 @@ namespace TrackIt
                         }
                     }
                 }
+            }
+        }
+        private void SettingsButtonClick(object sender, RoutedEventArgs e)
+        {
+            if (Properties.Settings.Default.MiniWindowOpened == false & Properties.Settings.Default.MiniWindowOpened1 == false)
+            {
+                var newForm = new Settings();
+                newForm.Show();
+                this.Close();
             }
         }
 

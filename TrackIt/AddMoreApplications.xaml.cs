@@ -90,19 +90,6 @@ namespace TrackIt
 
                 new ApplicationsNotToMonitor { Apps = ApplicationNamed}
                 };
-                if (Fileexists == false)
-                {
-                    Directory.CreateDirectory(directoryPath);
-                    using (var writer = new StreamWriter(FilePath))
-                    using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-                    {
-                        csv.WriteRecords(records);
-                    }
-                    Fileexists = true;
-                    var newForm = new ApplicationAdded();
-                    newForm.Show();
-                    this.Close();
-                }
                 if (Fileexists == true)
                 {
                     var config = new CsvConfiguration(CultureInfo.InvariantCulture)
@@ -119,12 +106,29 @@ namespace TrackIt
                     newForm.Show();
                     this.Close();
                 }
-
+                if (Fileexists == false)
+                {
+                    Directory.CreateDirectory(directoryPath);
+                    using (var writer = new StreamWriter(FilePath))
+                    using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                    {
+                        csv.WriteRecords(records);
+                    }
+                    Fileexists = true;
+                    var newForm = new ApplicationAdded();
+                    newForm.Show();
+                    this.Close();
+                }
             }
         }
         private void BackButtonClick(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            Properties.Settings.Default.MiniWindowOpened1 = false;
+            Properties.Settings.Default.Save();
         }
     }
 }

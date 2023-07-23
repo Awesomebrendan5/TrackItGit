@@ -99,6 +99,17 @@ namespace TrackIt
                 ForgotPasswordButton.Height = SystemParameters.PrimaryScreenHeight * 0.0481;
                 ForgotPasswordButton.Width = SystemParameters.PrimaryScreenWidth * 0.1365;
                 ForgotPasswordButton.SetValue(Canvas.LeftProperty, 1000 * (SystemParameters.PrimaryScreenWidth / 1920));
+
+                SettingsButton.SetValue(Canvas.TopProperty, 995 * (SystemParameters.PrimaryScreenHeight / 1080));
+                SettingsButton.Height = SystemParameters.PrimaryScreenHeight * 0.05;
+                SettingsButton.Width = SystemParameters.PrimaryScreenWidth * 0.0875;
+                SettingsButton.FontSize = (40 * SystemParameters.PrimaryScreenHeight / 1080);
+                SettingsButton.SetValue(Canvas.LeftProperty, 97 * (SystemParameters.PrimaryScreenWidth / 1920));
+
+                SettingsIcon.SetValue(Canvas.TopProperty, 981 * (SystemParameters.PrimaryScreenHeight / 1080));
+                SettingsIcon.Height = SystemParameters.PrimaryScreenHeight * 0.0713;
+                SettingsIcon.Width = SystemParameters.PrimaryScreenWidth * 0.04167;
+                SettingsIcon.SetValue(Canvas.LeftProperty, 12 * (SystemParameters.PrimaryScreenWidth / 1920));
             }
         }
         void CalendarButtonClick(object sender, RoutedEventArgs e)
@@ -177,9 +188,11 @@ namespace TrackIt
                 newForm.Show();
             }
         }
-        /*void Tests()
+        private void SettingsButtonClick(object sender, RoutedEventArgs e)
         {
-            Tested.Items.Add(Properties.Settings.Default.ListofRecords[1].ScreenTimeCollect);
-        }*/
+            var newForm = new Settings();
+            newForm.Show();
+            this.Close();
+        }
     }
 }

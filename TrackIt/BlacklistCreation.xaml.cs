@@ -102,7 +102,7 @@ namespace TrackIt
             SelectedItems();
             void SelectedItems()
             {
-                if (Applications.SelectedItem != null && EnterBlacklistName.Text != null)
+                if (Applications.SelectedItem != null && String.IsNullOrEmpty(EnterBlacklistName.Text))
                 {
                     string BlacklistName = EnterBlacklistName.Text;
                     ListofApps.Clear();
@@ -146,6 +146,7 @@ namespace TrackIt
                             csv.WriteRecords(records);
                         }
                     }
+                    Properties.Settings.Default.MiniWindowOpened1 = true;
                     var newForm = new BlacklistSaved();
                     newForm.Show();
                     this.Close();
