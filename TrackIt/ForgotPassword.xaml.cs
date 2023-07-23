@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.IO;
+using System;
 
 namespace TrackIt
 {
@@ -51,7 +52,23 @@ namespace TrackIt
             Properties.Settings.Default.Password = null;
             Properties.Settings.Default.Save();
             var newForm = new PasswordReset();
+            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string directoryPath = System.IO.Path.Combine(documentsPath, "TrackIt");
+            string FilePath = System.IO.Path.Combine(directoryPath, "Blacklists.csv");
+            string FilePaths = System.IO.Path.Combine(directoryPath, "BlacklistsCombined.csv");
+            string directoriesPath = System.IO.Path.Combine(documentsPath, "TrackIt");
+            string FilesPath = System.IO.Path.Combine(directoriesPath, "ApplicationsNotToTrack.csv");
+            string ApplicationdirectoryPath = System.IO.Path.Combine(documentsPath, "TrackIt");
+            string ApplicationFilePath = System.IO.Path.Combine(ApplicationdirectoryPath, "Limits.csv");
+            string directoryPaths = System.IO.Path.Combine(documentsPath, "TrackIt");
+            string FilesPaths = System.IO.Path.Combine(directoryPaths, "ScreentimeData.csv");
+            File.Delete(FilePath);
+            File.Delete(FilesPaths);
+            File.Delete(ApplicationFilePath);
+            File.Delete(FilesPath);
+            File.Delete(FilePaths);
             newForm.Show();
+            this.Close();
         }
         private void BackButtonClick(object sender, RoutedEventArgs e)
         {

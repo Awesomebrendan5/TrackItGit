@@ -290,7 +290,6 @@ namespace TrackIt
                         Convert.ToInt32(Properties.Settings.Default.ivalue),
                         Convert.ToInt32(Properties.Settings.Default.jvalue)
                     },
-                    MaxBarWidth = double.MaxValue
                 }
                 };
 

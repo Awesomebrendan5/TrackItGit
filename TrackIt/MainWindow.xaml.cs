@@ -144,91 +144,95 @@ namespace TrackIt
             string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             string FilePath = Path.Combine(documentsPath, "TrackIt", "ScreentimeData.csv");
             Dictionary<string, ScreentimeStats> mergedRecords = new Dictionary<string, ScreentimeStats>();
-            using (var reader = new StreamReader(FilePath))
-            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            if (File.Exists(FilePath))
             {
-                var records = csv.GetRecords<ScreentimeStats>().ToList(); ;
-                List<ScreentimeStats> alist = records.ToList();
-                foreach (ScreentimeStats record in records)
+                using (var reader = new StreamReader(FilePath))
+                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                 {
-                    // Check if the ApplicationName and DateCollected already exist
-                    string key = record.ApplicationName + record.DateCollected.Date.ToString();
-                    if (mergedRecords.ContainsKey(key))
+                    var records = csv.GetRecords<ScreentimeStats>().ToList(); ;
+                    List<ScreentimeStats> alist = records.ToList();
+                    foreach (ScreentimeStats record in records)
                     {
-                        // If the key already exists, add the ScreenTimeCollect value to the existing record
-                        mergedRecords[key].ScreenTimeCollect += record.ScreenTimeCollect;
+                        // Check if the ApplicationName and DateCollected already exist
+                        string key = record.ApplicationName + record.DateCollected.Date.ToString();
+                        if (mergedRecords.ContainsKey(key))
+                        {
+                            // If the key already exists, add the ScreenTimeCollect value to the existing record
+                            mergedRecords[key].ScreenTimeCollect += record.ScreenTimeCollect;
+                        }
+                        else
+                        {
+                            // If the key does not exist, add the record to the merged records
+                            mergedRecords.Add(key, record);
+                        }
                     }
-                    else
+                }
+                using (var reader = new StreamReader(FilePath))
+                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                {
+                    var records = csv.GetRecords<ScreentimeStats>().ToList();
+                    var today = DateTime.Today;
+                    records = records.Where(r => r.DateCollected.Date == today).ToList();
+                    List<ScreentimeStats> alist = records.ToList();
+                    alist.Sort((b, a) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
+                    try
                     {
-                        // If the key does not exist, add the record to the merged records
-                        mergedRecords.Add(key, record);
+                        Properties.Settings.Default.a = alist[0].ApplicationName;
+                        Properties.Settings.Default.avalue = (alist[0].ScreenTimeCollect / 60000);
+                        Properties.Settings.Default.Save();
                     }
+                    catch
+                    {
+                        Properties.Settings.Default.a = null;
+                        Properties.Settings.Default.avalue = 0;
+                    }
+                    try
+                    {
+                        Properties.Settings.Default.b = alist[1].ApplicationName;
+                        Properties.Settings.Default.bvalue = (alist[1].ScreenTimeCollect / 60000);
+                    }
+                    catch
+                    {
+                        Properties.Settings.Default.b = null;
+                        Properties.Settings.Default.bvalue = 0;
+                    }
+                    try
+                    {
+                        Properties.Settings.Default.c = alist[2].ApplicationName;
+                        Properties.Settings.Default.cvalue = (alist[2].ScreenTimeCollect / 60000);
+                    }
+                    catch
+                    {
+                        Properties.Settings.Default.c = null;
+                        Properties.Settings.Default.cvalue = 0;
+                    }
+                    try
+                    {
+                        Properties.Settings.Default.d = alist[3].ApplicationName;
+                        Properties.Settings.Default.dvalue = (alist[3].ScreenTimeCollect / 60000);
+                    }
+                    catch
+                    {
+                        Properties.Settings.Default.d = null;
+                        Properties.Settings.Default.dvalue = 0;
+                    }
+                    try
+                    {
+                        Properties.Settings.Default.e = alist[4].ApplicationName;
+                        Properties.Settings.Default.evalue = (alist[4].ScreenTimeCollect / 60000);
+                    }
+                    catch
+                    {
+                        Properties.Settings.Default.e = null;
+                        Properties.Settings.Default.evalue = 0;
+                    }
+                    Properties.Settings.Default.Save();
                 }
-            }
-            using (var reader = new StreamReader(FilePath))
-            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-            {
-                var records = csv.GetRecords<ScreentimeStats>().ToList();
-                var today = DateTime.Today;
-                records = records.Where(r => r.DateCollected.Date == today).ToList();
-                List<ScreentimeStats> alist = records.ToList();
-                alist.Sort((b, a) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
-                try
+                using (var writer = new StreamWriter(FilePath))
+                using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
                 {
-                    Properties.Settings.Default.a = alist[0].ApplicationName;
-                    Properties.Settings.Default.avalue = (alist[0].ScreenTimeCollect / 60000);
+                    csv.WriteRecords(mergedRecords.Values);
                 }
-                catch
-                {
-                    Properties.Settings.Default.a = null;
-                    Properties.Settings.Default.avalue = 0;
-                }
-                try
-                {
-                    Properties.Settings.Default.b = alist[1].ApplicationName;
-                    Properties.Settings.Default.bvalue = (alist[1].ScreenTimeCollect / 60000);
-                }
-                catch
-                {
-                    Properties.Settings.Default.b = null;
-                    Properties.Settings.Default.bvalue = 0;
-                }
-                try
-                {
-                    Properties.Settings.Default.c = alist[2].ApplicationName;
-                    Properties.Settings.Default.cvalue = (alist[2].ScreenTimeCollect / 60000);
-                }
-                catch
-                {
-                    Properties.Settings.Default.c = null;
-                    Properties.Settings.Default.cvalue = 0;
-                }
-                try
-                {
-                    Properties.Settings.Default.d = alist[3].ApplicationName;
-                    Properties.Settings.Default.dvalue = (alist[3].ScreenTimeCollect / 60000);
-                }
-                catch
-                {
-                    Properties.Settings.Default.d = null;
-                    Properties.Settings.Default.dvalue = 0;
-                }
-                try
-                {
-                    Properties.Settings.Default.e = alist[4].ApplicationName;
-                    Properties.Settings.Default.evalue = (alist[4].ScreenTimeCollect / 60000);
-                }
-                catch
-                {
-                    Properties.Settings.Default.e = null;
-                    Properties.Settings.Default.evalue = 0;
-                }
-                Properties.Settings.Default.Save();
-            }
-            using (var writer = new StreamWriter(FilePath))
-            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-            {
-                csv.WriteRecords(mergedRecords.Values);
             }
         }
         public void StoreWeekRecords()
@@ -237,140 +241,157 @@ namespace TrackIt
             string directoryPath = Path.Combine(documentPath, "TrackIt");
             string FilePath = Path.Combine(directoryPath, "ScreentimeData.csv");
             Dictionary<string, ScreentimeStats> mergedRecords = new Dictionary<string, ScreentimeStats>();
-            using (var reader = new StreamReader(FilePath))
-            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            if (File.Exists(FilePath))
             {
-                var records = csv.GetRecords<ScreentimeStats>().ToList(); ;
-                List<ScreentimeStats> alist = records.ToList();
-                foreach (ScreentimeStats record in records)
-                {
-                    int weekNumber = CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(record.DateCollected, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
-                    int year = record.DateCollected.Year;
-                    string key = $"{record.ApplicationName}_{weekNumber}_{year}";
-                    if (mergedRecords.ContainsKey(key))
-                    {
-                        // If the key already exists, add the ScreenTimeCollect value to the existing record
-                        mergedRecords[key].ScreenTimeCollect += record.ScreenTimeCollect;
-                    }
-                    else
-                    {
-                        // If the key does not exist, add the record to the merged records
-                        mergedRecords.Add(key, record);
-                    }
-                }
-            }
-            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            string directoriesPath = Path.Combine(documentPath, "TrackIt");
-            string FilesPath = Path.Combine(directoryPath, "ScreentimeWeekData.csv");
-            if (File.Exists(FilesPath))
-            {
-                using (var writer = new StreamWriter(FilesPath))
-                using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-                {
-                    csv.WriteRecords(mergedRecords.Values);
-                }
-                using (var reader = new StreamReader(FilesPath))
+                using (var reader = new StreamReader(FilePath))
                 using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                 {
-                    var records = csv.GetRecords<ScreentimeStats>().ToList();
-                    var today = DateTime.Today;
-                    var pastWeekRecords = records.Where(r => r.DateCollected.Date >= today.AddDays(-7)).ToList();
-                    pastWeekRecords.Sort((b, a) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
-                    records = records.Where(r => r.DateCollected.Date == today).ToList();
-                    try
+                    var records = csv.GetRecords<ScreentimeStats>().ToList(); ;
+                    List<ScreentimeStats> alist = records.ToList();
+                    foreach (ScreentimeStats record in records)
                     {
-                        Properties.Settings.Default.f = pastWeekRecords[0].ApplicationName;
-                        Properties.Settings.Default.fvalue = (pastWeekRecords[0].ScreenTimeCollect / 60000);
+                        int weekNumber = CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(record.DateCollected, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+                        int year = record.DateCollected.Year;
+                        string key = $"{record.ApplicationName}_{weekNumber}_{year}";
+                        if (mergedRecords.ContainsKey(key))
+                        {
+                            // If the key already exists, add the ScreenTimeCollect value to the existing record
+                            mergedRecords[key].ScreenTimeCollect += record.ScreenTimeCollect;
+                        }
+                        else
+                        {
+                            // If the key does not exist, add the record to the merged records
+                            mergedRecords.Add(key, record);
+                        }
                     }
-                    catch
-                    {
-
-                    }
-                    try
-                    {
-                        Properties.Settings.Default.g = pastWeekRecords[1].ApplicationName;
-                        Properties.Settings.Default.gvalue = (pastWeekRecords[1].ScreenTimeCollect / 60000);
-                    }
-                    catch
-                    {
-
-                    }
-                    try
-                    {
-                        Properties.Settings.Default.h = pastWeekRecords[2].ApplicationName;
-                        Properties.Settings.Default.hvalue = (pastWeekRecords[2].ScreenTimeCollect / 60000);
-                    }
-                    catch
-                    {
-
-                    }
-                    try
-                    {
-                        Properties.Settings.Default.i = pastWeekRecords[3].ApplicationName;
-                        Properties.Settings.Default.ivalue = (pastWeekRecords[3].ScreenTimeCollect / 60000);
-                    }
-                    catch
-                    {
-                        Properties.Settings.Default.i = pastWeekRecords[4].ApplicationName;
-                        Properties.Settings.Default.jvalue = (pastWeekRecords[4].ScreenTimeCollect / 60000);
-                    }
-                    Properties.Settings.Default.Save();
                 }
-            }
-            if (!File.Exists(FilesPath))
-            {
-                Directory.CreateDirectory(directoryPath);
-                using (var writer = new StreamWriter(FilesPath))
-                using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                string directoriesPath = Path.Combine(documentPath, "TrackIt");
+                string FilesPath = Path.Combine(directoryPath, "ScreentimeWeekData.csv");
+                if (File.Exists(FilesPath))
                 {
-                    csv.WriteRecords(mergedRecords.Values);
+                    using (var writer = new StreamWriter(FilesPath))
+                    using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                    {
+                        csv.WriteRecords(mergedRecords.Values);
+                    }
+                    using (var reader = new StreamReader(FilesPath))
+                    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                    {
+                        var records = csv.GetRecords<ScreentimeStats>().ToList();
+                        var today = DateTime.Today;
+                        var pastWeekRecords = records.Where(r => r.DateCollected.Date >= today.AddDays(-7)).ToList();
+                        pastWeekRecords.Sort((b, a) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
+                        records = records.Where(r => r.DateCollected.Date == today).ToList();
+                        try
+                        {
+                            Properties.Settings.Default.f = pastWeekRecords[0].ApplicationName;
+                            Properties.Settings.Default.fvalue = (pastWeekRecords[0].ScreenTimeCollect / 60000);
+                        }
+                        catch
+                        {
+
+                        }
+                        try
+                        {
+                            Properties.Settings.Default.g = pastWeekRecords[1].ApplicationName;
+                            Properties.Settings.Default.gvalue = (pastWeekRecords[1].ScreenTimeCollect / 60000);
+                        }
+                        catch
+                        {
+
+                        }
+                        try
+                        {
+                            Properties.Settings.Default.h = pastWeekRecords[2].ApplicationName;
+                            Properties.Settings.Default.hvalue = (pastWeekRecords[2].ScreenTimeCollect / 60000);
+                        }
+                        catch
+                        {
+
+                        }
+                        try
+                        {
+                            Properties.Settings.Default.i = pastWeekRecords[3].ApplicationName;
+                            Properties.Settings.Default.ivalue = (pastWeekRecords[3].ScreenTimeCollect / 60000);
+                        }
+                        catch
+                        {
+                        }
+                        try
+                        {
+                            Properties.Settings.Default.j = pastWeekRecords[4].ApplicationName;
+                            Properties.Settings.Default.jvalue = (pastWeekRecords[4].ScreenTimeCollect / 60000);
+                        }
+                        catch
+                        {
+
+                        }
+                        Properties.Settings.Default.Save();
+                    }
                 }
-                using (var reader = new StreamReader(FilesPath))
-                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                if (!File.Exists(FilesPath))
                 {
-                    var records = csv.GetRecords<ScreentimeStats>().ToList();
-                    var today = DateTime.Today;
-                    var pastWeekRecords = records.Where(r => r.DateCollected.Date >= today.AddDays(-7)).ToList();
-                    pastWeekRecords.Sort((b, a) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
-                    records = records.Where(r => r.DateCollected.Date == today).ToList();
-                    try
+                    Directory.CreateDirectory(directoryPath);
+                    using (var writer = new StreamWriter(FilesPath))
+                    using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
                     {
-                        Properties.Settings.Default.f = pastWeekRecords[0].ApplicationName;
-                        Properties.Settings.Default.fvalue = (pastWeekRecords[0].ScreenTimeCollect / 60000);
+                        csv.WriteRecords(mergedRecords.Values);
                     }
-                    catch
+                    using (var reader = new StreamReader(FilesPath))
+                    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                     {
+                        var records = csv.GetRecords<ScreentimeStats>().ToList();
+                        var today = DateTime.Today;
+                        var pastWeekRecords = records.Where(r => r.DateCollected.Date >= today.AddDays(-7)).ToList();
+                        pastWeekRecords.Sort((b, a) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
+                        records = records.Where(r => r.DateCollected.Date == today).ToList();
+                        try
+                        {
+                            Properties.Settings.Default.f = pastWeekRecords[0].ApplicationName;
+                            Properties.Settings.Default.fvalue = (pastWeekRecords[0].ScreenTimeCollect / 60000);
+                        }
+                        catch
+                        {
 
-                    }
-                    try
-                    {
-                        Properties.Settings.Default.g = pastWeekRecords[1].ApplicationName;
-                        Properties.Settings.Default.gvalue = (pastWeekRecords[1].ScreenTimeCollect / 60000);
-                    }
-                    catch
-                    {
+                        }
+                        try
+                        {
+                            Properties.Settings.Default.g = pastWeekRecords[1].ApplicationName;
+                            Properties.Settings.Default.gvalue = (pastWeekRecords[1].ScreenTimeCollect / 60000);
+                        }
+                        catch
+                        {
 
-                    }
-                    try
-                    {
-                        Properties.Settings.Default.h = pastWeekRecords[2].ApplicationName;
-                        Properties.Settings.Default.hvalue = (pastWeekRecords[2].ScreenTimeCollect / 60000);
-                    }
-                    catch
-                    {
+                        }
+                        try
+                        {
+                            Properties.Settings.Default.h = pastWeekRecords[2].ApplicationName;
+                            Properties.Settings.Default.hvalue = (pastWeekRecords[2].ScreenTimeCollect / 60000);
+                        }
+                        catch
+                        {
 
+                        }
+                        try
+                        {
+                            Properties.Settings.Default.i = pastWeekRecords[3].ApplicationName;
+                            Properties.Settings.Default.ivalue = (pastWeekRecords[3].ScreenTimeCollect / 60000);
+                        }
+                        catch
+                        {
+                        }
+                        try
+                        {
+                            Properties.Settings.Default.j = pastWeekRecords[4].ApplicationName;
+                            Properties.Settings.Default.jvalue = (pastWeekRecords[4].ScreenTimeCollect / 60000);
+                        }
+                        catch
+                        {
+
+                        }
+                        Properties.Settings.Default.Save();
                     }
-                    try
-                    {
-                        Properties.Settings.Default.i = pastWeekRecords[3].ApplicationName;
-                        Properties.Settings.Default.ivalue = (pastWeekRecords[3].ScreenTimeCollect / 60000);
-                    }
-                    catch
-                    {
-                        Properties.Settings.Default.i = pastWeekRecords[4].ApplicationName;
-                        Properties.Settings.Default.jvalue = (pastWeekRecords[4].ScreenTimeCollect / 60000);
-                    }
-                    Properties.Settings.Default.Save();
                 }
             }
         }
@@ -379,156 +400,159 @@ namespace TrackIt
             string documentPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             string FilePath = Path.Combine(documentPath, "TrackIt", "ScreentimeData.csv");
             Dictionary<string, ScreentimeStats> mergedRecords = new Dictionary<string, ScreentimeStats>();
-            using (var reader = new StreamReader(FilePath))
-            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            if (File.Exists(FilePath))
             {
-                var records = csv.GetRecords<ScreentimeStats>().ToList(); ;
-                List<ScreentimeStats> alist = records.ToList();
-                foreach (ScreentimeStats record in records)
-                {
-                    int weekNumber = CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(record.DateCollected, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
-                    int year = record.DateCollected.Year;
-                    string key = $"{record.ApplicationName}_{weekNumber}_{year}";
-                    if (mergedRecords.ContainsKey(key))
-                    {
-                        // If the key already exists, add the ScreenTimeCollect value to the existing record
-                        mergedRecords[key].ScreenTimeCollect += record.ScreenTimeCollect;
-                    }
-                    else
-                    {
-                        // If the key does not exist, add the record to the merged records
-                        mergedRecords.Add(key, record);
-                    }
-                }
-            }
-            string documentsPaths = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            string directoriesPath = Path.Combine(documentPath, "TrackIt");
-            string FilesPaths = Path.Combine(directoriesPath, "ScreentimeMonthData.csv");
-            if (File.Exists(FilesPaths))
-            {
-                using (var writer = new StreamWriter(FilesPaths))
-                using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-                {
-                    csv.WriteRecords(mergedRecords.Values);
-                }
-                using (var reader = new StreamReader(FilesPaths))
+                using (var reader = new StreamReader(FilePath))
                 using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                 {
-                    var records = csv.GetRecords<ScreentimeStats>().ToList();
-                    var today = DateTime.Today;
-                    var pastWeekRecords = records.Where(r => r.DateCollected.Date >= today.AddDays(-31)).ToList();
-                    pastWeekRecords.Sort((b, a) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
-                    records = records.Where(r => r.DateCollected.Date == today).ToList();
-                    try
+                    var records = csv.GetRecords<ScreentimeStats>().ToList(); ;
+                    List<ScreentimeStats> alist = records.ToList();
+                    foreach (ScreentimeStats record in records)
                     {
-                        Properties.Settings.Default.k = pastWeekRecords[0].ApplicationName;
-                        Properties.Settings.Default.kvalue = (pastWeekRecords[0].ScreenTimeCollect / 60000);
+                        int weekNumber = CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(record.DateCollected, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+                        int year = record.DateCollected.Year;
+                        string key = $"{record.ApplicationName}_{weekNumber}_{year}";
+                        if (mergedRecords.ContainsKey(key))
+                        {
+                            // If the key already exists, add the ScreenTimeCollect value to the existing record
+                            mergedRecords[key].ScreenTimeCollect += record.ScreenTimeCollect;
+                        }
+                        else
+                        {
+                            // If the key does not exist, add the record to the merged records
+                            mergedRecords.Add(key, record);
+                        }
                     }
-                    catch
-                    {
-
-                    }
-                    try
-                    {
-                        Properties.Settings.Default.l = pastWeekRecords[1].ApplicationName;
-                        Properties.Settings.Default.lvalue = (pastWeekRecords[1].ScreenTimeCollect / 60000);
-                    }
-                    catch
-                    {
-
-                    }
-                    try
-                    {
-                        Properties.Settings.Default.m = pastWeekRecords[2].ApplicationName;
-                        Properties.Settings.Default.mvalue = (pastWeekRecords[2].ScreenTimeCollect / 60000);
-                    }
-                    catch
-                    {
-
-                    }
-                    try
-                    {
-                        Properties.Settings.Default.n = pastWeekRecords[3].ApplicationName;
-                        Properties.Settings.Default.nvalue = (pastWeekRecords[3].ScreenTimeCollect / 60000);
-                    }
-                    catch
-                    {
-
-                    }
-                    try
-                    {
-                        Properties.Settings.Default.o = pastWeekRecords[4].ApplicationName;
-                        Properties.Settings.Default.ovalue = (pastWeekRecords[4].ScreenTimeCollect / 60000);
-                    }
-                    catch
-                    {
-
-                    }
-                    Properties.Settings.Default.Save();
                 }
-            }
-            if (!File.Exists(FilesPaths))
-            {
-                Directory.CreateDirectory(directoriesPath);
-                using (var writer = new StreamWriter(FilesPaths))
-                using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                string documentsPaths = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                string directoriesPath = Path.Combine(documentPath, "TrackIt");
+                string FilesPaths = Path.Combine(directoriesPath, "ScreentimeMonthData.csv");
+                if (File.Exists(FilesPaths))
                 {
-                    csv.WriteRecords(mergedRecords.Values);
+                    using (var writer = new StreamWriter(FilesPaths))
+                    using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                    {
+                        csv.WriteRecords(mergedRecords.Values);
+                    }
+                    using (var reader = new StreamReader(FilesPaths))
+                    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                    {
+                        var records = csv.GetRecords<ScreentimeStats>().ToList();
+                        var today = DateTime.Today;
+                        var pastWeekRecords = records.Where(r => r.DateCollected.Date >= today.AddDays(-31)).ToList();
+                        pastWeekRecords.Sort((b, a) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
+                        records = records.Where(r => r.DateCollected.Date == today).ToList();
+                        try
+                        {
+                            Properties.Settings.Default.k = pastWeekRecords[0].ApplicationName;
+                            Properties.Settings.Default.kvalue = (pastWeekRecords[0].ScreenTimeCollect / 60000);
+                        }
+                        catch
+                        {
+
+                        }
+                        try
+                        {
+                            Properties.Settings.Default.l = pastWeekRecords[1].ApplicationName;
+                            Properties.Settings.Default.lvalue = (pastWeekRecords[1].ScreenTimeCollect / 60000);
+                        }
+                        catch
+                        {
+
+                        }
+                        try
+                        {
+                            Properties.Settings.Default.m = pastWeekRecords[2].ApplicationName;
+                            Properties.Settings.Default.mvalue = (pastWeekRecords[2].ScreenTimeCollect / 60000);
+                        }
+                        catch
+                        {
+
+                        }
+                        try
+                        {
+                            Properties.Settings.Default.n = pastWeekRecords[3].ApplicationName;
+                            Properties.Settings.Default.nvalue = (pastWeekRecords[3].ScreenTimeCollect / 60000);
+                        }
+                        catch
+                        {
+
+                        }
+                        try
+                        {
+                            Properties.Settings.Default.o = pastWeekRecords[4].ApplicationName;
+                            Properties.Settings.Default.ovalue = (pastWeekRecords[4].ScreenTimeCollect / 60000);
+                        }
+                        catch
+                        {
+
+                        }
+                        Properties.Settings.Default.Save();
+                    }
                 }
-                using (var reader = new StreamReader(FilesPaths))
-                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                if (!File.Exists(FilesPaths))
                 {
-                    var records = csv.GetRecords<ScreentimeStats>().ToList();
-                    var today = DateTime.Today;
-                    var pastWeekRecords = records.Where(r => r.DateCollected.Date >= today.AddDays(-31)).ToList();
-                    pastWeekRecords.Sort((b, a) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
-                    records = records.Where(r => r.DateCollected.Date == today).ToList();
-                    try
+                    Directory.CreateDirectory(directoriesPath);
+                    using (var writer = new StreamWriter(FilesPaths))
+                    using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
                     {
-                        Properties.Settings.Default.k = pastWeekRecords[0].ApplicationName;
-                        Properties.Settings.Default.kvalue = (pastWeekRecords[0].ScreenTimeCollect / 60000);
+                        csv.WriteRecords(mergedRecords.Values);
                     }
-                    catch
+                    using (var reader = new StreamReader(FilesPaths))
+                    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                     {
+                        var records = csv.GetRecords<ScreentimeStats>().ToList();
+                        var today = DateTime.Today;
+                        var pastWeekRecords = records.Where(r => r.DateCollected.Date >= today.AddDays(-31)).ToList();
+                        pastWeekRecords.Sort((b, a) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
+                        records = records.Where(r => r.DateCollected.Date == today).ToList();
+                        try
+                        {
+                            Properties.Settings.Default.k = pastWeekRecords[0].ApplicationName;
+                            Properties.Settings.Default.kvalue = (pastWeekRecords[0].ScreenTimeCollect / 60000);
+                        }
+                        catch
+                        {
 
-                    }
-                    try
-                    {
-                        Properties.Settings.Default.l = pastWeekRecords[1].ApplicationName;
-                        Properties.Settings.Default.lvalue = (pastWeekRecords[1].ScreenTimeCollect / 60000);
-                    }
-                    catch
-                    {
+                        }
+                        try
+                        {
+                            Properties.Settings.Default.l = pastWeekRecords[1].ApplicationName;
+                            Properties.Settings.Default.lvalue = (pastWeekRecords[1].ScreenTimeCollect / 60000);
+                        }
+                        catch
+                        {
 
-                    }
-                    try
-                    {
-                        Properties.Settings.Default.m = pastWeekRecords[2].ApplicationName;
-                        Properties.Settings.Default.mvalue = (pastWeekRecords[2].ScreenTimeCollect / 60000);
-                    }
-                    catch
-                    {
+                        }
+                        try
+                        {
+                            Properties.Settings.Default.m = pastWeekRecords[2].ApplicationName;
+                            Properties.Settings.Default.mvalue = (pastWeekRecords[2].ScreenTimeCollect / 60000);
+                        }
+                        catch
+                        {
 
-                    }
-                    try
-                    {
-                        Properties.Settings.Default.n = pastWeekRecords[3].ApplicationName;
-                        Properties.Settings.Default.nvalue = (pastWeekRecords[3].ScreenTimeCollect / 60000);
-                    }
-                    catch
-                    {
+                        }
+                        try
+                        {
+                            Properties.Settings.Default.n = pastWeekRecords[3].ApplicationName;
+                            Properties.Settings.Default.nvalue = (pastWeekRecords[3].ScreenTimeCollect / 60000);
+                        }
+                        catch
+                        {
 
-                    }
-                    try
-                    {
-                        Properties.Settings.Default.o = pastWeekRecords[4].ApplicationName;
-                        Properties.Settings.Default.ovalue = (pastWeekRecords[4].ScreenTimeCollect / 60000);
-                    }
-                    catch
-                    {
+                        }
+                        try
+                        {
+                            Properties.Settings.Default.o = pastWeekRecords[4].ApplicationName;
+                            Properties.Settings.Default.ovalue = (pastWeekRecords[4].ScreenTimeCollect / 60000);
+                        }
+                        catch
+                        {
 
+                        }
+                        Properties.Settings.Default.Save();
                     }
-                    Properties.Settings.Default.Save();
                 }
             }
         }
@@ -537,7 +561,8 @@ namespace TrackIt
             string documentPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             string FilePath = Path.Combine(documentPath, "TrackIt", "ScreentimeData.csv");
             Dictionary<string, ScreentimeStats> mergedRecords = new Dictionary<string, ScreentimeStats>();
-
+            if (File.Exists(FilePath))
+            {
             using (var reader = new StreamReader(FilePath))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
@@ -618,65 +643,72 @@ namespace TrackIt
                     Properties.Settings.Default.Save();
                 }
             }
-            if (!File.Exists(FilePaths))
-            {
-                Directory.CreateDirectory(directoriesPath);
-                using (var writer = new StreamWriter(FilePaths))
-                using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                if (!File.Exists(FilePaths))
                 {
-                    csv.WriteRecords(mergedRecords.Values);
-                }
-                using (var reader = new StreamReader(FilePaths))
-                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-                {
-                    var records = csv.GetRecords<ScreentimeStats>().ToList();
-                    var today = DateTime.Today;
-                    var pastWeekRecords = records.Where(r => r.DateCollected.Date >= today.AddDays(-365)).ToList();
-                    pastWeekRecords.Sort((b, a) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
-                    records = records.Where(r => r.DateCollected.Date == today).ToList();
-                    try
+                    Directory.CreateDirectory(directoriesPath);
+                    using (var writer = new StreamWriter(FilePaths))
+                    using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
                     {
-                        Properties.Settings.Default.p = pastWeekRecords[0].ApplicationName;
-                        Properties.Settings.Default.pvalue = (pastWeekRecords[0].ScreenTimeCollect / 60000);
+                        csv.WriteRecords(mergedRecords.Values);
                     }
-                    catch
+                    using (var reader = new StreamReader(FilePaths))
+                    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                     {
+                        var records = csv.GetRecords<ScreentimeStats>().ToList();
+                        var today = DateTime.Today;
+                        var pastWeekRecords = records.Where(r => r.DateCollected.Date >= today.AddDays(-365)).ToList();
+                        pastWeekRecords.Sort((b, a) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
+                        records = records.Where(r => r.DateCollected.Date == today).ToList();
+                        try
+                        {
+                            Properties.Settings.Default.p = pastWeekRecords[0].ApplicationName;
+                            Properties.Settings.Default.pvalue = (pastWeekRecords[0].ScreenTimeCollect / 60000);
+                        }
+                        catch
+                        {
 
-                    }
-                    try
-                    {
-                        Properties.Settings.Default.q = pastWeekRecords[1].ApplicationName;
-                        Properties.Settings.Default.qvalue = (pastWeekRecords[1].ScreenTimeCollect / 60000);
-                    }
-                    catch
-                    {
+                        }
+                        try
+                        {
+                            Properties.Settings.Default.q = pastWeekRecords[1].ApplicationName;
+                            Properties.Settings.Default.qvalue = (pastWeekRecords[1].ScreenTimeCollect / 60000);
+                        }
+                        catch
+                        {
 
-                    }
-                    try
-                    {
-                        Properties.Settings.Default.r = pastWeekRecords[2].ApplicationName;
-                        Properties.Settings.Default.rvalue = (pastWeekRecords[2].ScreenTimeCollect / 60000);
-                    }
-                    catch
-                    {
-                        Properties.Settings.Default.s = pastWeekRecords[3].ApplicationName;
-                        Properties.Settings.Default.svalue = (pastWeekRecords[3].ScreenTimeCollect / 60000);
-                    }
-                    try
-                    {
-                        Properties.Settings.Default.t = pastWeekRecords[4].ApplicationName;
-                        Properties.Settings.Default.tvalue = (pastWeekRecords[4].ScreenTimeCollect / 60000);
-                    }
-                    catch
-                    {
+                        }
+                        try
+                        {
+                            Properties.Settings.Default.r = pastWeekRecords[2].ApplicationName;
+                            Properties.Settings.Default.rvalue = (pastWeekRecords[2].ScreenTimeCollect / 60000);
+                        }
+                        catch
+                        {
+                            Properties.Settings.Default.s = pastWeekRecords[3].ApplicationName;
+                            Properties.Settings.Default.svalue = (pastWeekRecords[3].ScreenTimeCollect / 60000);
+                        }
+                        try
+                        {
+                            Properties.Settings.Default.t = pastWeekRecords[4].ApplicationName;
+                            Properties.Settings.Default.tvalue = (pastWeekRecords[4].ScreenTimeCollect / 60000);
+                        }
+                        catch
+                        {
 
+                        }
+                        Properties.Settings.Default.Save();
                     }
-                    Properties.Settings.Default.Save();
                 }
             }
         }
         void CalendarButtonClick(object sender, RoutedEventArgs e)
         {
+            string messageBoxText = Properties.Settings.Default.c;
+            string caption = "Word Processor";
+            MessageBoxButton button = MessageBoxButton.YesNoCancel;
+            MessageBoxImage icon = MessageBoxImage.Warning;
+            MessageBoxResult result;
+            result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
             var newForm = new CalendarMenu();
             newForm.Show();
             this.Close();

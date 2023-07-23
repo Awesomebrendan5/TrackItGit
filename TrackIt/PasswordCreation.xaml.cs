@@ -82,6 +82,7 @@ namespace TrackIt
                 Properties.Settings.Default.Save();
                 var newForm = new PasswordSaved();
                 newForm.Show();
+                this.Close();
             }
             if (Password.Password != PasswordConfirmation.Password & Password.Password.Length > 7)
             {
