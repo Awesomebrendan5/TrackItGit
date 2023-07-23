@@ -244,7 +244,7 @@ namespace TrackIt
                         Convert.ToInt32(Properties.Settings.Default.dvalue),
                         Convert.ToInt32(Properties.Settings.Default.evalue)
                     },
-                    MaxBarWidth = double.MaxValue
+                    MaxBarWidth = double.MaxValue,
                 }
                 };
 
@@ -253,7 +253,7 @@ namespace TrackIt
                 {
                 new Axis
                 {
-                    Labels = new string[] { message1, message2, message3, message4, message5 }
+                    Labels = new string[] { message1, message2, message3, message4, message5 },
                 }
                 };
 
@@ -276,6 +276,7 @@ namespace TrackIt
             static string message4 = Properties.Settings.Default.i;
             static string message5 = Properties.Settings.Default.j;
 
+            [Obsolete]
             public ISeries[] Series { get; set; }
                 = new ISeries[]
                 {
@@ -290,6 +291,8 @@ namespace TrackIt
                         Convert.ToInt32(Properties.Settings.Default.ivalue),
                         Convert.ToInt32(Properties.Settings.Default.jvalue)
                     },
+                  MaxBarWidth = 10,
+                  GroupPadding = 0
                 }
                 };
 

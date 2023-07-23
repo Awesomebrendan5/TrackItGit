@@ -37,7 +37,7 @@
             </Button.Template>
         </Button>
         <Button Name ="CreateDailyUseLimit" Click="CreateDailyUseClick" Content="Set Daily Usage Limit" Canvas.Left="1622" Canvas.Top="1020" Height="60" Width="298" Background="#5FB72E" FontSize="30" FontFamily="Narkism" HorizontalAlignment="Left" VerticalAlignment="Top"></Button>
-        <UserControl Name="Chart" Height="387" Width="584" Canvas.Left="350" Canvas.Top="97">
+        <UserControl Name="Chart" Height="500" Width="850" Canvas.Left="350" Canvas.Top="97">
             <UserControl.DataContext>
                 <vms:ViewModel/>
             </UserControl.DataContext>
@@ -51,21 +51,21 @@
     YAxes="{Binding YAxes}">
             </lvc:CartesianChart>
         </UserControl>
-        <UserControl Name="Chart1" Height="387" Width="584" Canvas.Left="1000" Canvas.Top="97">
+        <UserControl Name="Chart1" Height="375" Width="638" Canvas.Left="1000" Canvas.Top="97">
             <UserControl.DataContext>
                 <vmd:ViewModel/>
             </UserControl.DataContext>
             <lvc:CartesianChart
      Focusable="True"
      ZoomMode="Both"
-     Height="500"
-     Width="850"
+     Height="375"
+     Width="638"
     Series="{Binding Series}"
     XAxes="{Binding XAxes}"
     YAxes="{Binding YAxes}">
             </lvc:CartesianChart>
         </UserControl>
-        <UserControl Name="Chart2" Height="387" Width="584" Canvas.Left="350" Canvas.Top="607">
+        <UserControl Name="Chart2" Height="500" Width="850" Canvas.Left="350" Canvas.Top="607">
             <UserControl.DataContext>
                 <vme:ViewModel/>
             </UserControl.DataContext>
@@ -79,7 +79,7 @@
     YAxes="{Binding YAxes}">
             </lvc:CartesianChart>
         </UserControl>
-        <UserControl Name="Chart3" Height="387" Width="584" Canvas.Left="1000" Canvas.Top="607">
+        <UserControl Name="Chart3" Height="500" Width="850" Canvas.Left="1000" Canvas.Top="607">
             <UserControl.DataContext>
                 <vmf:ViewModel/>
             </UserControl.DataContext>

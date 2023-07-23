@@ -703,11 +703,12 @@ namespace TrackIt
         }
         void CalendarButtonClick(object sender, RoutedEventArgs e)
         {
-            string messageBoxText = Properties.Settings.Default.c;
+            string messageBoxText = Properties.Settings.Default.e;
             string caption = "Word Processor";
             MessageBoxButton button = MessageBoxButton.YesNoCancel;
             MessageBoxImage icon = MessageBoxImage.Warning;
             MessageBoxResult result;
+
             result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
             var newForm = new CalendarMenu();
             newForm.Show();
