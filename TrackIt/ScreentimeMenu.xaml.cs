@@ -143,28 +143,36 @@ namespace TrackIt
                 CreateDailyUseLimit.FontSize = (30 * SystemParameters.PrimaryScreenHeight / 1080);
 
                 Chart.SetValue(Canvas.TopProperty, 97 * (SystemParameters.PrimaryScreenHeight / 1080));
-                Chart.Height = SystemParameters.PrimaryScreenHeight * 0.3583;
-                Chart.Width = SystemParameters.PrimaryScreenWidth * 0.3042;
+                Chart.Height = SystemParameters.PrimaryScreenHeight * 0.3472;
+                Chart.Width = SystemParameters.PrimaryScreenWidth * 0.3323;
                 Chart.SetValue(Canvas.LeftProperty, 350 * (SystemParameters.PrimaryScreenWidth / 1920));
                 Chart.FontSize = (30 * SystemParameters.PrimaryScreenHeight / 1080);
+                ChartData.Height = SystemParameters.PrimaryScreenHeight * 0.3472;
+                ChartData.Width = SystemParameters.PrimaryScreenWidth * 0.3323;
 
                 Chart1.SetValue(Canvas.TopProperty, 97 * (SystemParameters.PrimaryScreenHeight / 1080));
                 Chart1.Height = SystemParameters.PrimaryScreenHeight * 0.3583;
                 Chart1.Width = SystemParameters.PrimaryScreenWidth * 0.3042;
                 Chart1.SetValue(Canvas.LeftProperty, 1000 * (SystemParameters.PrimaryScreenWidth / 1920));
                 Chart1.FontSize = (30 * SystemParameters.PrimaryScreenHeight / 1080);
+                ChartData1.Height = SystemParameters.PrimaryScreenHeight * 0.3472;
+                ChartData1.Width = SystemParameters.PrimaryScreenWidth * 0.3323;
 
                 Chart2.SetValue(Canvas.TopProperty, 607 * (SystemParameters.PrimaryScreenHeight / 1080));
                 Chart2.Height = SystemParameters.PrimaryScreenHeight * 0.3583;
                 Chart2.Width = SystemParameters.PrimaryScreenWidth * 0.3042;
                 Chart2.SetValue(Canvas.LeftProperty, 350 * (SystemParameters.PrimaryScreenWidth / 1920));
                 Chart2.FontSize = (30 * SystemParameters.PrimaryScreenHeight / 1080);
+                ChartData2.Height = SystemParameters.PrimaryScreenHeight * 0.3472;
+                ChartData2.Width = SystemParameters.PrimaryScreenWidth * 0.3323;
 
                 Chart3.SetValue(Canvas.TopProperty, 607 * (SystemParameters.PrimaryScreenHeight / 1080));
                 Chart3.Height = SystemParameters.PrimaryScreenHeight * 0.3583;
                 Chart3.Width = SystemParameters.PrimaryScreenWidth * 0.3042;
                 Chart3.SetValue(Canvas.LeftProperty, 1000 * (SystemParameters.PrimaryScreenWidth / 1920));
                 Chart3.FontSize = (30 * SystemParameters.PrimaryScreenHeight / 1080);
+                ChartData3.Height = SystemParameters.PrimaryScreenHeight * 0.3472;
+                ChartData3.Width = SystemParameters.PrimaryScreenWidth * 0.3323;
             }
 
         }
@@ -245,6 +253,7 @@ namespace TrackIt
                         Convert.ToInt32(Properties.Settings.Default.evalue)
                     },
                     MaxBarWidth = double.MaxValue,
+                    
                 }
                 };
 
