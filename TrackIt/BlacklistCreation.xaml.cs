@@ -60,6 +60,12 @@ namespace TrackIt
                 EnterBlacklist.SetValue(Canvas.LeftProperty, 84 * (SystemParameters.PrimaryScreenWidth / 1920));
                 EnterBlacklist.FontSize = (20 * SystemParameters.PrimaryScreenHeight / 1080);
 
+                Information.SetValue(Canvas.TopProperty, 108 * (SystemParameters.PrimaryScreenHeight / 1080));
+                Information.Height = SystemParameters.PrimaryScreenHeight * 0.0287;
+                Information.Width = SystemParameters.PrimaryScreenWidth * 0.1177;
+                Information.SetValue(Canvas.LeftProperty, 101 * (SystemParameters.PrimaryScreenWidth / 1920));
+                Information.FontSize = (15 * SystemParameters.PrimaryScreenHeight / 1080);
+
                 EnterBlacklistName.SetValue(Canvas.TopProperty, 137 * (SystemParameters.PrimaryScreenHeight / 1080));
                 EnterBlacklistName.Height = SystemParameters.PrimaryScreenHeight * 0.0445;
                 EnterBlacklistName.Width = SystemParameters.PrimaryScreenWidth * 0.1052;
@@ -102,54 +108,61 @@ namespace TrackIt
             SelectedItems();
             void SelectedItems()
             {
-                if (Applications.SelectedItem != null && String.IsNullOrEmpty(EnterBlacklistName.Text))
+                if (Applications.SelectedItem != null && !String.IsNullOrEmpty(EnterBlacklistName.Text))
                 {
-                    string BlacklistName = EnterBlacklistName.Text;
-                    ListofApps.Clear();
-                    string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                    string directoryPath = System.IO.Path.Combine(documentsPath, "TrackIt");
-                    string FilePath = System.IO.Path.Combine(directoryPath, "Blacklists.csv");
-                    if (File.Exists(FilePath))
+                    if (EnterBlacklistName.Text.Length < 12)
                     {
-                        Fileexists = true;
-                    }
-                    else
-                    {
-                        Fileexists = false;
-                    }
-                    foreach (var item in Applications.SelectedItems)
-                    {
-                        ListofApps.Add(item.ToString());
-                    }
-                    var records = new List<Blacklists>();
-                    records.Add(new Blacklists { BlacklistName = BlacklistName, Applications = string.Join(",", ListofApps) });
-                    if (Fileexists == false)
-                    {
-                        Directory.CreateDirectory(directoryPath);
-                        using (var writer = new StreamWriter(FilePath))
-                        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                        string BlacklistName = EnterBlacklistName.Text;
+                        ListofApps.Clear();
+                        string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                        string directoryPath = System.IO.Path.Combine(documentsPath, "TrackIt");
+                        string FilePath = System.IO.Path.Combine(directoryPath, "Blacklists.csv");
+                        if (File.Exists(FilePath))
                         {
-                            csv.WriteRecords(records);
+                            Fileexists = true;
                         }
-                        Fileexists = true;
-                    }
-                    if (Fileexists == true)
-                    {
-                        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+                        else
                         {
-                            HasHeaderRecord = false,
-                        };
-                        using (var stream = File.Open(FilePath, FileMode.Append))
-                        using (var writer = new StreamWriter(stream))
-                        using (var csv = new CsvWriter(writer, config))
-                        {
-                            csv.WriteRecords(records);
+                            Fileexists = false;
                         }
+                        foreach (var item in Applications.SelectedItems)
+                        {
+                            ListofApps.Add(item.ToString());
+                        }
+                        var records = new List<Blacklists>();
+                        records.Add(new Blacklists { BlacklistName = BlacklistName, Applications = string.Join(",", ListofApps) });
+                        if (Fileexists == true)
+                        {
+                            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+                            {
+                                HasHeaderRecord = false,
+                            };
+                            using (var stream = File.Open(FilePath, FileMode.Append))
+                            using (var writer = new StreamWriter(stream))
+                            using (var csv = new CsvWriter(writer, config))
+                            {
+                                csv.WriteRecords(records);
+                            }
+                        }
+                        if (Fileexists == false)
+                        {
+                            Directory.CreateDirectory(directoryPath);
+                            using (var writer = new StreamWriter(FilePath))
+                            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                            {
+                                csv.WriteRecords(records);
+                            }
+                            Fileexists = true;
+                        }
+                        Properties.Settings.Default.MiniWindowOpened1 = true;
+                        var newForm = new BlacklistSaved();
+                        newForm.Show();
+                        this.Close();
                     }
-                    Properties.Settings.Default.MiniWindowOpened1 = true;
-                    var newForm = new BlacklistSaved();
-                    newForm.Show();
-                    this.Close();
+                    if (EnterBlacklistName.Text.Length <= 12)
+                    {
+
+                    }
                 }
             }
         }

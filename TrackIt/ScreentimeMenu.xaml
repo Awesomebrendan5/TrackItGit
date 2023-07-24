@@ -25,6 +25,10 @@
         <TextBlock Name="TrackIt" Height="48" Width="154" Text="TrackIt" FontFamily="Narkisim" FontSize="40" Foreground="#FF0000" Canvas.Left="95" HorizontalAlignment="Left" VerticalAlignment="Center" />
         <TextBlock Name = "ScreenTimeLabel" Height="61" Width="272" Text="ScreenTime" FontFamily="Narkisim" Canvas.Left="947" FontSize="50" Canvas.Top="24" HorizontalAlignment="Left" VerticalAlignment="Center" ></TextBlock>
         <Label Name ="AddApplicationLabel" Height="69" Width="158" Content="Applications &#xD;&#xA;Not to Track" FontFamily="Narkisim" Canvas.Left="1662" FontSize="27" Canvas.Top="62" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        <Label Name ="GraphLabel" Height="69" Width="158" Content="Daily Usage" FontFamily="Narkisim" Canvas.Left="590" FontSize="27" Canvas.Top="107" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Label Name ="GraphLabel1" Height="69" Width="192" Content="Weekly Usage" FontFamily="Narkisim" Canvas.Left="1240" FontSize="27" Canvas.Top="107" HorizontalAlignment="Left" VerticalAlignment="Center" />
+        <Label Name ="GraphLabel2" Height="69" Width="192" Content="Monthly Usage" FontFamily="Narkisim" Canvas.Left="590" FontSize="27" Canvas.Top="573" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        <Label Name ="GraphLabel3" Height="69" Width="192" Content="Yearly Usage" FontFamily="Narkisim" Canvas.Left="1240" FontSize="27" Canvas.Top="573" HorizontalAlignment="Center" VerticalAlignment="Top" />
         <Image Name="BlacklistBox" Height="755" Canvas.Left="1608" Source="Images/BlacklistBox.png" Stretch="Fill" Canvas.Top="136" Width="272" HorizontalAlignment="Left" VerticalAlignment="Top" Opacity="100"/>
         <Image Name="SettingsIcon" Source="/Images/Settings.png" Height="77" Canvas.Top="981" Width="80" Canvas.Left="12" HorizontalAlignment="Left" VerticalAlignment="Top" />
         <Button x:Name="SettingsButton" Click="SettingsButtonClick" Height="54" Width ="168" Canvas.Top="995" RenderTransformOrigin="0.37,-2.518" Background="Transparent" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Narkisim" FontSize="40" Content="Settings" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="97"/>
@@ -39,7 +43,7 @@
             </Button.Template>
         </Button>
         <Button Name ="CreateDailyUseLimit" Click="CreateDailyUseClick" Content="Set Daily Usage Limit" Canvas.Left="1622" Canvas.Top="1020" Height="60" Width="298" Background="#5FB72E" FontSize="30" FontFamily="Narkism" HorizontalAlignment="Left" VerticalAlignment="Top"></Button>
-        <UserControl Name="Chart" Height="375" Width="638" Canvas.Left="350" Canvas.Top="97">
+        <UserControl Name="Chart" Height="375" Width="638" Canvas.Left="350" Canvas.Top="165" HorizontalAlignment="Center" VerticalAlignment="Top">
             <UserControl.DataContext>
                 <vms:ViewModel/>
             </UserControl.DataContext>
@@ -54,7 +58,7 @@
     YAxes="{Binding YAxes}">
             </lvc:CartesianChart>
         </UserControl>
-        <UserControl Name="Chart1" Height="375" Width="638" Canvas.Left="1000" Canvas.Top="97">
+        <UserControl Name="Chart1" Height="375" Width="638" Canvas.Left="1000" Canvas.Top="165" HorizontalAlignment="Center" VerticalAlignment="Top">
             <UserControl.DataContext>
                 <vmd:ViewModel/>
             </UserControl.DataContext>

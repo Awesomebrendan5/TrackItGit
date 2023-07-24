@@ -116,52 +116,60 @@ namespace TrackIt
         {
             if (InputApplication.Text != null)
             {
-                string ApplicationNamed = InputApplication.Text;
-                long SetLength = Convert.ToInt32(HourBox.Text) * 3600000 + Convert.ToInt32(MinuteBox.Text) * 60000 + Convert.ToInt32(SecondBox.Text) * 1000;
-                string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                string directoryPath = System.IO.Path.Combine(documentsPath, "TrackIt");
-                string FilePath = System.IO.Path.Combine(directoryPath, "Limits.csv");
-                if (File.Exists(FilePath))
+
+                if (Convert.ToInt32(Hour) * 3600000 + Convert.ToInt32(Minute) * 60000 + Convert.ToInt32(Second) * 1000 <= 86400000)
                 {
-                    Fileexists = true;
-                }
-                else
-                {
-                    Fileexists = false;
-                }
-                var records = new List<ScreentimeLimits>()
+                    string ApplicationNamed = InputApplication.Text;
+                    long SetLength = Convert.ToInt32(HourBox.Text) * 3600000 + Convert.ToInt32(MinuteBox.Text) * 60000 + Convert.ToInt32(SecondBox.Text) * 1000;
+                    string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                    string directoryPath = System.IO.Path.Combine(documentsPath, "TrackIt");
+                    string FilePath = System.IO.Path.Combine(directoryPath, "Limits.csv");
+                    if (File.Exists(FilePath))
+                    {
+                        Fileexists = true;
+                    }
+                    else
+                    {
+                        Fileexists = false;
+                    }
+                    var records = new List<ScreentimeLimits>()
                 {
 
                 new ScreentimeLimits { ApplicationName = ApplicationNamed, ScreenTimeLimit = SetLength}
                 };
-                if (Fileexists == false)
-                {
-                    Directory.CreateDirectory(directoryPath);
-                    using (var writer = new StreamWriter(FilePath))
-                    using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                    if (Fileexists == false)
                     {
-                        csv.WriteRecords(records);
+                        Directory.CreateDirectory(directoryPath);
+                        using (var writer = new StreamWriter(FilePath))
+                        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                        {
+                            csv.WriteRecords(records);
+                        }
+                        Fileexists = true;
                     }
-                    Fileexists = true;
-                }
-                if (Fileexists == true)
-                {
-                    // Append to the file.
-                    var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+                    if (Fileexists == true)
                     {
-                        // Don't write the header again.
-                        HasHeaderRecord = false,
-                    };
-                    using (var stream = File.Open(FilePath, FileMode.Append))
-                    using (var writer = new StreamWriter(stream))
-                    using (var csv = new CsvWriter(writer, config))
-                    {
-                        csv.WriteRecords(records);
+                        // Append to the file.
+                        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+                        {
+                            // Don't write the header again.
+                            HasHeaderRecord = false,
+                        };
+                        using (var stream = File.Open(FilePath, FileMode.Append))
+                        using (var writer = new StreamWriter(stream))
+                        using (var csv = new CsvWriter(writer, config))
+                        {
+                            csv.WriteRecords(records);
+                        }
                     }
+                    var newForm = new LimitSaved();
+                    newForm.Show();
+                    this.Close();
                 }
-                var newForm = new LimitSaved();
-                newForm.Show();
-                this.Close();
+                if (Convert.ToInt32(Hour) * 3600000 + Convert.ToInt32(Minute) * 60000 + Convert.ToInt32(Second) * 1000! <= 86400000)
+                {
+
+                }
 
             }
         }
@@ -249,6 +257,12 @@ namespace TrackIt
             {
                 e.CancelCommand();
             }
+        }
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            Properties.Settings.Default.MiniWindowOpened1 = false;
+            Properties.Settings.Default.MiniWindowOpened = false;
+            Properties.Settings.Default.Save();
         }
     }
 }

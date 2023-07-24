@@ -125,6 +125,30 @@ namespace TrackIt
                 AddApplicationLabel.SetValue(Canvas.LeftProperty, 1662 * (SystemParameters.PrimaryScreenWidth / 1920));
                 AddApplicationLabel.FontSize = (27 * SystemParameters.PrimaryScreenHeight / 1080);
 
+                GraphLabel.SetValue(Canvas.TopProperty, 107 * (SystemParameters.PrimaryScreenHeight / 1080));
+                GraphLabel.Height = SystemParameters.PrimaryScreenHeight * 0.0639;
+                GraphLabel.Width = SystemParameters.PrimaryScreenWidth * 0.0823;
+                GraphLabel.SetValue(Canvas.LeftProperty, 590 * (SystemParameters.PrimaryScreenWidth / 1920));
+                GraphLabel.FontSize = (27 * SystemParameters.PrimaryScreenHeight / 1080);
+
+                GraphLabel1.SetValue(Canvas.TopProperty, 107 * (SystemParameters.PrimaryScreenHeight / 1080));
+                GraphLabel1.Height = SystemParameters.PrimaryScreenHeight * 0.0639;
+                GraphLabel1.Width = SystemParameters.PrimaryScreenWidth * 0.1;
+                GraphLabel1.SetValue(Canvas.LeftProperty, 1240 * (SystemParameters.PrimaryScreenWidth / 1920));
+                GraphLabel1.FontSize = (27 * SystemParameters.PrimaryScreenHeight / 1080);
+
+                GraphLabel2.SetValue(Canvas.TopProperty, 573 * (SystemParameters.PrimaryScreenHeight / 1080));
+                GraphLabel2.Height = SystemParameters.PrimaryScreenHeight * 0.0639;
+                GraphLabel2.Width = SystemParameters.PrimaryScreenWidth * 0.1;
+                GraphLabel2.SetValue(Canvas.LeftProperty, 590 * (SystemParameters.PrimaryScreenWidth / 1920));
+                GraphLabel2.FontSize = (27 * SystemParameters.PrimaryScreenHeight / 1080);
+
+                GraphLabel3.SetValue(Canvas.TopProperty, 573 * (SystemParameters.PrimaryScreenHeight / 1080));
+                GraphLabel3.Height = SystemParameters.PrimaryScreenHeight * 0.0639;
+                GraphLabel3.Width = SystemParameters.PrimaryScreenWidth * 0.1;
+                GraphLabel3.SetValue(Canvas.LeftProperty, 1240 * (SystemParameters.PrimaryScreenWidth / 1920));
+                GraphLabel3.FontSize = (27 * SystemParameters.PrimaryScreenHeight / 1080);
+
                 BlacklistBox.SetValue(Canvas.TopProperty, 136 * (SystemParameters.PrimaryScreenHeight / 1080));
                 BlacklistBox.Height = SystemParameters.PrimaryScreenHeight * 0.6991;
                 BlacklistBox.Width = SystemParameters.PrimaryScreenWidth * 0.1417;
@@ -142,7 +166,7 @@ namespace TrackIt
                 CreateDailyUseLimit.SetValue(Canvas.LeftProperty, 1622 * (SystemParameters.PrimaryScreenWidth / 1920));
                 CreateDailyUseLimit.FontSize = (30 * SystemParameters.PrimaryScreenHeight / 1080);
 
-                Chart.SetValue(Canvas.TopProperty, 97 * (SystemParameters.PrimaryScreenHeight / 1080));
+                Chart.SetValue(Canvas.TopProperty, 165 * (SystemParameters.PrimaryScreenHeight / 1080));
                 Chart.Height = SystemParameters.PrimaryScreenHeight * 0.3472;
                 Chart.Width = SystemParameters.PrimaryScreenWidth * 0.3323;
                 Chart.SetValue(Canvas.LeftProperty, 350 * (SystemParameters.PrimaryScreenWidth / 1920));
@@ -150,7 +174,7 @@ namespace TrackIt
                 ChartData.Height = SystemParameters.PrimaryScreenHeight * 0.3472;
                 ChartData.Width = SystemParameters.PrimaryScreenWidth * 0.3323;
 
-                Chart1.SetValue(Canvas.TopProperty, 97 * (SystemParameters.PrimaryScreenHeight / 1080));
+                Chart1.SetValue(Canvas.TopProperty, 165 * (SystemParameters.PrimaryScreenHeight / 1080));
                 Chart1.Height = SystemParameters.PrimaryScreenHeight * 0.3583;
                 Chart1.Width = SystemParameters.PrimaryScreenWidth * 0.3042;
                 Chart1.SetValue(Canvas.LeftProperty, 1000 * (SystemParameters.PrimaryScreenWidth / 1920));
@@ -320,8 +344,7 @@ namespace TrackIt
                         Convert.ToInt32(Properties.Settings.Default.ivalue),
                         Convert.ToInt32(Properties.Settings.Default.jvalue)
                     },
-                  MaxBarWidth = 10,
-                  GroupPadding = 0
+                    MaxBarWidth = double.MaxValue,
                 }
                 };
 
@@ -412,7 +435,8 @@ namespace TrackIt
                         Convert.ToInt32(Properties.Settings.Default.rvalue),
                         Convert.ToInt32(Properties.Settings.Default.svalue),
                         Convert.ToInt32(Properties.Settings.Default.tvalue)
-                    }
+                    },
+                    MaxBarWidth = double.MaxValue,
                 }
                 };
 

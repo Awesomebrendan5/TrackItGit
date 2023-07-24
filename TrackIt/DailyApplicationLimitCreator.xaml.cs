@@ -117,50 +117,58 @@ namespace TrackIt
         {
             if (Applications.SelectedItem != null)
                 {
-                string ApplicationNamed = Applications.SelectedItem.ToString();
-                long SetLength = Convert.ToInt32(HourBox.Text) * 3600000 + Convert.ToInt32(MinuteBox.Text) * 60000 + Convert.ToInt32(SecondBox.Text) * 1000;
-                string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                string directoryPath = Path.Combine(documentsPath, "TrackIt");
-                string FilePath = Path.Combine(directoryPath, "Limits.csv");
-                if (File.Exists(FilePath))
+                if (Convert.ToInt32(Hour) * 3600000 + Convert.ToInt32(Minute) * 60000 + Convert.ToInt32(Second) * 1000 <= 86400000)
                 {
-                    Fileexists = true;
-                }
-                else
-                {
-                    Fileexists = false;
-                }
-                var records = new List<ScreentimeLimits>()
+                    string ApplicationNamed = Applications.SelectedItem.ToString();
+                    long SetLength = Convert.ToInt32(HourBox.Text) * 3600000 + Convert.ToInt32(MinuteBox.Text) * 60000 + Convert.ToInt32(SecondBox.Text) * 1000;
+                    string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                    string directoryPath = Path.Combine(documentsPath, "TrackIt");
+                    string FilePath = Path.Combine(directoryPath, "Limits.csv");
+                    if (File.Exists(FilePath))
+                    {
+                        Fileexists = true;
+                    }
+                    else
+                    {
+                        Fileexists = false;
+                    }
+                    var records = new List<ScreentimeLimits>()
                 {
 
                 new ScreentimeLimits { ApplicationName = ApplicationNamed, ScreenTimeLimit = SetLength}
                 };
-                if (Fileexists == false)
-                {
-                    Directory.CreateDirectory(directoryPath);
-                    using (var writer = new StreamWriter(FilePath))
-                    using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                    if (Fileexists == false)
                     {
-                        csv.WriteRecords(records);
+                        Directory.CreateDirectory(directoryPath);
+                        using (var writer = new StreamWriter(FilePath))
+                        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                        {
+                            csv.WriteRecords(records);
+                        }
+                        Fileexists = true;
                     }
-                    Fileexists = true;
-                }
-                if (Fileexists == true)
-                {
-                    var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+                    if (Fileexists == true)
                     {
-                        HasHeaderRecord = false,
-                    };
-                    using (var stream = File.Open(FilePath, FileMode.Append))
-                    using (var writer = new StreamWriter(stream))
-                    using (var csv = new CsvWriter(writer, config))
-                    {
-                        csv.WriteRecords(records);
+                        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+                        {
+                            HasHeaderRecord = false,
+                        };
+                        using (var stream = File.Open(FilePath, FileMode.Append))
+                        using (var writer = new StreamWriter(stream))
+                        using (var csv = new CsvWriter(writer, config))
+                        {
+                            csv.WriteRecords(records);
+                        }
                     }
+                    Properties.Settings.Default.MiniWindowOpened1 = true;
+                    var newForm = new LimitSaved();
+                    newForm.Show();
+                    this.Close();
                 }
-                var newForm = new LimitSaved();
-                newForm.Show();
-                this.Close();
+                if (Convert.ToInt32(Hour) * 3600000 + Convert.ToInt32(Minute) * 60000 + Convert.ToInt32(Second) * 1000 !<= 86400000)
+                {
+
+                }
             }
         }
         private void BackButtonClick(object sender, RoutedEventArgs e)
@@ -169,6 +177,7 @@ namespace TrackIt
         }
         private void Add_AnotherClick(object sender, RoutedEventArgs e)
         {
+            Properties.Settings.Default.MiniWindowOpened1 = true;
             var newForm = new AddAnotherLimit();
             newForm.Show();
             this.Close();

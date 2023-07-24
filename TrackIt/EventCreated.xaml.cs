@@ -22,6 +22,8 @@ namespace TrackIt
         public EventCreated()
         {
             InitializeComponent();
+            Properties.Settings.Default.MiniWindowOpened1 = true;
+            Properties.Settings.Default.MiniWindowOpened = true;
             Screenscale();
         }
         void Screenscale()
@@ -52,7 +54,15 @@ namespace TrackIt
         }
         private void ExitButtonClick(object sender, RoutedEventArgs e)
         {
+            Properties.Settings.Default.MiniWindowOpened1 = false;
+            Properties.Settings.Default.MiniWindowOpened = false;
             this.Close();
+        }
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            Properties.Settings.Default.MiniWindowOpened1 = false;
+            Properties.Settings.Default.MiniWindowOpened = false;
+            Properties.Settings.Default.Save();
         }
     }
 }
