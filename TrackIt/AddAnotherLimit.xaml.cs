@@ -33,15 +33,15 @@ namespace TrackIt
         }
         public class ScreentimeLimits
         {
-            public string ApplicationName { get; set; }
-            public long ScreenTimeLimit { get; set; }
+            public string ApplicationName { get; set; } //Define ApplicationName string.
+            public long ScreenTimeLimit { get; set; } //Define ScreenTimeLimit Long.
         }
         void Screenscale()
         {
-            if (SystemParameters.PrimaryScreenHeight != 1080)
+            if (SystemParameters.PrimaryScreenHeight != 1080) //Check that the screen resolution is different to default.
             {
-                MinHeight = SystemParameters.PrimaryScreenHeight * (740.0 / 1080.0);
-                MinWidth = SystemParameters.PrimaryScreenWidth * (428.0 / 1920);
+                MinHeight = SystemParameters.PrimaryScreenHeight * (740.0 / 1080.0); //Set MinHeight property.
+                MinWidth = SystemParameters.PrimaryScreenWidth * (428.0 / 1920); //Set MinWidth property.
 
                 UseLimit.SetValue(Canvas.TopProperty, 10 * (SystemParameters.PrimaryScreenHeight / 1080));
                 UseLimit.Height = SystemParameters.PrimaryScreenHeight * 0.0445;
@@ -114,61 +114,71 @@ namespace TrackIt
         }
         private void ConfirmButtonClick(object sender, RoutedEventArgs e)
         {
-            if (InputApplication.Text != null)
+            int hour, minute, second; //Define the hour, minute and second integers.
+            if (InputApplication.Text != null) //Check that the user has input text.
             {
 
-                if (Convert.ToInt32(Hour) * 3600000 + Convert.ToInt32(Minute) * 60000 + Convert.ToInt32(Second) * 1000 <= 86400000)
+                if (int.TryParse(HourBox.Text, out hour) && int.TryParse(MinuteBox.Text, out minute) && int.TryParse(SecondBox.Text, out second)) //Check that the input text is an integer.
                 {
-                    string ApplicationNamed = InputApplication.Text;
-                    long SetLength = Convert.ToInt32(HourBox.Text) * 3600000 + Convert.ToInt32(MinuteBox.Text) * 60000 + Convert.ToInt32(SecondBox.Text) * 1000;
-                    string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                    string directoryPath = System.IO.Path.Combine(documentsPath, "TrackIt");
-                    string FilePath = System.IO.Path.Combine(directoryPath, "Limits.csv");
-                    if (File.Exists(FilePath))
+                    if ((hour * 3600000 + minute * 60000 + second * 1000) <= 86400000) //Check that the screntime limit entered by the user is not greater than 1 day.
                     {
-                        Fileexists = true;
+                        string ApplicationNamed = InputApplication.Text; //Save the user input application name.
+                        long SetLength = Convert.ToInt32(HourBox.Text) * 3600000 + Convert.ToInt32(MinuteBox.Text) * 60000 + Convert.ToInt32(SecondBox.Text) * 1000; //Set the length of the screentime limit.
+                        string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments); //Save the documents path.
+                        string directoryPath = System.IO.Path.Combine(documentsPath, "TrackIt"); //Save TrackIt's directory path.
+                        string FilePath = System.IO.Path.Combine(directoryPath, "Limits.csv"); //Save the file path.
+                        if (File.Exists(FilePath)) //Check if the file path exists.
+                        {
+                            Fileexists = true;
+                        }
+                        else
+                        {
+                            Fileexists = false;
+                        }
+                        var records = new List<ScreentimeLimits>()
+                        {
+
+                        new ScreentimeLimits { ApplicationName = ApplicationNamed, ScreenTimeLimit = SetLength}
+                        };
+                        if (Fileexists == false)
+                        {
+                            Directory.CreateDirectory(directoryPath); //Create the directory path.
+                            using (var writer = new StreamWriter(FilePath))
+                            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                            {
+                                csv.WriteRecords(records); //Write the record into Limit.csv.
+                            }
+                            Fileexists = true;
+                        }
+                        if (Fileexists == true)
+                        {
+                            // Append to the file.
+                            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+                            {
+                                // Don't write the header again.
+                                HasHeaderRecord = false,
+                            };
+                            using (var stream = File.Open(FilePath, FileMode.Append))
+                            using (var writer = new StreamWriter(stream))
+                            using (var csv = new CsvWriter(writer, config))
+                            {
+                                csv.WriteRecords(records); //Write the record into Limit.csv.
+                            }
+                        }
+                        Properties.Settings.Default.MiniWindowOpened1 = true; //Set MiniWindowOpened1 to true.
+                        var newForm = new LimitSaved(); //Open the LimitSaved window.
+                        newForm.Show();
+                        this.Close(); //Close the window.
                     }
                     else
                     {
-                        Fileexists = false;
-                    }
-                    var records = new List<ScreentimeLimits>()
-                {
-
-                new ScreentimeLimits { ApplicationName = ApplicationNamed, ScreenTimeLimit = SetLength}
-                };
-                    if (Fileexists == false)
-                    {
-                        Directory.CreateDirectory(directoryPath);
-                        using (var writer = new StreamWriter(FilePath))
-                        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                        if (Properties.Settings.Default.MiniWindowOpened1 == false)
                         {
-                            csv.WriteRecords(records);
-                        }
-                        Fileexists = true;
-                    }
-                    if (Fileexists == true)
-                    {
-                        // Append to the file.
-                        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
-                        {
-                            // Don't write the header again.
-                            HasHeaderRecord = false,
-                        };
-                        using (var stream = File.Open(FilePath, FileMode.Append))
-                        using (var writer = new StreamWriter(stream))
-                        using (var csv = new CsvWriter(writer, config))
-                        {
-                            csv.WriteRecords(records);
+                            Properties.Settings.Default.MiniWindowOpened1 = true; //Set MiniWindowOpened1 to true.
+                            var newForm = new LimitOver24Hours(); //Open LimitOver24Hours
+                            newForm.Show();
                         }
                     }
-                    var newForm = new LimitSaved();
-                    newForm.Show();
-                    this.Close();
-                }
-                if (Convert.ToInt32(Hour) * 3600000 + Convert.ToInt32(Minute) * 60000 + Convert.ToInt32(Second) * 1000! <= 86400000)
-                {
-
                 }
 
             }
@@ -179,34 +189,34 @@ namespace TrackIt
         }
         void HourBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            Regex regexchecker = new Regex("[^0-9]+"); 
+            Regex regexchecker = new Regex("[^0-9]+");  //Check that the text the user is inputting is a number.
             e.Handled = regexchecker.IsMatch(e.Text);
         }
         private void HourBox_Pasting(object sender, DataObjectPastingEventArgs e)
         {
-            if (e.DataObject.GetDataPresent(typeof(string)))
+            if (e.DataObject.GetDataPresent(typeof(string))) 
             {
                 string pastedText = (string)e.DataObject.GetData(typeof(string));
                 if (!IsValidInteger(pastedText))
                 {
-                    e.CancelCommand();
+                    e.CancelCommand(); //Stop the user from pasting.
                 }
                 bool IsValidInteger(string input)
                 {
                     int number;
-                    return int.TryParse(input, out number);
+                    return int.TryParse(input, out number); //Allow the user to paste.
                 }
             }
 
             else
             {
-                e.CancelCommand();
+                e.CancelCommand(); //Stop the user from pasting.
             }
         }
 
         private void MinuteBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            Regex regexchecker = new Regex("[^0-9]+"); 
+            Regex regexchecker = new Regex("[^0-9]+"); //Check that the text the user is inputting is a number.
             e.Handled = regexchecker.IsMatch(e.Text);
         }
 
@@ -217,24 +227,24 @@ namespace TrackIt
                 string pastedText = (string)e.DataObject.GetData(typeof(string));
                 if (!IsValidInteger(pastedText))
                 {
-                    e.CancelCommand();
+                    e.CancelCommand(); //Stop the user from pasting.
                 }
                 bool IsValidInteger(string input)
                 {
                     int number;
-                    return int.TryParse(input, out number);
+                    return int.TryParse(input, out number); //Allow the user to paste.
                 }
             }
 
             else
             {
-                e.CancelCommand();
+                e.CancelCommand(); //Stop the user from pasting.
             }
         }
 
         private void SecondBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            Regex regexchecker = new Regex("[^0-9]+"); 
+            Regex regexchecker = new Regex("[^0-9]+"); //Check that the text the user is inputting is a number.
             e.Handled = regexchecker.IsMatch(e.Text);
         }
         private void SecondBox_Pasting(object sender, DataObjectPastingEventArgs e)
@@ -244,24 +254,24 @@ namespace TrackIt
                 string pastedText = (string)e.DataObject.GetData(typeof(string));
                 if (!IsValidInteger(pastedText))
                 {
-                    e.CancelCommand();
+                    e.CancelCommand(); //Stop the user from pasting.
                 }
                 bool IsValidInteger(string input)
                 {
                     int number;
-                    return int.TryParse(input, out number);
+                    return int.TryParse(input, out number); //Allow the user to paste.
                 }
             }
 
             else
             {
-                e.CancelCommand();
+                e.CancelCommand(); //Stop the user from pasting.
             }
         }
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
-            Properties.Settings.Default.MiniWindowOpened1 = false;
-            Properties.Settings.Default.MiniWindowOpened = false;
+            Properties.Settings.Default.MiniWindowOpened1 = false; //Set MiniWindowOpened1 to false.
+            Properties.Settings.Default.MiniWindowOpened = false; //Set MiniWindowOpened to false.
             Properties.Settings.Default.Save();
         }
     }

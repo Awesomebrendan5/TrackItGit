@@ -28,7 +28,7 @@ namespace TrackIt
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             WindowState = WindowState.Maximized;
             ListofBlacklists();
-            if (SystemParameters.PrimaryScreenHeight != 1080)
+            if (SystemParameters.PrimaryScreenHeight != 1080) //Check that the screen resolution is different to default.
             {
                 Line.Height = SystemParameters.PrimaryScreenHeight * 1;
                 Line.Width = SystemParameters.PrimaryScreenWidth * 0.0031;
@@ -141,61 +141,61 @@ namespace TrackIt
         {
             if (Properties.Settings.Default.MiniWindowOpened == false & Properties.Settings.Default.MiniWindowOpened1 == false)
             {
-                var newForm = new ScreentimeMenu();
+                var newForm = new ScreentimeMenu(); //Open the ScreentimeMenu window.
                 newForm.Show();
-                this.Close();
+                this.Close(); //Close the window.
             }
         }
         void PasswordButtonClick(object sender, RoutedEventArgs e)
         {
             if (Properties.Settings.Default.MiniWindowOpened == false & Properties.Settings.Default.MiniWindowOpened1 == false)
             {
-                var newForm = new PasswordMenu();
+                var newForm = new PasswordMenu(); //Open the PasswordMenu window.
                 newForm.Show();
-                this.Close();
+                this.Close(); //Close the window.
             }
         }
         void HomeButtonClick(object sender, RoutedEventArgs e)
         {
             if (Properties.Settings.Default.MiniWindowOpened == false & Properties.Settings.Default.MiniWindowOpened1 == false)
             {
-                var newForm = new MainWindow();
+                var newForm = new MainWindow(); //Open the MainWindow window.
                 newForm.Show();
-                this.Close();
+                this.Close(); //Close the window.
             }
         }
         void CreateBlacklistClick(object sender, RoutedEventArgs e)
         {
             if (Properties.Settings.Default.MiniWindowOpened == false & Properties.Settings.Default.MiniWindowOpened1 == false)
             {
-             var newForm = new BlacklistCreation();
-             Properties.Settings.Default.MiniWindowOpened = true;
-             newForm.Show();
+             var newForm = new BlacklistCreation(); //Open the BlacklistCreation window.
+                Properties.Settings.Default.MiniWindowOpened = true; //Set MiniWindowOpened to true.
+                newForm.Show();
             }
         }
 
-            void Calendar_SelectedDatesChanged(object sender,SelectionChangedEventArgs e)
+            void Calendar_SelectedDatesChanged(object sender,SelectionChangedEventArgs e) //Trigger when the user selects a date on the calendar.
                 {
                     var calendar = sender as System.Windows.Controls.Calendar;
-                    Properties.Settings.Default.DatePicked = calendar.SelectedDate.Value;
+                    Properties.Settings.Default.DatePicked = calendar.SelectedDate.Value; //Save the DatePicked value as the value of the user selected date.
                     
-                    if (calendar.SelectedDate.HasValue)
+                    if (calendar.SelectedDate.HasValue) //Check if the SelectedDate variable is not null.
                     {
-                        DateTime dt = calendar.SelectedDate.Value;
-                        Properties.Settings.Default.DatePicked = dt;
-                        if (Properties.Settings.Default.MiniWindowOpened == false & Properties.Settings.Default.MiniWindowOpened1 == false)
+                        DateTime dt = calendar.SelectedDate.Value; 
+                        Properties.Settings.Default.DatePicked = dt; //Save the DatePicked value as the value of the user selected date.
+                    if (Properties.Settings.Default.MiniWindowOpened == false & Properties.Settings.Default.MiniWindowOpened1 == false)
                         {
-                            Properties.Settings.Default.MiniWindowOpened = true;
-                            var newForm = new Scheduler();
+                            Properties.Settings.Default.MiniWindowOpened = true; //Set MiniWindowOpened to true.
+                            var newForm = new Scheduler(); //Open the Scheduler window.
                             newForm.Show();
                         }
                     }
                  }
         void ListofBlacklists()
         {
-            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            string directoryPath = Path.Combine(documentsPath, "TrackIt");
-            string FilePath = Path.Combine(directoryPath, "Blacklists.csv");
+            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments); //Save the documents path.
+            string directoryPath = Path.Combine(documentsPath, "TrackIt"); //Save TrackIt's directory path.
+            string FilePath = Path.Combine(directoryPath, "Blacklists.csv"); //Save the file path.
             if (File.Exists(FilePath))
             {
                 Fileexists = true;
@@ -206,8 +206,7 @@ namespace TrackIt
             }
             if (Fileexists == true)
             {
-                var BlacklistRecords = new Dictionary<string, long>();
-                var uniqueBlacklistNames = new HashSet<string>();
+                var uniqueBlacklistNames = new HashSet<string>(); //Create a uniqueBlacklistNames hashset to be utilised to avoid duplicate names appearing.
                 using (var reader = new StreamReader(FilePath))
                 using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                 {
@@ -215,10 +214,10 @@ namespace TrackIt
                     foreach (var blacklist in Blacklists)
                     {
                         var name = blacklist.BlacklistName;
-                        if (!uniqueBlacklistNames.Contains(name))
+                        if (!uniqueBlacklistNames.Contains(name)) //Check if the name has already been saved into the uniqueBlacklistNames hashset.
                         {
-                            BlacklistList.Items.Add(name);
-                            uniqueBlacklistNames.Add(name);
+                            BlacklistList.Items.Add(name); //Add the name to the BlacklistList
+                            uniqueBlacklistNames.Add(name); //Add the name to the uniqueBlacklistNames hashset.
                         }
                     }
                 }
@@ -228,9 +227,9 @@ namespace TrackIt
         {
             if (Properties.Settings.Default.MiniWindowOpened == false & Properties.Settings.Default.MiniWindowOpened1 == false)
             {
-                var newForm = new Settings();
+                var newForm = new Settings(); //Open the Settings window.
                 newForm.Show();
-                this.Close();
+                this.Close(); //Close the window.
             }
         }
 

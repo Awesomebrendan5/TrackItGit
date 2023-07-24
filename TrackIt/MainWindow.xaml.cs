@@ -48,6 +48,8 @@ namespace TrackIt
             InitializeComponent();
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             WindowState = WindowState.Maximized;
+            Properties.Settings.Default.MiniWindowOpened = false;
+            Properties.Settings.Default.MiniWindowOpened1 = false;
             ScreenScale();
             StoreDayRecords();
             StoreWeekRecords();
@@ -60,17 +62,17 @@ namespace TrackIt
         void Startup()
         {
             String path = AppDomain.CurrentDomain.BaseDirectory;
-            RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true); //Checks if TrackItMonitor is set to launch on startup.
             if (key.GetValue("Trackit") == null)
             {
-                Process.Start("TrackItMonitor.exe");
+                Process.Start("TrackItMonitor.exe"); //Starts TrackItMonitor .
             }
 
         }
 
         void ScreenScale()
         {
-            if (SystemParameters.PrimaryScreenHeight != 1080)
+            if (SystemParameters.PrimaryScreenHeight != 1080) //Checks that the screen resolution is different to default.
             {
                 Line.Height = SystemParameters.PrimaryScreenHeight * 1;
                 Line.Width = SystemParameters.PrimaryScreenWidth * 0.0031;
@@ -758,8 +760,10 @@ namespace TrackIt
         }
         void ListofEvents()
         {
-            string filePath = "C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\BlacklistsCombined.csv";
-            if (File.Exists(filePath))
+            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string directoryPath = Path.Combine(documentsPath, "TrackIt");
+            string FilePath = Path.Combine(directoryPath, "BlacklistsCombined.csv");
+            if (File.Exists(FilePath))
             {
                 Fileexists = true;
             }
@@ -770,7 +774,13 @@ namespace TrackIt
             if (Fileexists == true)
             {
                 var BlacklistRecords = new Dictionary<string, long>();
-                using (var reader = new StreamReader("C:\\Users\\brend\\source\\repos\\TrackIt\\TrackIt\\BlacklistsCombined.csv"))
+                var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+                {
+                    // Don't write the header again.
+                    HasHeaderRecord = false,
+                };
+                var addedEvents = new HashSet<string>();
+                using (var reader = new StreamReader(FilePath))
                 using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                 {
                     var Blacklists = csv.GetRecords<NewBlacklists>();
@@ -784,12 +794,15 @@ namespace TrackIt
 
                         var startTime = DateTime.Parse(dateRange[0].Trim());
                         var endTime = DateTime.Parse(dateRange[1].Trim());
-                        foreach (var events in Blacklists)
+
+                        if (startTime.Date == DateTime.Now.Date)
                         {
-                            if (startTime.Date == DateTime.Today.Date)
+                            var name = blacklist.EventName;
+                            var eventString = name + " " + startTime.TimeOfDay + " - " + endTime.TimeOfDay;
+                            if (!addedEvents.Contains(eventString))
                             {
-                                var name = blacklist.EventName;
                                 EventList.Items.Add(name + " " + startTime.TimeOfDay + " - " + endTime.TimeOfDay);
+                                addedEvents.Add(eventString);
                             }
                         }
                     }

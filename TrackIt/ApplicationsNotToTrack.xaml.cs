@@ -16,10 +16,10 @@ namespace TrackIt
     public partial class ApplicationsNotToTrack : Window
     {
         public bool Fileexists;
-        private List<string> ListofApps;
+        private List<string> ListofApps; //Define ListofApps as a private string list.
         public class ApplicationsNotToMonitor
         {
-            public string Apps { get; set; }
+            public string Apps { get; set; } //Define the Apps string.
         }
         public ApplicationsNotToTrack()
         {
@@ -30,10 +30,10 @@ namespace TrackIt
         }
         void Screenscale()
         {
-            if (SystemParameters.PrimaryScreenHeight != 1080)
+            if (SystemParameters.PrimaryScreenHeight != 1080) //Check that the screen resolution is different to default.
             {
-                MinHeight = SystemParameters.PrimaryScreenHeight * (740.0 / 1080.0);
-                MinWidth = SystemParameters.PrimaryScreenWidth * (428.0 / 1920);
+                MinHeight = SystemParameters.PrimaryScreenHeight * (740.0 / 1080.0); //Set MinHeight property.
+                MinWidth = SystemParameters.PrimaryScreenWidth * (428.0 / 1920); //Set MinWidth property.
 
                 DoNotTrack.SetValue(Canvas.TopProperty, 10 * (SystemParameters.PrimaryScreenHeight / 1080));
                 DoNotTrack.Height = SystemParameters.PrimaryScreenHeight * 0.0444;
@@ -72,17 +72,16 @@ namespace TrackIt
                 Add_Another.FontSize = (20 * SystemParameters.PrimaryScreenHeight / 1080);
             }
         }
-
         private void ConfirmButtonClick(object sender, RoutedEventArgs e)
         {
             SelectedItems();
             void SelectedItems()
             {
-                if (Applications.SelectedItem != null)
+                if (Applications.SelectedItem != null) //Check that the user has a selected an item in the list.
                 {
-                    string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                    string directoryPath = Path.Combine(documentsPath, "TrackIt");
-                    string FilePath = Path.Combine(directoryPath, "ApplicationsNotToTrack.csv");
+                    string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments); //Save the documents path.
+                    string directoryPath = Path.Combine(documentsPath, "TrackIt"); //Save TrackIt's directory path.
+                    string FilePath = Path.Combine(directoryPath, "ApplicationsNotToTrack.csv"); //Save the file path.
                     if (File.Exists(FilePath))
                     {
                         Fileexists = true;
@@ -96,7 +95,7 @@ namespace TrackIt
                         ListofApps.Add(item.ToString());
                     }
                     var records = new List<ApplicationsNotToMonitor>();
-                    records.Add(new ApplicationsNotToMonitor {Apps = string.Join(",", ListofApps) });
+                    records.Add(new ApplicationsNotToMonitor {Apps = string.Join(",", ListofApps) }); //Create a record with the apps variable set to all selected applications in the ListofApps.
                     if (Fileexists == true)
                     {
                         var config = new CsvConfiguration(CultureInfo.InvariantCulture)
@@ -107,7 +106,7 @@ namespace TrackIt
                         using (var writer = new StreamWriter(stream))
                         using (var csv = new CsvWriter(writer, config))
                         {
-                            csv.WriteRecords(records);
+                            csv.WriteRecords(records); //Write the record into ApplicationsNotToTrack.csv.
                         }
                         var newForm = new ApplicationAdded();
                         newForm.Show();
@@ -115,45 +114,45 @@ namespace TrackIt
                     }
                     if (Fileexists == false)
                     {
-                        Directory.CreateDirectory(directoryPath);
+                        Directory.CreateDirectory(directoryPath); //Create the directory if missing.
                         using (var writer = new StreamWriter(FilePath))
                         using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
                         {
-                            csv.WriteRecords(records);
+                            csv.WriteRecords(records); //Write the record into ApplicationsNotToTrack.csv.
                         }
                         Fileexists = true;
-                        var newForm = new ApplicationAdded();
+                        var newForm = new ApplicationAdded(); //Open the ApplicationAdded window.
                         newForm.Show();
-                        this.Close();
+                        this.Close(); //Close the window.
                     }
                 }
             }
         }
         private void BackButtonClick(object sender, RoutedEventArgs e)
         {
-            Properties.Settings.Default.MiniWindowOpened = false;
-            this.Close();
+            Properties.Settings.Default.MiniWindowOpened = false; //Set MiniWindowOpened to false.
+            this.Close(); //Close the window.
         }
         void Add_AnotherClick(object sender, RoutedEventArgs e)
         {
-            Properties.Settings.Default.MiniWindowOpened1 = true;
-            var newForm = new AddMoreApplications();
+            Properties.Settings.Default.MiniWindowOpened1 = true; //Set MiniWindowOpened1 to true.
+            var newForm = new AddMoreApplications(); //Open the AddMoreApplications window.
             newForm.Show();
-            this.Close();
+            this.Close(); //Close the window.
         }
         void ListofApplications()
         {
-            string registry_key = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
+            string registry_key = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"; //Access the specified registry key.
             using Microsoft.Win32.RegistryKey key = Registry.LocalMachine.OpenSubKey(registry_key);
-            foreach (string subkey_name in key.GetSubKeyNames())
+            foreach (string subkey_name in key.GetSubKeyNames()) //Iterate through the subkey_name of all appliations in the key.
             {
                 using RegistryKey subkey = key.OpenSubKey(subkey_name);
-                Applications.Items.Add(subkey.GetValue("DisplayName"));
+                Applications.Items.Add(subkey.GetValue("DisplayName")); //Add the subkey DisplayName property to the Applications list.
             }
         }
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e) 
         {
-            Properties.Settings.Default.MiniWindowOpened = false;
+            Properties.Settings.Default.MiniWindowOpened = false; //Set MiniWindowOpened to false.
             Properties.Settings.Default.Save();
         }
     }

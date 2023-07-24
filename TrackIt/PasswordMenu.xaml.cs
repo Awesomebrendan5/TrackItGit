@@ -154,6 +154,7 @@ namespace TrackIt
             }
             if (Properties.Settings.Default.MiniWindowOpened == false & !string.IsNullOrEmpty(password))
             {
+                Properties.Settings.Default.MiniWindowOpened = true;
                 var newForm = new PasswordAlreadyCreated();
                 newForm.Show();
             }
@@ -169,6 +170,7 @@ namespace TrackIt
             }
             if (Properties.Settings.Default.MiniWindowOpened == false & string.IsNullOrEmpty(password))
             {
+                Properties.Settings.Default.MiniWindowOpened = true;
                 var newForm = new NoPasswordCreated();
                 newForm.Show();
             }
@@ -184,6 +186,7 @@ namespace TrackIt
             }
             if (Properties.Settings.Default.MiniWindowOpened == false & string.IsNullOrEmpty(password))
             {
+                Properties.Settings.Default.MiniWindowOpened = true;
                 var newForm = new NoPasswordCreated();
                 newForm.Show();
             }

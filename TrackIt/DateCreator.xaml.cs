@@ -26,23 +26,23 @@ namespace TrackIt
         }
         public class Blacklists
         {
-            public string BlacklistName { get; set; }
-            public string Applications { get; set; }
+            public string BlacklistName { get; set; } //Define the BlacklistName string.
+            public string Applications { get; set; } //Define the Applications string.
         }
         public class NewBlacklists
         {
-            public string EventName { get; set; }
-            public string BlacklistName { get; set; }
-            public string Applications { get; set; }
+            public string EventName { get; set; } //Define the EventName string.
+            public string BlacklistName { get; set; } //Define the BlacklistName string.
+            public string Applications { get; set; } //Define the Applications string.
 
-            public string DateRange { get; set; }
+            public string DateRange { get; set; } //Define the DateRange String.
         }
         void Screenscale()
         {
-            if (SystemParameters.PrimaryScreenHeight != 1080)
+            if (SystemParameters.PrimaryScreenHeight != 1080) //Check that the screen resolution is different to default.
             {
-                MinHeight = SystemParameters.PrimaryScreenHeight * (740.0 / 1080.0);
-                MinWidth = SystemParameters.PrimaryScreenWidth * (428.0 / 1920);
+                MinHeight = SystemParameters.PrimaryScreenHeight * (740.0 / 1080.0); //Set MinHeight property.
+                MinWidth = SystemParameters.PrimaryScreenWidth * (428.0 / 1920); //Set MinWidth property.
 
                 EventLabel.SetValue(Canvas.TopProperty, 10 * (SystemParameters.PrimaryScreenHeight / 1080));
                 EventLabel.Height = SystemParameters.PrimaryScreenHeight * 0.0445;
@@ -154,15 +154,15 @@ namespace TrackIt
         }
         void DateTitle()
         {
-            EventLabel.Text = Properties.Settings.Default.DatePicked.ToShortDateString();
+            EventLabel.Text = Properties.Settings.Default.DatePicked.ToShortDateString(); //Set the EventLabel to the DatePicked
         }
         private void ConfirmButtonClick(object sender, RoutedEventArgs e)
         {
-            int hour, minute, second, hour1, minute1, second1;
-            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            string directoryPath = Path.Combine(documentsPath, "TrackIt");
-            string FilePath = Path.Combine(directoryPath, "BlacklistsCombined.csv");
-            if (File.Exists(FilePath))
+            int hour, minute, second, hour1, minute1, second1; //Define the hour, hour1, minute, minute1, second and second1 integers.
+            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments); //Save the documents path.
+            string directoryPath = Path.Combine(documentsPath, "TrackIt"); //Save TrackIt's directory path.
+            string FilePath = Path.Combine(directoryPath, "BlacklistsCombined.csv"); //Save the file path.
+            if (File.Exists(FilePath)) //Check if the file path exists.
             {
                 Fileexists = true;
             }
@@ -172,21 +172,21 @@ namespace TrackIt
             }
             if (Fileexists == false)
             {
-                Directory.CreateDirectory(directoryPath);
+                Directory.CreateDirectory(directoryPath); //Create the directory path.
             }
-            if (int.TryParse(HourBox.Text, out hour) && int.TryParse(MinuteBox.Text, out minute) && int.TryParse(SecondBox.Text, out second) & int.TryParse(HourBox_Copy.Text, out hour1) && int.TryParse(MinuteBox_Copy.Text, out minute1) && int.TryParse(SecondBox_Copy.Text, out second1) & !String.IsNullOrEmpty(EventInput.Text))
+            if (int.TryParse(HourBox.Text, out hour) && int.TryParse(MinuteBox.Text, out minute) && int.TryParse(SecondBox.Text, out second) & int.TryParse(HourBox_Copy.Text, out hour1) && int.TryParse(MinuteBox_Copy.Text, out minute1) && int.TryParse(SecondBox_Copy.Text, out second1) & !String.IsNullOrEmpty(EventInput.Text)) //Check that the hours, minutes and seconds input by the users are integers and that the user has input an event name.
             {
-                if (EventInput.Text.Length < 8)
+                if (EventInput.Text.Length < 8) //Check that the event name is under 8 chacracters.
                 {
-                    if (hour * 60000 + minute * 3600 + second * 60 <= hour1 * 60000 + minute * 3600 + second * 60)
+                    if (hour * 60000 + minute * 3600 + second * 60 <= hour1 * 60000 + minute * 3600 + second * 60) //Check that the first timeset is earlier than the second timeset.
                     {
-                        if (hour * 3600000 + minute * 60000 + second * 1000 <= 86400000 && hour1 * 3600000 + minute * 60000 + second * 1000 <= 86400000)
+                        if (hour * 3600000 + minute * 60000 + second * 1000 <= 86400000 && hour1 * 3600000 + minute * 60000 + second * 1000 <= 86400000) //Check that neither timeset are greater than a day in length.
                         {
-                            DateTime currentDate = Properties.Settings.Default.DatePicked.Date;
-                            DateTime FirstDateTime = currentDate.AddHours(hour).AddMinutes(minute).AddSeconds(second);
-                            DateTime SecondDateTime = currentDate.AddHours(hour1).AddMinutes(minute1).AddSeconds(second1);
-                            string dateRange = FirstDateTime.ToString() + " - " + SecondDateTime.ToString();
-                            string NameofEvent = EventInput.Text;
+                            DateTime currentDate = Properties.Settings.Default.DatePicked.Date; //Set the currentDate to the DatePicked.
+                            DateTime FirstDateTime = currentDate.AddHours(hour).AddMinutes(minute).AddSeconds(second); //Set the FirstDateTime to the CurrentDate added with the hours, minutes and seconds.
+                            DateTime SecondDateTime = currentDate.AddHours(hour1).AddMinutes(minute1).AddSeconds(second1); //Set the SecondDateTime to the CurrentDate added with the hours, minutes and seconds.
+                            string dateRange = FirstDateTime.ToString() + " - " + SecondDateTime.ToString(); //Creates a dateRange that is the first date separated from the second date. 
+                            string NameofEvent = EventInput.Text; //Set NameofEvent to the user input event name.
                             string documented = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                             string directoriesPath = Path.Combine(documentsPath, "TrackIt");
                             string BlacklistsPath = Path.Combine(directoryPath, "Blacklists.csv");
@@ -226,7 +226,7 @@ namespace TrackIt
                                                     DateRange = dateRange
                                                 };
 
-                                                csvWriter.WriteRecord(newRecord);
+                                                csvWriter.WriteRecord(newRecord); //Write the record into BlacklistsCombined.csv.
                                                 csvWriter.NextRecord();
                                             }
                                         }
@@ -248,54 +248,71 @@ namespace TrackIt
                                                     DateRange = dateRange
                                                 };
 
-                                                csvWriter.WriteRecord(newRecord);
+                                                csvWriter.WriteRecord(newRecord); //Write the record into BlacklistsCombined.csv.
                                                 csvWriter.NextRecord();
                                             }
                                         }
                                         Fileexists = true;
                                     }
-                                    var newForm = new EventCreated();
+                                    var newForm = new EventCreated(); //Open the EventCreated window.
                                     newForm.Show();
-                                    this.Close();
+                                    this.Close(); //Close the window.
                                 }
                             }
                             if (!File.Exists(BlacklistsPath))
                             {
-
-                                var newForm = new BlacklistDoesNotExist();
+                                if (Properties.Settings.Default.MiniWindowOpened1 == false)
+                                {
+                                    Properties.Settings.Default.MiniWindowOpened1 = true; //Set MiniWindowOpened1 to true.
+                                    var newForm = new BlacklistDoesNotExist(); //Open the BlacklistDoesNotExist window.
+                                    newForm.Show();
+                                    this.Close(); //Close the window.
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (Properties.Settings.Default.MiniWindowOpened1 == false)
+                            {
+                                Properties.Settings.Default.MiniWindowOpened1 = true; //Set MiniWindowOpened1 to true.
+                                var newForm = new NextDay(); //Open the NextDay window.
                                 newForm.Show();
-                                this.Close();
                             }
                         }
                     }
-                    if (hour * 3600000 + minute * 60000 + second * 1000 !<= 86400000 | hour1 * 3600000 + minute * 60000 + second * 1000 !<= 86400000)
+                    if (hour * 60000 + minute * 3600 + second * 60! >= hour1 * 60000 + minute * 3600 + second * 60)
                     {
-
-                    } 
-                        
-                }
-                if (hour * 60000 + minute * 3600 + second * 60 !<= hour1 * 60000 + minute * 3600 + second * 60)
-                {
-
+                        if (Properties.Settings.Default.MiniWindowOpened1 == false)
+                        {
+                            Properties.Settings.Default.MiniWindowOpened1 = true; //Set MiniWindowOpened1 to true.
+                            var newForm = new FirstTimeLess(); //Open the FirstTimeLess window.
+                            newForm.Show();
+                        }
+                    }
                 }
             }
-            if (EventInput.Text.Length <= 8)
+            if (EventInput.Text.Length >= 8)
             {
-
+                if (Properties.Settings.Default.MiniWindowOpened1 == false)
+                {
+                    Properties.Settings.Default.MiniWindowOpened1 = true; //Set MiniWindowOpened1 to true.
+                    var newForm = new EventTooLong(); //Open the EventTooLong window.
+                    newForm.Show();
+                }
             }
         }
 
 
         private void BackButtonClick(object sender, RoutedEventArgs e)
         {
-            Properties.Settings.Default.MiniWindowOpened1 = false;
-            Properties.Settings.Default.MiniWindowOpened = false;
-            this.Close();
+            Properties.Settings.Default.MiniWindowOpened1 = false; //Set MiniWindowOpened1 to true.
+            Properties.Settings.Default.MiniWindowOpened = false; //Set MiniWindowOpened to true.
+            this.Close(); //Close the window.
         }
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
-            Properties.Settings.Default.MiniWindowOpened1 = false;
-            Properties.Settings.Default.MiniWindowOpened = false;
+            Properties.Settings.Default.MiniWindowOpened1 = false; //Set MiniWindowOpened1 to true.
+            Properties.Settings.Default.MiniWindowOpened = false; //Set MiniWindowOpened to true.
             Properties.Settings.Default.Save();
         }
     }

@@ -16,10 +16,10 @@ namespace TrackIt
         }
         void Screenscale()
         {
-            if (SystemParameters.PrimaryScreenHeight == 1080)
+            if (SystemParameters.PrimaryScreenHeight != 1080) //Check that the screen resolution is different to default.
             {
-                MinHeight = SystemParameters.PrimaryScreenHeight * (740.0 / 1080.0);
-                MinWidth = SystemParameters.PrimaryScreenWidth * (428.0 / 1920);
+                MinHeight = SystemParameters.PrimaryScreenHeight * (740.0 / 1080.0); //Set MinHeight property.
+                MinWidth = SystemParameters.PrimaryScreenWidth * (428.0 / 1920); //Set MinWidth property.
 
                 PasswordLabel.SetValue(Canvas.TopProperty, 10 * (SystemParameters.PrimaryScreenHeight / 1080));
                 PasswordLabel.Height = SystemParameters.PrimaryScreenHeight * 0.0444;
@@ -72,26 +72,38 @@ namespace TrackIt
         {
             if (Password.Password == PasswordConfirmation.Password & Password.Password.Length > 7)
             {
-                Properties.Settings.Default.Password = PasswordConfirmation.Password;
+                Properties.Settings.Default.Password = PasswordConfirmation.Password; //Check if the two passwords the user entered match and have a length of greater than 7.
                 Properties.Settings.Default.Save();
                 var newForm = new PasswordSaved();
                 newForm.Show();
                 this.Close();
             }
-            if (Password.Password != PasswordConfirmation.Password & Password.Password.Length > 7)
+            if (Password.Password != PasswordConfirmation.Password & Password.Password.Length > 7) //Check if the two passwords the user entered do not match and have a length of greater than 7.
             {
-                var newForm = new PasswordMismatch();
-                newForm.Show();
+                if (Properties.Settings.Default.MiniWindowOpened1 == false)
+                {
+                    Properties.Settings.Default.MiniWindowOpened1 = true;
+                    var newForm = new PasswordMismatch();
+                    newForm.Show();
+                }
             }
-            if (Password.Password == PasswordConfirmation.Password & Password.Password.Length <= 7)
+            if (Password.Password == PasswordConfirmation.Password & Password.Password.Length <= 7) //Check if the two passwords the user entered match and have a length of less than or equal to than 7.
             {
-                var newForm = new PasswordTooShort();
-                newForm.Show();
+                if (Properties.Settings.Default.MiniWindowOpened1 == false)
+                {
+                    Properties.Settings.Default.MiniWindowOpened1 = true;
+                    var newForm = new PasswordTooShort();
+                    newForm.Show();
+                }
             }
-            if (Password.Password != PasswordConfirmation.Password & Password.Password.Length <= 7)
+            if (Password.Password != PasswordConfirmation.Password & Password.Password.Length <= 7) //Check if the two passwords the user entered do not match and have a length of less than or equal to than 7.
             {
-                var newForm = new PasswordDoubleMismatch();
-                newForm.Show();
+                if (Properties.Settings.Default.MiniWindowOpened1 == false)
+                {
+                    Properties.Settings.Default.MiniWindowOpened1 = true;
+                    var newForm = new PasswordDoubleMismatch();
+                    newForm.Show();
+                }
             }
         }
         private void BackButtonClick(object sender, RoutedEventArgs e)

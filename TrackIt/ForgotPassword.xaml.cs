@@ -17,10 +17,10 @@ namespace TrackIt
         }
         void Screenscale()
         {
-            if (SystemParameters.PrimaryScreenHeight != 1080)
+            if (SystemParameters.PrimaryScreenHeight != 1080) //Check that the screen resolution is different to default.
             {
-                MinHeight = SystemParameters.PrimaryScreenHeight * (740.0 / 1080.0);
-                MinWidth = SystemParameters.PrimaryScreenWidth * (428.0 / 1920);
+                MinHeight = SystemParameters.PrimaryScreenHeight * (740.0 / 1080.0); //Set MinHeight property.
+                MinWidth = SystemParameters.PrimaryScreenWidth * (428.0 / 1920); //Set MinWidth property.
 
                 ForgotPasswordText.SetValue(Canvas.TopProperty, 10 * (SystemParameters.PrimaryScreenHeight / 1080));
                 ForgotPasswordText.Height = SystemParameters.PrimaryScreenHeight * 0.0444;
@@ -49,35 +49,35 @@ namespace TrackIt
         }
         private void ConfirmButtonClick(object sender, RoutedEventArgs e)
         {
-            Properties.Settings.Default.Password = null;
+            Properties.Settings.Default.Password = null; //Set the password to null.
             Properties.Settings.Default.Save();
-            var newForm = new PasswordReset();
-            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            string directoryPath = System.IO.Path.Combine(documentsPath, "TrackIt");
-            string FilePath = System.IO.Path.Combine(directoryPath, "Blacklists.csv");
-            string FilePaths = System.IO.Path.Combine(directoryPath, "BlacklistsCombined.csv");
-            string directoriesPath = System.IO.Path.Combine(documentsPath, "TrackIt");
-            string FilesPath = System.IO.Path.Combine(directoriesPath, "ApplicationsNotToTrack.csv");
-            string ApplicationdirectoryPath = System.IO.Path.Combine(documentsPath, "TrackIt");
-            string ApplicationFilePath = System.IO.Path.Combine(ApplicationdirectoryPath, "Limits.csv");
-            string directoryPaths = System.IO.Path.Combine(documentsPath, "TrackIt");
-            string FilesPaths = System.IO.Path.Combine(directoryPaths, "ScreentimeData.csv");
-            File.Delete(FilePath);
-            File.Delete(FilesPaths);
-            File.Delete(ApplicationFilePath);
-            File.Delete(FilesPath);
-            File.Delete(FilePaths);
+            var newForm = new PasswordReset(); //Open the PasswordReset window.
+            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments); //Save the documents path.
+            string directoryPath = System.IO.Path.Combine(documentsPath, "TrackIt"); //Save TrackIt's directory path.
+            string FilePath = System.IO.Path.Combine(directoryPath, "Blacklists.csv"); //Save the file path.
+            string FilePaths = System.IO.Path.Combine(directoryPath, "BlacklistsCombined.csv"); //Save the file path.
+            string directoriesPath = System.IO.Path.Combine(documentsPath, "TrackIt"); //Save TrackIt's directory path.
+            string FilesPath = System.IO.Path.Combine(directoriesPath, "ApplicationsNotToTrack.csv"); //Save the file path.
+            string ApplicationdirectoryPath = System.IO.Path.Combine(documentsPath, "TrackIt"); //Save TrackIt's directory path.
+            string ApplicationFilePath = System.IO.Path.Combine(ApplicationdirectoryPath, "Limits.csv"); //Save the file path.
+            string directoryPaths = System.IO.Path.Combine(documentsPath, "TrackIt"); //Save TrackIt's directory path.
+            string FilesPaths = System.IO.Path.Combine(directoryPaths, "ScreentimeData.csv"); //Save the file path.
+            File.Delete(FilePath); //Delete the file path.
+            File.Delete(FilesPaths); //Delete the file path.
+            File.Delete(ApplicationFilePath); //Delete the file path.
+            File.Delete(FilesPath);  //Delete the file path.
+            File.Delete(FilePaths); //Delete the file path.
             newForm.Show();
-            this.Close();
+            this.Close(); //Close the window.
         }
         private void BackButtonClick(object sender, RoutedEventArgs e)
         {
-            Properties.Settings.Default.MiniWindowOpened = false;
-            this.Close();
+            Properties.Settings.Default.MiniWindowOpened = false; //Set MiniWindowOpened to false.
+            this.Close(); //Close the window.
         }
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
-            Properties.Settings.Default.MiniWindowOpened = false;
+            Properties.Settings.Default.MiniWindowOpened = false; //Set MiniWindowOpened to false.
             Properties.Settings.Default.Save();
         }
     }

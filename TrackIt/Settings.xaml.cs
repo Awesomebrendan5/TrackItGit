@@ -152,28 +152,40 @@ namespace TrackIt
 
         void CalendarButtonClick(object sender, RoutedEventArgs e)
         {
-            var newForm = new CalendarMenu();
-            newForm.Show();
-            this.Close();
+            if (Properties.Settings.Default.MiniWindowOpened == false & Properties.Settings.Default.MiniWindowOpened1 == false)
+            {
+                var newForm = new CalendarMenu();
+                newForm.Show();
+                this.Close();
+            }
 
         }
         void ScreenTimeButtonClick(object sender, RoutedEventArgs e)
         {
-            var newForm = new ScreentimeMenu();
-            newForm.Show();
-            this.Close();
+            if (Properties.Settings.Default.MiniWindowOpened == false & Properties.Settings.Default.MiniWindowOpened1 == false)
+            {
+                var newForm = new ScreentimeMenu();
+                newForm.Show();
+                this.Close();
+            }
         }
         void PasswordButtonClick(object sender, RoutedEventArgs e)
         {
-            var newForm = new PasswordMenu();
-            newForm.Show();
-            this.Close();
+            if (Properties.Settings.Default.MiniWindowOpened == false & Properties.Settings.Default.MiniWindowOpened1 == false)
+            {
+                var newForm = new PasswordMenu();
+                newForm.Show();
+                this.Close();
+            }
         }
         void HomeButtonClick(object sender, RoutedEventArgs e)
         {
-            var newForm = new MainWindow();
-            newForm.Show();
-            this.Close();
+            if (Properties.Settings.Default.MiniWindowOpened == false & Properties.Settings.Default.MiniWindowOpened1 == false)
+            {
+                var newForm = new MainWindow();
+                newForm.Show();
+                this.Close();
+            }
         }
         private void SettingsButtonClick(object sender, RoutedEventArgs e)
         {
@@ -182,23 +194,39 @@ namespace TrackIt
 
         private void DeleteBlacklistButtonClick(object sender, RoutedEventArgs e)
         {
-            var newForm = new DeleteBlacklists();
-            newForm.Show();
+            if (Properties.Settings.Default.MiniWindowOpened == false & Properties.Settings.Default.MiniWindowOpened1 == false)
+            {
+                Properties.Settings.Default.MiniWindowOpened = true;
+                var newForm = new DeleteBlacklists();
+                newForm.Show();
+            }
         }
         private void DeleteNotTrackButtonClick(object sender, RoutedEventArgs e)
         {
-            var newForm = new DeleteApplicationsNotToTrack();
-            newForm.Show();
+            if (Properties.Settings.Default.MiniWindowOpened == false & Properties.Settings.Default.MiniWindowOpened1 == false)
+            {
+                Properties.Settings.Default.MiniWindowOpened = true;
+                var newForm = new DeleteApplicationsNotToTrack();
+                newForm.Show();
+            }
         }
         private void DeleteScreentimeButtonClick(object sender, RoutedEventArgs e)
         {
-            var newForm = new DeleteScreentime();
-            newForm.Show();
+            if (Properties.Settings.Default.MiniWindowOpened == false & Properties.Settings.Default.MiniWindowOpened1 == false)
+            {
+                Properties.Settings.Default.MiniWindowOpened = true;
+                var newForm = new DeleteScreentime();
+                newForm.Show();
+            }
         }
         private void DeleteLimitsButtonClick(object sender, RoutedEventArgs e)
         {
-            var newForm = new DeleteLimits();
-            newForm.Show();
+            if (Properties.Settings.Default.MiniWindowOpened == false & Properties.Settings.Default.MiniWindowOpened1 == false)
+            {
+                Properties.Settings.Default.MiniWindowOpened = true;
+                var newForm = new DeleteLimits();
+                newForm.Show();
+            }
         }
     }
 }

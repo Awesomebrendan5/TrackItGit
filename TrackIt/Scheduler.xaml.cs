@@ -52,7 +52,7 @@ namespace TrackIt
                 EventList.Height = SystemParameters.PrimaryScreenHeight * 0.2435;
                 EventList.Width = SystemParameters.PrimaryScreenWidth * 0.1083;
                 EventList.SetValue(Canvas.LeftProperty, 110 * (SystemParameters.PrimaryScreenWidth / 1920));
-                EventList.FontSize = (20 * SystemParameters.PrimaryScreenHeight / 1080);
+                EventList.FontSize = (15 * SystemParameters.PrimaryScreenHeight / 1080);
 
                 CreateNewEvent.SetValue(Canvas.TopProperty, 418 * (SystemParameters.PrimaryScreenHeight / 1080));
                 CreateNewEvent.Height = SystemParameters.PrimaryScreenHeight * 0.0398;
@@ -73,7 +73,6 @@ namespace TrackIt
         }
         private void NewEventClick(object sender, RoutedEventArgs e)
         {
-            Properties.Settings.Default.MiniWindowOpened1 = true;
             var newForm = new DateCreator();
             newForm.Show();
             this.Close();
@@ -109,6 +108,7 @@ namespace TrackIt
                     // Don't write the header again.
                     HasHeaderRecord = false,
                 };
+                var addedEvents = new HashSet<string>();
                 using (var reader = new StreamReader(FilePath))
                 using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                 {
@@ -127,7 +127,12 @@ namespace TrackIt
                         if (startTime.Date == Properties.Settings.Default.DatePicked)
                         {
                             var name = blacklist.EventName;
-                            EventList.Items.Add(name + " " + startTime.TimeOfDay + " - " + endTime.TimeOfDay);
+                            var eventString = name + " " + startTime.TimeOfDay + " - " + endTime.TimeOfDay;
+                            if (!addedEvents.Contains(eventString))
+                            {
+                                EventList.Items.Add(name + " " + startTime.TimeOfDay + " - " + endTime.TimeOfDay);
+                                addedEvents.Add(eventString);
+                            }
                         }
                     }
                 }

@@ -15,10 +15,10 @@ namespace TrackIt
         }
         void Screenscale()
         {
-            if (SystemParameters.PrimaryScreenHeight != 1080)
+            if (SystemParameters.PrimaryScreenHeight != 1080) //Check that the screen resolution is different to default.
             {
-                MinHeight = SystemParameters.PrimaryScreenHeight * (282.0 / 1080.0);
-                MinWidth = SystemParameters.PrimaryScreenWidth * (461.0 / 1920);
+                MinHeight = SystemParameters.PrimaryScreenHeight * (282.0 / 1080.0); //Set MinHeight property.
+                MinWidth = SystemParameters.PrimaryScreenWidth * (461.0 / 1920); //Set MinWidth property.
 
                 ErrorMessage.SetValue(Canvas.TopProperty, 10 * (SystemParameters.PrimaryScreenHeight / 1080));
                 ErrorMessage.Height = SystemParameters.PrimaryScreenHeight * 0.0444;
@@ -41,7 +41,14 @@ namespace TrackIt
         }
         private void ExitButtonClick(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Properties.Settings.Default.MiniWindowOpened = false; //Set MiniWindowOpened to false.
+            Properties.Settings.Default.Save();
+            this.Close(); //Close the window.
+        }
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            Properties.Settings.Default.MiniWindowOpened = false; //Set MiniWindowOpened to false.
+            Properties.Settings.Default.Save();
         }
     }
 }

@@ -42,7 +42,14 @@ namespace TrackIt
 
         private void ExitButtonClick(object sender, RoutedEventArgs e)
         {
+            Properties.Settings.Default.MiniWindowOpened1 = false;
+            Properties.Settings.Default.Save();
             this.Close();
+        }
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            Properties.Settings.Default.MiniWindowOpened1 = false;
+            Properties.Settings.Default.Save();
         }
 
     }

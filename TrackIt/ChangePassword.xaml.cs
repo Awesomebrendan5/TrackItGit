@@ -15,10 +15,10 @@ namespace TrackIt
         }
         void Screenscale()
         {
-            if (SystemParameters.PrimaryScreenHeight != 1080)
+            if (SystemParameters.PrimaryScreenHeight != 1080) //Check that the screen resolution is different to default.
             {
-                MinHeight = SystemParameters.PrimaryScreenHeight * (740.0 / 1080.0);
-                MinWidth = SystemParameters.PrimaryScreenWidth * (428.0 / 1920);
+                MinHeight = SystemParameters.PrimaryScreenHeight * (740.0 / 1080.0); //Set MinHeight property.
+                MinWidth = SystemParameters.PrimaryScreenWidth * (428.0 / 1920); //Set MinWidth property.
 
                 PasswordLabel.SetValue(Canvas.TopProperty, 10 * (SystemParameters.PrimaryScreenHeight / 1080));
                 PasswordLabel.Height = SystemParameters.PrimaryScreenHeight * 0.0445;
@@ -74,56 +74,71 @@ namespace TrackIt
         }
         private void ConfirmButtonClick(object sender, RoutedEventArgs e)
         {
-            if (Properties.Settings.Default.Password == OldPassword.Password)
+            if (Properties.Settings.Default.Password == OldPassword.Password) //Check if the user input the correct password.
             {
-                if (Properties.Settings.Default.Password == NewPassword.Password)
+                if (Properties.Settings.Default.Password == NewPassword.Password) //Check if the user entered their old password.
                 {
-                    var newForm = new PasswordSame();
+                    var newForm = new PasswordSame(); //Open the PasswordSame window.
                     newForm.Show();
                 }
-                if (NewPassword.Password != Properties.Settings.Default.Password)
+                if (NewPassword.Password != Properties.Settings.Default.Password) //Check if the user did not enter their old pasword.
                 {
-                    if (NewPassword.Password == NewPasswordConfirmation.Password & NewPassword.Password.Length > 7)
+                    if (NewPassword.Password == NewPasswordConfirmation.Password & NewPassword.Password.Length > 7) //Check that the new password is equal to the confirmed password and it is greater than 7 characters.
                     {
-                        Properties.Settings.Default.Password = NewPassword.Password;
+                        Properties.Settings.Default.Password = NewPassword.Password; //Store the NewPassword.
                         Properties.Settings.Default.Save();
-                        var newForm = new PasswordSaved();
+                        var newForm = new PasswordSaved(); //Open the PasswordSaved window.
                         newForm.Show();
-                        this.Close();
+                        this.Close(); //Close the window.
                     }
-                    if (NewPassword.Password != NewPasswordConfirmation.Password & NewPassword.Password.Length > 7)
+                    if (NewPassword.Password != NewPasswordConfirmation.Password & NewPassword.Password.Length > 7) //Check that the new password is not equal to the confirmed password and it is greater than 7 characters.
                     {
-                        Properties.Settings.Default.Password = NewPassword.Password;
-                        var newForm = new PasswordMismatch();
-                        newForm.Show();
+                        if (Properties.Settings.Default.MiniWindowOpened1 == false) //Check that MiniWindowOpened1 is false.
+                        {
+                            Properties.Settings.Default.MiniWindowOpened1 = true; //Set MiniWindowOpened1 to true.
+                            var newForm = new PasswordMismatch(); //Open the PasswordMismatch window.
+                            newForm.Show();
+                        }
                     }
-                    if (NewPassword.Password == NewPasswordConfirmation.Password & NewPassword.Password.Length <= 7)
+                    if (NewPassword.Password == NewPasswordConfirmation.Password & NewPassword.Password.Length <= 7) //Check that the new password is equal to the confirmed password and it is less than or equal to 7 characters.
                     {
-                        var newForm = new PasswordTooShort();
-                        newForm.Show();
+                        if (Properties.Settings.Default.MiniWindowOpened1 == false) //Check that MiniWindowOpened1 is false.
+                        {
+                            Properties.Settings.Default.MiniWindowOpened1 = true; //Set MiniWindowOpened1 to true.
+                            var newForm = new PasswordTooShort(); //Open the PasswordTooShort window.
+                            newForm.Show();
+                        }
                     }
-                    if (NewPassword.Password != NewPasswordConfirmation.Password & NewPassword.Password.Length <= 7)
+                    if (NewPassword.Password != NewPasswordConfirmation.Password & NewPassword.Password.Length <= 7) //Check that the new password is not equal to the confirmed password and it is less than or equal to 7 characters.
                     {
-                        var newForm = new PasswordDoubleMismatch();
-                        newForm.Show();
+                        if (Properties.Settings.Default.MiniWindowOpened1 == false) //Check that MiniWindowOpened1 is false.
+                        {
+                            Properties.Settings.Default.MiniWindowOpened1 = true; //Set MiniWindowOpened1 to true.
+                            var newForm = new PasswordDoubleMismatch(); //Open the PasswordDoubleMismatch window.
+                            newForm.Show();
+                        }
                     }
                 }
             }
             else
             {
-                var newForm = new WrongPassword();
-                newForm.Show();
+                if (Properties.Settings.Default.MiniWindowOpened1 == false) //Check that MiniWindowOpened1 is false.
+                {
+                    Properties.Settings.Default.MiniWindowOpened1 = true; //Set MiniWindowOpened1 to true.
+                    var newForm = new WrongPassword(); //Open the WrongPassword window.
+                    newForm.Show();
+                }
             }
         }
 
         private void BackButtonClick(object sender, RoutedEventArgs e)
         {
-            Properties.Settings.Default.MiniWindowOpened = false;
-            this.Close();
+            Properties.Settings.Default.MiniWindowOpened = false; //Set MiniWindowOpened to false.
+            this.Close(); //Close the window.
         }
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e) 
         {
-            Properties.Settings.Default.MiniWindowOpened = false;
+            Properties.Settings.Default.MiniWindowOpened = false; //Set MiniWindowOpened to false.
             Properties.Settings.Default.Save();
         }
     }

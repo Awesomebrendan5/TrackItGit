@@ -10,7 +10,7 @@
     <Canvas Focusable="true" Background="#75A0D8">
         <Image Name="Box" Height="368" Canvas.Left="96" Source="/Images/EventSquare.png" Stretch="Fill" Canvas.Top="106" Width="236"/>
         <TextBlock TextAlignment ="Left" x:Name="DateToday" Height="38" Width="258" Text="20/11/22 - Schedule" FontFamily="Calibri" FontSize="25" Foreground="Black" Canvas.Left="106" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Top="63"/>
-        <ItemsControl x:Name="EventList" Height="263" Width="208" Background="#E9DBDB" FontFamily="Calibri" FontSize="20" Foreground="Black" Canvas.Left="110" Canvas.Top="122" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible">
+        <ItemsControl x:Name="EventList" Height="263" Width="208" Background="#E9DBDB" FontFamily="Calibri" FontSize="15" Foreground="Black" Canvas.Left="110" Canvas.Top="122" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel HorizontalAlignment="Center" />

@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace TrackIt
 {
     /// <summary>
-    /// Interaction logic for AppliationsNotToTrackRemoved.xaml
+    /// Interaction logic for BlacklistOver12.xaml
     /// </summary>
-    public partial class AppliationsNotToTrackRemoved : Window
+    public partial class BlacklistOver12 : Window
     {
-        public AppliationsNotToTrackRemoved()
+        public BlacklistOver12()
         {
             InitializeComponent();
             Screenscale();
@@ -31,15 +31,15 @@ namespace TrackIt
                 MinHeight = SystemParameters.PrimaryScreenHeight * (282.0 / 1080.0); //Set MinHeight property.
                 MinWidth = SystemParameters.PrimaryScreenWidth * (461.0 / 1920); //Set MinWidth property.
 
-                RemovedMessage.SetValue(Canvas.TopProperty, 10 * (SystemParameters.PrimaryScreenHeight / 1080));
-                RemovedMessage.Height = SystemParameters.PrimaryScreenHeight * 0.0444;
-                RemovedMessage.Width = SystemParameters.PrimaryScreenWidth * 0.1339;
-                RemovedMessage.SetValue(Canvas.LeftProperty, 102 * (SystemParameters.PrimaryScreenWidth / 1920));
-                RemovedMessage.FontSize = (30 * SystemParameters.PrimaryScreenHeight / 1080);
+                ErrorMessage.SetValue(Canvas.TopProperty, 10 * (SystemParameters.PrimaryScreenHeight / 1080));
+                ErrorMessage.Height = SystemParameters.PrimaryScreenHeight * 0.0444;
+                ErrorMessage.Width = SystemParameters.PrimaryScreenWidth * 0.1339;
+                ErrorMessage.SetValue(Canvas.LeftProperty, 102 * (SystemParameters.PrimaryScreenWidth / 1920));
+                ErrorMessage.FontSize = (30 * SystemParameters.PrimaryScreenHeight / 1080);
 
                 Information.SetValue(Canvas.TopProperty, 95 * (SystemParameters.PrimaryScreenHeight / 1080));
-                Information.Height = SystemParameters.PrimaryScreenHeight * 0.0824;
-                Information.Width = SystemParameters.PrimaryScreenWidth * 0.194792;
+                Information.Height = SystemParameters.PrimaryScreenHeight * 0.0491;
+                Information.Width = SystemParameters.PrimaryScreenWidth * 0.188021;
                 Information.SetValue(Canvas.LeftProperty, 50 * (SystemParameters.PrimaryScreenWidth / 1920));
                 Information.FontSize = (20 * SystemParameters.PrimaryScreenHeight / 1080);
 
@@ -52,8 +52,14 @@ namespace TrackIt
         }
         private void ExitButtonClick(object sender, RoutedEventArgs e)
         {
+            Properties.Settings.Default.MiniWindowOpened1 = false; //Set MiniWindowOpened1 to false.
+            Properties.Settings.Default.Save();
             this.Close(); //Close the window.
+        }
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            Properties.Settings.Default.MiniWindowOpened1 = false; //Set MiniWindowOpened1 to false.
+            Properties.Settings.Default.Save();
         }
     }
 }
-

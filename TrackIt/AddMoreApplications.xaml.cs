@@ -34,10 +34,10 @@ namespace TrackIt
 
         void Screenscale()
         {
-            if (SystemParameters.PrimaryScreenHeight != 1080)
+            if (SystemParameters.PrimaryScreenHeight != 1080) //Check that the screen resolution is different to default.
             {
-                MinHeight = SystemParameters.PrimaryScreenHeight * (740.0 / 1080.0);
-                MinWidth = SystemParameters.PrimaryScreenWidth * (428.0 / 1920);
+                MinHeight = SystemParameters.PrimaryScreenHeight * (740.0 / 1080.0); //Set MinHeight property.
+                MinWidth = SystemParameters.PrimaryScreenWidth * (428.0 / 1920); //Set MinWidth property.
 
                 AddMore.SetValue(Canvas.TopProperty, 10 * (SystemParameters.PrimaryScreenHeight / 1080));
                 AddMore.Height = SystemParameters.PrimaryScreenHeight * 0.0445;
@@ -71,12 +71,12 @@ namespace TrackIt
         }
         private void ConfirmButtonClick(object sender, RoutedEventArgs e)
         {
-            if (InputApplication.Text != null)
+            if (InputApplication.Text != null) //Check that the user has input text.
             {
-                string ApplicationNamed = InputApplication.Text;
-                string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                string directoryPath = System.IO.Path.Combine(documentsPath, "TrackIt");
-                string FilePath = System.IO.Path.Combine(directoryPath, "ApplicationsNotToTrack.csv");
+                string ApplicationNamed = InputApplication.Text; //Save the user input application name.
+                string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments); //Save the documents path.
+                string directoryPath = System.IO.Path.Combine(documentsPath, "TrackIt"); //Save TrackIt's directory path.
+                string FilePath = System.IO.Path.Combine(directoryPath, "ApplicationsNotToTrack.csv"); //Save the file path.
                 if (File.Exists(FilePath))
                 {
                     Fileexists = true;
@@ -100,7 +100,7 @@ namespace TrackIt
                     using (var writer = new StreamWriter(stream))
                     using (var csv = new CsvWriter(writer, config))
                     {
-                        csv.WriteRecords(records);
+                        csv.WriteRecords(records); //Write the record into ApplicationsNotToTrack.csv.
                     }
                     var newForm = new ApplicationAdded();
                     newForm.Show();
@@ -108,16 +108,16 @@ namespace TrackIt
                 }
                 if (Fileexists == false)
                 {
-                    Directory.CreateDirectory(directoryPath);
+                    Directory.CreateDirectory(directoryPath); //Create the directory if missing.
                     using (var writer = new StreamWriter(FilePath))
                     using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
                     {
-                        csv.WriteRecords(records);
+                        csv.WriteRecords(records); //Write the record into ApplicationsNotToTrack.csv.
                     }
                     Fileexists = true;
-                    var newForm = new ApplicationAdded();
+                    var newForm = new ApplicationAdded(); //Open the ApplicationAdded window.
                     newForm.Show();
-                    this.Close();
+                    this.Close(); //Close the window.
                 }
             }
         }
@@ -127,7 +127,7 @@ namespace TrackIt
         }
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
-            Properties.Settings.Default.MiniWindowOpened1 = false;
+            Properties.Settings.Default.MiniWindowOpened1 = false; //Set MiniWindowOpened1 to false.
             Properties.Settings.Default.Save();
         }
     }

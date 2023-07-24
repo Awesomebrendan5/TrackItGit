@@ -27,10 +27,10 @@ namespace TrackIt
         }
         void Screenscale()
         {
-            if (SystemParameters.PrimaryScreenHeight != 1080)
+            if (SystemParameters.PrimaryScreenHeight != 1080) //Check that the screen resolution is different to default.
             {
-                MinHeight = SystemParameters.PrimaryScreenHeight * (740.0 / 1080.0);
-                MinWidth = SystemParameters.PrimaryScreenWidth * (428.0 / 1920);
+                MinHeight = SystemParameters.PrimaryScreenHeight * (740.0 / 1080.0); //Set MinHeight property.
+                MinWidth = SystemParameters.PrimaryScreenWidth * (428.0 / 1920); //Set MinWidth property.
 
                 PasswordLabel.SetValue(Canvas.TopProperty, 10 * (SystemParameters.PrimaryScreenHeight / 1080));
                 PasswordLabel.Height = SystemParameters.PrimaryScreenHeight * 0.0444;
@@ -76,28 +76,32 @@ namespace TrackIt
         }
         private void ConfirmButtonClick(object sender, RoutedEventArgs e)
         {
-            if (Properties.Settings.Default.Password == Password.Password)
+            if (Properties.Settings.Default.Password == Password.Password) //Check that the input password is correct.
             {
-                string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                string directoryPath = System.IO.Path.Combine(documentsPath, "TrackIt");
-                string FilePath = System.IO.Path.Combine(directoryPath, "Blacklists.csv");
-                string FilePaths = System.IO.Path.Combine(directoryPath, "BlacklistsCombined.csv");
-                File.Delete(FilePath);
-                File.Delete(FilePaths);
-                var newForm = new BlacklistsRemoved();
+                string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments); //Save the documents path.
+                string directoryPath = System.IO.Path.Combine(documentsPath, "TrackIt"); //Save TrackIt's directory path.
+                string FilePath = System.IO.Path.Combine(directoryPath, "Blacklists.csv"); //Save the file path.
+                string FilePaths = System.IO.Path.Combine(directoryPath, "BlacklistsCombined.csv"); //Save the file path.
+                File.Delete(FilePath); //Delete the file path.
+                File.Delete(FilePaths); //Delete the file path.
+                var newForm = new BlacklistsRemoved(); //Open the BlacklistsRemoved window.
                 newForm.Show();
-                this.Close();
+                this.Close(); //Close the window.
             }
-            if (Properties.Settings.Default.Password != Password.Password)
+            if (Properties.Settings.Default.Password != Password.Password) //Check that the input password is incorrect.
             {
-                var newForm = new WrongPassword2();
-                newForm.Show();
+                if (Properties.Settings.Default.MiniWindowOpened1 == false)
+                {
+                    Properties.Settings.Default.MiniWindowOpened1 = true; //Set MiniWindowOpened1 to true.
+                    var newForm = new WrongPassword2(); //Open the WrongPassword2 window.
+                    newForm.Show();
+                }
             }
         }
         private void BackButtonClick(object sender, RoutedEventArgs e)
         {
-            Properties.Settings.Default.MiniWindowOpened = false;
-            this.Close();
+            Properties.Settings.Default.MiniWindowOpened = false; //Set MiniWindowOpened to false.
+            this.Close(); //Close the window.
         }
     }
 }
