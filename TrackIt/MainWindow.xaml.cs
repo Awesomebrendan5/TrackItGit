@@ -25,6 +25,7 @@ using System.Drawing.Drawing2D;
 using System.Windows.Media.Media3D;
 using Windows.ApplicationModel.VoiceCommands;
 using System.Windows.Documents;
+using IWshRuntimeLibrary;
 
 namespace TrackIt
 {
@@ -57,6 +58,11 @@ namespace TrackIt
             StoreYearRecords();
             Startup();
             ListofEvents();
+            String path = AppDomain.CurrentDomain.BaseDirectory;
+            string wpfAppExePath = path + "TrackIt.exe"; 
+            string shortcutName = "TrackIt";
+
+            CreateShortcutOnDesktop(wpfAppExePath, shortcutName);
         }
 
         void Startup()
@@ -69,10 +75,20 @@ namespace TrackIt
             }
 
         }
+        public static void CreateShortcutOnDesktop(string targetExePath, string shortcutName)
+        {
+            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string shortcutPath = Path.Combine(desktopPath, $"{shortcutName}.lnk");
 
+            dynamic shell = Activator.CreateInstance(Type.GetTypeFromProgID("WScript.Shell"));
+            dynamic shortcut = shell.CreateShortcut(shortcutPath);
+
+            shortcut.TargetPath = targetExePath;
+            shortcut.Save();
+        }
         void ScreenScale()
         {
-            if (SystemParameters.PrimaryScreenHeight != 1080) //Checks that the screen resolution is different to default.
+            if (SystemParameters.PrimaryScreenHeight != 1080 | SystemParameters.PrimaryScreenWidth!= 1920) //Checks that the screen resolution is different to default.
             {
                 Line.Height = SystemParameters.PrimaryScreenHeight * 1;
                 Line.Width = SystemParameters.PrimaryScreenWidth * 0.0031;
@@ -151,6 +167,16 @@ namespace TrackIt
                 SettingsIcon.Width = SystemParameters.PrimaryScreenWidth * 0.04167;
                 SettingsIcon.SetValue(Canvas.LeftProperty, 12 * (SystemParameters.PrimaryScreenWidth / 1920));
 
+                RedCrossButton.SetValue(Canvas.TopProperty, 0 * (SystemParameters.PrimaryScreenHeight / 1080));
+                RedCrossButton.Height = SystemParameters.PrimaryScreenHeight * 0.0463;
+                RedCrossButton.Width = SystemParameters.PrimaryScreenWidth * 0.0260;
+                RedCrossButton.SetValue(Canvas.LeftProperty, 1870 * (SystemParameters.PrimaryScreenWidth / 1920));
+
+                RedCross.SetValue(Canvas.TopProperty, 0 * (SystemParameters.PrimaryScreenHeight / 1080));
+                RedCross.Height = SystemParameters.PrimaryScreenHeight * 0.0463;
+                RedCross.Width = SystemParameters.PrimaryScreenWidth * 0.0260;
+                RedCross.SetValue(Canvas.LeftProperty, 1870 * (SystemParameters.PrimaryScreenWidth / 1920));
+
             }
         }
         public void StoreDayRecords()
@@ -158,7 +184,7 @@ namespace TrackIt
             string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             string FilePath = Path.Combine(documentsPath, "TrackIt", "ScreentimeData.csv");
             Dictionary<string, ScreentimeStats> mergedRecords = new Dictionary<string, ScreentimeStats>();
-            if (File.Exists(FilePath))
+            if (System.IO.File.Exists(FilePath))
             {
                 using (var reader = new StreamReader(FilePath))
                 using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
@@ -191,19 +217,26 @@ namespace TrackIt
                     alist.Sort((b, a) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
                     try
                     {
-                        Properties.Settings.Default.a = alist[0].ApplicationName;
-                        Properties.Settings.Default.avalue = (alist[0].ScreenTimeCollect / 60000);
-                        Properties.Settings.Default.Save();
+                        if (alist[0].ApplicationName.Length <= 17)
+                        {
+                            Properties.Settings.Default.a = alist[0].ApplicationName;
+                            Properties.Settings.Default.avalue = (alist[0].ScreenTimeCollect / 60000);
+                            Properties.Settings.Default.Save();
+                        }
                     }
                     catch
                     {
+
                         Properties.Settings.Default.a = null;
                         Properties.Settings.Default.avalue = 0;
                     }
                     try
                     {
-                        Properties.Settings.Default.b = alist[1].ApplicationName;
-                        Properties.Settings.Default.bvalue = (alist[1].ScreenTimeCollect / 60000);
+                        if (alist[1].ApplicationName.Length <= 17)
+                        {
+                            Properties.Settings.Default.b = alist[1].ApplicationName;
+                            Properties.Settings.Default.bvalue = (alist[1].ScreenTimeCollect / 60000);
+                        }
                     }
                     catch
                     {
@@ -212,8 +245,11 @@ namespace TrackIt
                     }
                     try
                     {
-                        Properties.Settings.Default.c = alist[2].ApplicationName;
-                        Properties.Settings.Default.cvalue = (alist[2].ScreenTimeCollect / 60000);
+                        if (alist[2].ApplicationName.Length <= 17)
+                        {
+                            Properties.Settings.Default.c = alist[2].ApplicationName;
+                            Properties.Settings.Default.cvalue = (alist[2].ScreenTimeCollect / 60000);
+                        }
                     }
                     catch
                     {
@@ -222,8 +258,11 @@ namespace TrackIt
                     }
                     try
                     {
-                        Properties.Settings.Default.d = alist[3].ApplicationName;
-                        Properties.Settings.Default.dvalue = (alist[3].ScreenTimeCollect / 60000);
+                        if (alist[3].ApplicationName.Length <= 17)
+                        {
+                            Properties.Settings.Default.d = alist[3].ApplicationName;
+                            Properties.Settings.Default.dvalue = (alist[3].ScreenTimeCollect / 60000);
+                        }
                     }
                     catch
                     {
@@ -232,8 +271,11 @@ namespace TrackIt
                     }
                     try
                     {
-                        Properties.Settings.Default.e = alist[4].ApplicationName;
-                        Properties.Settings.Default.evalue = (alist[4].ScreenTimeCollect / 60000);
+                        if (alist[4].ApplicationName.Length <= 17)
+                        {
+                            Properties.Settings.Default.e = alist[4].ApplicationName;
+                            Properties.Settings.Default.evalue = (alist[4].ScreenTimeCollect / 60000);
+                        }
                     }
                     catch
                     {
@@ -255,7 +297,7 @@ namespace TrackIt
             string directoryPath = Path.Combine(documentPath, "TrackIt");
             string FilePath = Path.Combine(directoryPath, "ScreentimeData.csv");
             Dictionary<string, ScreentimeStats> mergedRecords = new Dictionary<string, ScreentimeStats>();
-            if (File.Exists(FilePath))
+            if (System.IO.File.Exists(FilePath))
             {
                 using (var reader = new StreamReader(FilePath))
                 using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
@@ -282,7 +324,7 @@ namespace TrackIt
                 string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                 string directoriesPath = Path.Combine(documentPath, "TrackIt");
                 string FilesPath = Path.Combine(directoryPath, "ScreentimeWeekData.csv");
-                if (File.Exists(FilesPath))
+                if (System.IO.File.Exists(FilesPath))
                 {
                     using (var writer = new StreamWriter(FilesPath))
                     using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
@@ -299,52 +341,73 @@ namespace TrackIt
                         records = records.Where(r => r.DateCollected.Date == today).ToList();
                         try
                         {
-                            Properties.Settings.Default.f = pastWeekRecords[0].ApplicationName;
-                            Properties.Settings.Default.fvalue = (pastWeekRecords[0].ScreenTimeCollect / 60000);
+                            if (pastWeekRecords[0].ApplicationName.Length <= 17)
+                            {
+                                Properties.Settings.Default.f = pastWeekRecords[0].ApplicationName;
+                                Properties.Settings.Default.fvalue = (pastWeekRecords[0].ScreenTimeCollect / 60000);
+                            }
                         }
                         catch
                         {
-
+                            Properties.Settings.Default.f = null;
+                            Properties.Settings.Default.fvalue = 0;
                         }
                         try
                         {
-                            Properties.Settings.Default.g = pastWeekRecords[1].ApplicationName;
-                            Properties.Settings.Default.gvalue = (pastWeekRecords[1].ScreenTimeCollect / 60000);
+                            if (pastWeekRecords[1].ApplicationName.Length <= 17)
+                            {
+                                Properties.Settings.Default.g = pastWeekRecords[1].ApplicationName;
+                                Properties.Settings.Default.gvalue = (pastWeekRecords[1].ScreenTimeCollect / 60000);
+                            }
                         }
                         catch
                         {
-
+                            Properties.Settings.Default.g = null;
+                            Properties.Settings.Default.gvalue = 0;
                         }
                         try
                         {
-                            Properties.Settings.Default.h = pastWeekRecords[2].ApplicationName;
-                            Properties.Settings.Default.hvalue = (pastWeekRecords[2].ScreenTimeCollect / 60000);
+                            if (pastWeekRecords[2].ApplicationName.Length <= 17)
+                            {
+                                Properties.Settings.Default.h = pastWeekRecords[2].ApplicationName;
+                                Properties.Settings.Default.hvalue = (pastWeekRecords[2].ScreenTimeCollect / 60000);
+                            }
                         }
                         catch
                         {
-
+                            Properties.Settings.Default.h = null;
+                            Properties.Settings.Default.hvalue = 0;
                         }
                         try
                         {
-                            Properties.Settings.Default.i = pastWeekRecords[3].ApplicationName;
-                            Properties.Settings.Default.ivalue = (pastWeekRecords[3].ScreenTimeCollect / 60000);
+                            if (pastWeekRecords[3].ApplicationName.Length <= 17)
+                            {
+                                Properties.Settings.Default.i = pastWeekRecords[3].ApplicationName;
+                                Properties.Settings.Default.ivalue = (pastWeekRecords[3].ScreenTimeCollect / 60000);
+                            }
                         }
                         catch
                         {
+                            Properties.Settings.Default.i = null;
+                            Properties.Settings.Default.ivalue = 0;
                         }
                         try
                         {
-                            Properties.Settings.Default.j = pastWeekRecords[4].ApplicationName;
-                            Properties.Settings.Default.jvalue = (pastWeekRecords[4].ScreenTimeCollect / 60000);
+                            if (pastWeekRecords[4].ApplicationName.Length <= 17)
+                            {
+                                Properties.Settings.Default.j = pastWeekRecords[4].ApplicationName;
+                                Properties.Settings.Default.jvalue = (pastWeekRecords[4].ScreenTimeCollect / 60000);
+                            }
                         }
                         catch
                         {
-
+                            Properties.Settings.Default.j = null;
+                            Properties.Settings.Default.jvalue = 0;
                         }
                         Properties.Settings.Default.Save();
                     }
                 }
-                if (!File.Exists(FilesPath))
+                if (!System.IO.File.Exists(FilesPath))
                 {
                     Directory.CreateDirectory(directoryPath);
                     using (var writer = new StreamWriter(FilesPath))
@@ -362,47 +425,68 @@ namespace TrackIt
                         records = records.Where(r => r.DateCollected.Date == today).ToList();
                         try
                         {
-                            Properties.Settings.Default.f = pastWeekRecords[0].ApplicationName;
-                            Properties.Settings.Default.fvalue = (pastWeekRecords[0].ScreenTimeCollect / 60000);
+                            if (pastWeekRecords[0].ApplicationName.Length <= 17)
+                            {
+                                Properties.Settings.Default.f = pastWeekRecords[0].ApplicationName;
+                                Properties.Settings.Default.fvalue = (pastWeekRecords[0].ScreenTimeCollect / 60000);
+                            }
                         }
                         catch
                         {
-
+                            Properties.Settings.Default.f = null;
+                            Properties.Settings.Default.fvalue = 0;
                         }
                         try
                         {
-                            Properties.Settings.Default.g = pastWeekRecords[1].ApplicationName;
-                            Properties.Settings.Default.gvalue = (pastWeekRecords[1].ScreenTimeCollect / 60000);
+                            if (pastWeekRecords[1].ApplicationName.Length <= 17)
+                            {
+                                Properties.Settings.Default.g = pastWeekRecords[1].ApplicationName;
+                                Properties.Settings.Default.gvalue = (pastWeekRecords[1].ScreenTimeCollect / 60000);
+                            }
                         }
                         catch
                         {
-
+                            Properties.Settings.Default.g = null;
+                            Properties.Settings.Default.gvalue = 0;
                         }
                         try
                         {
-                            Properties.Settings.Default.h = pastWeekRecords[2].ApplicationName;
-                            Properties.Settings.Default.hvalue = (pastWeekRecords[2].ScreenTimeCollect / 60000);
+                            if (pastWeekRecords[2].ApplicationName.Length <= 17)
+                            {
+                                Properties.Settings.Default.h = pastWeekRecords[2].ApplicationName;
+                                Properties.Settings.Default.hvalue = (pastWeekRecords[2].ScreenTimeCollect / 60000);
+                            }
                         }
                         catch
                         {
-
+                            Properties.Settings.Default.h = null;
+                            Properties.Settings.Default.hvalue = 0;
                         }
                         try
                         {
-                            Properties.Settings.Default.i = pastWeekRecords[3].ApplicationName;
-                            Properties.Settings.Default.ivalue = (pastWeekRecords[3].ScreenTimeCollect / 60000);
+                            if (pastWeekRecords[3].ApplicationName.Length <= 17)
+                            {
+                                Properties.Settings.Default.i = pastWeekRecords[3].ApplicationName;
+                                Properties.Settings.Default.ivalue = (pastWeekRecords[3].ScreenTimeCollect / 60000);
+                            }
                         }
                         catch
                         {
+                            Properties.Settings.Default.i = null;
+                            Properties.Settings.Default.ivalue = 0;
                         }
                         try
                         {
-                            Properties.Settings.Default.j = pastWeekRecords[4].ApplicationName;
-                            Properties.Settings.Default.jvalue = (pastWeekRecords[4].ScreenTimeCollect / 60000);
+                            if (pastWeekRecords[4].ApplicationName.Length <= 17)
+                            {
+                                Properties.Settings.Default.j = pastWeekRecords[4].ApplicationName;
+                                Properties.Settings.Default.jvalue = (pastWeekRecords[4].ScreenTimeCollect / 60000);
+                            }
                         }
                         catch
                         {
-
+                            Properties.Settings.Default.j = null;
+                            Properties.Settings.Default.jvalue = 0;
                         }
                         Properties.Settings.Default.Save();
                     }
@@ -414,7 +498,7 @@ namespace TrackIt
             string documentPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             string FilePath = Path.Combine(documentPath, "TrackIt", "ScreentimeData.csv");
             Dictionary<string, ScreentimeStats> mergedRecords = new Dictionary<string, ScreentimeStats>();
-            if (File.Exists(FilePath))
+            if (System.IO.File.Exists(FilePath))
             {
                 var today = DateTime.Today;
                 var firstDayOfMonth = new DateTime(today.Year, today.Month, 1);
@@ -422,7 +506,7 @@ namespace TrackIt
                 using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                 {
                     var records = csv.GetRecords<ScreentimeStats>().ToList(); ;
-                    records = records.Where(r => r.DateCollected >= firstDayOfMonth && r.DateCollected <= today).ToList();
+                    records = records.Where(r => r.DateCollected >= firstDayOfMonth && r.DateCollected <= today.AddDays(1)).ToList();
                     List<ScreentimeStats> alist = records.ToList();
                     foreach (ScreentimeStats record in records)
                     {
@@ -444,7 +528,7 @@ namespace TrackIt
                 string documentsPaths = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                 string directoriesPath = Path.Combine(documentPath, "TrackIt");
                 string FilesPaths = Path.Combine(directoriesPath, "ScreentimeMonthData.csv");
-                if (File.Exists(FilesPaths))
+                if (System.IO.File.Exists(FilesPaths))
                 {
                     using (var writer = new StreamWriter(FilesPaths))
                     using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
@@ -461,53 +545,73 @@ namespace TrackIt
                         records = records.Where(r => r.DateCollected.Date == today1).ToList();
                         try
                         {
-                            Properties.Settings.Default.k = pastWeekRecords[0].ApplicationName;
-                            Properties.Settings.Default.kvalue = (pastWeekRecords[0].ScreenTimeCollect / 60000);
+                            if (pastWeekRecords[0].ApplicationName.Length <= 17)
+                            {
+                                Properties.Settings.Default.k = pastWeekRecords[0].ApplicationName;
+                                Properties.Settings.Default.kvalue = (pastWeekRecords[0].ScreenTimeCollect / 60000);
+                            }
                         }
                         catch
                         {
-
+                            Properties.Settings.Default.k = null;
+                            Properties.Settings.Default.kvalue = 0;
                         }
                         try
                         {
-                            Properties.Settings.Default.l = pastWeekRecords[1].ApplicationName;
-                            Properties.Settings.Default.lvalue = (pastWeekRecords[1].ScreenTimeCollect / 60000);
+                            if (pastWeekRecords[1].ApplicationName.Length <= 17)
+                            {
+                                Properties.Settings.Default.l = pastWeekRecords[1].ApplicationName;
+                                Properties.Settings.Default.lvalue = (pastWeekRecords[1].ScreenTimeCollect / 60000);
+                            }
                         }
                         catch
                         {
-
+                            Properties.Settings.Default.l = null;
+                            Properties.Settings.Default.lvalue = 0;
                         }
                         try
                         {
-                            Properties.Settings.Default.m = pastWeekRecords[2].ApplicationName;
-                            Properties.Settings.Default.mvalue = (pastWeekRecords[2].ScreenTimeCollect / 60000);
+                            if (pastWeekRecords[2].ApplicationName.Length <= 17)
+                            {
+                                Properties.Settings.Default.m = pastWeekRecords[2].ApplicationName;
+                                Properties.Settings.Default.mvalue = (pastWeekRecords[2].ScreenTimeCollect / 60000);
+                            }
                         }
                         catch
                         {
-
+                            Properties.Settings.Default.m = null;
+                            Properties.Settings.Default.mvalue = 0;
                         }
                         try
                         {
-                            Properties.Settings.Default.n = pastWeekRecords[3].ApplicationName;
-                            Properties.Settings.Default.nvalue = (pastWeekRecords[3].ScreenTimeCollect / 60000);
+                            if (pastWeekRecords[3].ApplicationName.Length <= 17)
+                            {
+                                Properties.Settings.Default.n = pastWeekRecords[3].ApplicationName;
+                                Properties.Settings.Default.nvalue = (pastWeekRecords[3].ScreenTimeCollect / 60000);
+                            }
                         }
                         catch
                         {
-
+                            Properties.Settings.Default.n = null;
+                            Properties.Settings.Default.nvalue = 0;
                         }
                         try
                         {
-                            Properties.Settings.Default.o = pastWeekRecords[4].ApplicationName;
-                            Properties.Settings.Default.ovalue = (pastWeekRecords[4].ScreenTimeCollect / 60000);
+                            if (pastWeekRecords[4].ApplicationName.Length <= 17)
+                            {
+                                Properties.Settings.Default.o = pastWeekRecords[4].ApplicationName;
+                                Properties.Settings.Default.ovalue = (pastWeekRecords[4].ScreenTimeCollect / 60000);
+                            }
                         }
                         catch
                         {
-
+                            Properties.Settings.Default.o = null;
+                            Properties.Settings.Default.ovalue = 0;
                         }
                         Properties.Settings.Default.Save();
                     }
                 }
-                if (!File.Exists(FilesPaths))
+                if (!System.IO.File.Exists(FilesPaths))
                 {
                     Directory.CreateDirectory(directoriesPath);
                     using (var writer = new StreamWriter(FilesPaths))
@@ -525,48 +629,68 @@ namespace TrackIt
                         records = records.Where(r => r.DateCollected.Date == today1).ToList();
                         try
                         {
-                            Properties.Settings.Default.k = pastWeekRecords[0].ApplicationName;
-                            Properties.Settings.Default.kvalue = (pastWeekRecords[0].ScreenTimeCollect / 60000);
+                            if (pastWeekRecords[0].ApplicationName.Length <= 17)
+                            {
+                                Properties.Settings.Default.k = pastWeekRecords[0].ApplicationName;
+                                Properties.Settings.Default.kvalue = (pastWeekRecords[0].ScreenTimeCollect / 60000);
+                            }
                         }
                         catch
                         {
-
+                            Properties.Settings.Default.k = null;
+                            Properties.Settings.Default.kvalue = 0;
                         }
                         try
                         {
-                            Properties.Settings.Default.l = pastWeekRecords[1].ApplicationName;
-                            Properties.Settings.Default.lvalue = (pastWeekRecords[1].ScreenTimeCollect / 60000);
+                            if (pastWeekRecords[1].ApplicationName.Length <= 17)
+                            {
+                                Properties.Settings.Default.l = pastWeekRecords[1].ApplicationName;
+                                Properties.Settings.Default.lvalue = (pastWeekRecords[1].ScreenTimeCollect / 60000);
+                            }
                         }
                         catch
                         {
-
+                            Properties.Settings.Default.l = null;
+                            Properties.Settings.Default.lvalue = 0;
                         }
                         try
                         {
-                            Properties.Settings.Default.m = pastWeekRecords[2].ApplicationName;
-                            Properties.Settings.Default.mvalue = (pastWeekRecords[2].ScreenTimeCollect / 60000);
+                            if (pastWeekRecords[2].ApplicationName.Length <= 17)
+                            {
+                                Properties.Settings.Default.m = pastWeekRecords[2].ApplicationName;
+                                Properties.Settings.Default.mvalue = (pastWeekRecords[2].ScreenTimeCollect / 60000);
+                            }
                         }
                         catch
                         {
-
+                            Properties.Settings.Default.m = null;
+                            Properties.Settings.Default.mvalue = 0;
                         }
                         try
                         {
-                            Properties.Settings.Default.n = pastWeekRecords[3].ApplicationName;
-                            Properties.Settings.Default.nvalue = (pastWeekRecords[3].ScreenTimeCollect / 60000);
+                            if (pastWeekRecords[3].ApplicationName.Length <= 17)
+                            {
+                                Properties.Settings.Default.n = pastWeekRecords[3].ApplicationName;
+                                Properties.Settings.Default.nvalue = (pastWeekRecords[3].ScreenTimeCollect / 60000);
+                            }
                         }
                         catch
                         {
-
+                            Properties.Settings.Default.n = null;
+                            Properties.Settings.Default.nvalue = 0;
                         }
                         try
                         {
-                            Properties.Settings.Default.o = pastWeekRecords[4].ApplicationName;
-                            Properties.Settings.Default.ovalue = (pastWeekRecords[4].ScreenTimeCollect / 60000);
+                            if (pastWeekRecords[4].ApplicationName.Length <= 17)
+                            {
+                                Properties.Settings.Default.o = pastWeekRecords[4].ApplicationName;
+                                Properties.Settings.Default.ovalue = (pastWeekRecords[4].ScreenTimeCollect / 60000);
+                            }
                         }
                         catch
                         {
-
+                            Properties.Settings.Default.o = null;
+                            Properties.Settings.Default.ovalue = 0;
                         }
                         Properties.Settings.Default.Save();
                     }
@@ -578,7 +702,7 @@ namespace TrackIt
             string documentPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             string FilePath = Path.Combine(documentPath, "TrackIt", "ScreentimeData.csv");
             Dictionary<string, ScreentimeStats> mergedRecords = new Dictionary<string, ScreentimeStats>();
-            if (File.Exists(FilePath))
+            if (System.IO.File.Exists(FilePath))
             {
             using (var reader = new StreamReader(FilePath))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
@@ -608,7 +732,7 @@ namespace TrackIt
             string documentsPaths = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             string directoriesPath = Path.Combine(documentPath, "TrackIt");
             string FilePaths = Path.Combine(directoriesPath, "ScreentimeYearData.csv");
-            if (File.Exists(FilePaths))
+            if (System.IO.File.Exists(FilePaths))
             {
                 using (var writer = new StreamWriter(FilePaths))
                 using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
@@ -624,54 +748,74 @@ namespace TrackIt
                     pastWeekRecords.Sort((b, a) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
                     records = records.Where(r => r.DateCollected.Date == today).ToList();
                     try
-                    {
-                        Properties.Settings.Default.p = pastWeekRecords[0].ApplicationName;
-                        Properties.Settings.Default.pvalue = (pastWeekRecords[0].ScreenTimeCollect / 60000);
+                        {
+                            if (pastWeekRecords[0].ApplicationName.Length <= 17)
+                            {
+                                Properties.Settings.Default.p = pastWeekRecords[0].ApplicationName;
+                                Properties.Settings.Default.pvalue = (pastWeekRecords[0].ScreenTimeCollect / 60000);
+                            }
                     }
                     catch
                     {
-
+                            Properties.Settings.Default.p = null;
+                            Properties.Settings.Default.pvalue = 0;
+                        }
+                    try
+                        {
+                            if (pastWeekRecords[1].ApplicationName.Length <= 17)
+                            {
+                                Properties.Settings.Default.q = pastWeekRecords[1].ApplicationName;
+                                Properties.Settings.Default.qvalue = (pastWeekRecords[1].ScreenTimeCollect / 60000);
+                            }
+                    }
+                    catch
+                    {
+                            Properties.Settings.Default.q = null;
+                            Properties.Settings.Default.qvalue = 0;
                     }
                     try
-                    {
-                        Properties.Settings.Default.q = pastWeekRecords[1].ApplicationName;
-                        Properties.Settings.Default.qvalue = (pastWeekRecords[1].ScreenTimeCollect / 60000);
+                        {
+                            if (pastWeekRecords[2].ApplicationName.Length <= 17)
+                            {
+                                Properties.Settings.Default.r = pastWeekRecords[2].ApplicationName;
+                                Properties.Settings.Default.rvalue = (pastWeekRecords[2].ScreenTimeCollect / 60000);
+                            }
                     }
                     catch
                     {
-
+                            Properties.Settings.Default.r = null;
+                            Properties.Settings.Default.rvalue = 0;
                     }
                     try
-                    {
-                        Properties.Settings.Default.r = pastWeekRecords[2].ApplicationName;
-                        Properties.Settings.Default.rvalue = (pastWeekRecords[2].ScreenTimeCollect / 60000);
+                        {
+                            if (pastWeekRecords[3].ApplicationName.Length <= 17)
+                            {
+                                Properties.Settings.Default.s = pastWeekRecords[3].ApplicationName;
+                                Properties.Settings.Default.svalue = (pastWeekRecords[3].ScreenTimeCollect / 60000);
+                            }
                     }
                     catch
                     {
-
+                            Properties.Settings.Default.s = null;
+                            Properties.Settings.Default.svalue = 0;
                     }
                     try
-                    {
-                        Properties.Settings.Default.s = pastWeekRecords[3].ApplicationName;
-                        Properties.Settings.Default.svalue = (pastWeekRecords[3].ScreenTimeCollect / 60000);
+                        {
+                            if (pastWeekRecords[4].ApplicationName.Length <= 17)
+                            {
+                                Properties.Settings.Default.t = pastWeekRecords[4].ApplicationName;
+                                Properties.Settings.Default.tvalue = (pastWeekRecords[4].ScreenTimeCollect / 60000);
+                            }
                     }
                     catch
                     {
-
-                    }
-                    try
-                    {
-                        Properties.Settings.Default.t = pastWeekRecords[4].ApplicationName;
-                        Properties.Settings.Default.tvalue = (pastWeekRecords[4].ScreenTimeCollect / 60000);
-                    }
-                    catch
-                    {
-
+                            Properties.Settings.Default.t = null;
+                            Properties.Settings.Default.tvalue = 0;
                     }
                     Properties.Settings.Default.Save();
                 }
             }
-                if (!File.Exists(FilePaths))
+                if (!System.IO.File.Exists(FilePaths))
                 {
                     Directory.CreateDirectory(directoriesPath);
                     using (var writer = new StreamWriter(FilePaths))
@@ -689,40 +833,68 @@ namespace TrackIt
                         records = records.Where(r => r.DateCollected.Date == today).ToList();
                         try
                         {
-                            Properties.Settings.Default.p = pastWeekRecords[0].ApplicationName;
-                            Properties.Settings.Default.pvalue = (pastWeekRecords[0].ScreenTimeCollect / 60000);
+                            if (pastWeekRecords[0].ApplicationName.Length <= 17)
+                            {
+                                Properties.Settings.Default.p = pastWeekRecords[0].ApplicationName;
+                                Properties.Settings.Default.pvalue = (pastWeekRecords[0].ScreenTimeCollect / 60000);
+                            }
                         }
                         catch
                         {
-
+                            Properties.Settings.Default.p = null;
+                            Properties.Settings.Default.pvalue = 0;
                         }
                         try
                         {
-                            Properties.Settings.Default.q = pastWeekRecords[1].ApplicationName;
-                            Properties.Settings.Default.qvalue = (pastWeekRecords[1].ScreenTimeCollect / 60000);
+                            if (pastWeekRecords[1].ApplicationName.Length <= 17)
+                            {
+                                Properties.Settings.Default.q = pastWeekRecords[1].ApplicationName;
+                                Properties.Settings.Default.qvalue = (pastWeekRecords[1].ScreenTimeCollect / 60000);
+                            }
                         }
                         catch
                         {
-
+                            Properties.Settings.Default.q = null;
+                            Properties.Settings.Default.qvalue = 0;
                         }
                         try
                         {
-                            Properties.Settings.Default.r = pastWeekRecords[2].ApplicationName;
-                            Properties.Settings.Default.rvalue = (pastWeekRecords[2].ScreenTimeCollect / 60000);
+                            if (pastWeekRecords[2].ApplicationName.Length <= 17)
+                            {
+                                Properties.Settings.Default.r = pastWeekRecords[2].ApplicationName;
+                                Properties.Settings.Default.rvalue = (pastWeekRecords[2].ScreenTimeCollect / 60000);
+                            }
                         }
                         catch
                         {
-                            Properties.Settings.Default.s = pastWeekRecords[3].ApplicationName;
-                            Properties.Settings.Default.svalue = (pastWeekRecords[3].ScreenTimeCollect / 60000);
+                            Properties.Settings.Default.r = null;
+                            Properties.Settings.Default.rvalue = 0;
                         }
                         try
                         {
-                            Properties.Settings.Default.t = pastWeekRecords[4].ApplicationName;
-                            Properties.Settings.Default.tvalue = (pastWeekRecords[4].ScreenTimeCollect / 60000);
+                            if (pastWeekRecords[3].ApplicationName.Length <= 17)
+                            {
+                                Properties.Settings.Default.s = pastWeekRecords[3].ApplicationName;
+                                Properties.Settings.Default.svalue = (pastWeekRecords[3].ScreenTimeCollect / 60000);
+                            }
                         }
                         catch
                         {
-
+                            Properties.Settings.Default.s = null;
+                            Properties.Settings.Default.svalue = 0;
+                        }
+                        try
+                        {
+                            if (pastWeekRecords[4].ApplicationName.Length <= 17)
+                            {
+                                Properties.Settings.Default.t = pastWeekRecords[4].ApplicationName;
+                                Properties.Settings.Default.tvalue = (pastWeekRecords[4].ScreenTimeCollect / 60000);
+                            }
+                        }
+                        catch
+                        {
+                            Properties.Settings.Default.t = null;
+                            Properties.Settings.Default.tvalue = 0;
                         }
                         Properties.Settings.Default.Save();
                     }
@@ -752,6 +924,10 @@ namespace TrackIt
         {
 
         }
+        void RedCrossButtonClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
         private void SettingsButtonClick(object sender, RoutedEventArgs e)
         {
             var newForm = new Settings();
@@ -763,7 +939,7 @@ namespace TrackIt
             string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             string directoryPath = Path.Combine(documentsPath, "TrackIt");
             string FilePath = Path.Combine(directoryPath, "BlacklistsCombined.csv");
-            if (File.Exists(FilePath))
+            if (System.IO.File.Exists(FilePath))
             {
                 Fileexists = true;
             }

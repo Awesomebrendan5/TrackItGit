@@ -28,7 +28,7 @@ namespace TrackIt
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             WindowState = WindowState.Maximized;
             ListofBlacklists();
-            if (SystemParameters.PrimaryScreenHeight != 1080) //Check that the screen resolution is different to default.
+            if (SystemParameters.PrimaryScreenHeight != 1080 | SystemParameters.PrimaryScreenWidth != 1920) //Check that the screen resolution is different to default.
             {
                 Line.Height = SystemParameters.PrimaryScreenHeight * 1;
                 Line.Width = SystemParameters.PrimaryScreenWidth * 0.0031;
@@ -132,6 +132,15 @@ namespace TrackIt
                 SettingsIcon.Width = SystemParameters.PrimaryScreenWidth * 0.04167;
                 SettingsIcon.SetValue(Canvas.LeftProperty, 12 * (SystemParameters.PrimaryScreenWidth / 1920));
 
+                RedCrossButton.SetValue(Canvas.TopProperty, 0 * (SystemParameters.PrimaryScreenHeight / 1080));
+                RedCrossButton.Height = SystemParameters.PrimaryScreenHeight * 0.0463;
+                RedCrossButton.Width = SystemParameters.PrimaryScreenWidth * 0.0260;
+                RedCrossButton.SetValue(Canvas.LeftProperty, 1870 * (SystemParameters.PrimaryScreenWidth / 1920));
+
+                RedCross.SetValue(Canvas.TopProperty, 0 * (SystemParameters.PrimaryScreenHeight / 1080));
+                RedCross.Height = SystemParameters.PrimaryScreenHeight * 0.0463;
+                RedCross.Width = SystemParameters.PrimaryScreenWidth * 0.0260;
+                RedCross.SetValue(Canvas.LeftProperty, 1870 * (SystemParameters.PrimaryScreenWidth / 1920));
             }
         }
         void CalendarButtonClick(object sender, RoutedEventArgs e)
@@ -154,6 +163,10 @@ namespace TrackIt
                 newForm.Show();
                 this.Close(); //Close the window.
             }
+        }
+        void RedCrossButtonClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
         void HomeButtonClick(object sender, RoutedEventArgs e)
         {

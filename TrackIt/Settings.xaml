@@ -27,6 +27,19 @@
         <Image Name="SettingsIcon" Source="/Images/Settings.png" Height="77" Canvas.Top="981" Width="80" Canvas.Left="12" HorizontalAlignment="Left" VerticalAlignment="Top" />
         <Button x:Name="SettingsButton" Click="SettingsButtonClick" Height="54" Width ="168" Canvas.Top="995" RenderTransformOrigin="0.37,-2.518" Background="Transparent" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Narkisim" FontSize="40" Content="Settings" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="97"/>
         <TextBlock Canvas.Left="1319" Canvas.Top="424" Name="DeleteLimits" Text="Delete Application Limits" FontSize="40" Height="60" Width="468" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
+        <Button Name="RedCrossButton" Height="50" Width="50" Click="RedCrossButtonClick" Canvas.Left="1870" Background="Transparent" BorderThickness="0">
+            <Image Name="RedCross" Height="50" Canvas.Left="1870" Source="/Images/RedCross.png" Stretch="Fill" Width="50"/>
+        </Button>
+        <Label Name="WebsiteLink" Canvas.Left="674" Canvas.Top="861" HorizontalAlignment="Left" VerticalAlignment="Top" Width="780">
+            <Hyperlink  Click="WebsiteLinkClick" NavigateUri="https://sites.google.com/view/trackitofficial">
+                <TextBlock Name="WebsiteLinkText" Canvas.Left="674" Canvas.Top="861" Width="780" Text="https://sites.google.com/view/trackitofficial" TextAlignment="Center" FontSize="40"/>
+            </Hyperlink>
+        </Label>
+        <Label Name="WebsiteLink1" Canvas.Left="467" Canvas.Top="966" HorizontalAlignment="Left" VerticalAlignment="Top" Width="1194">
+            <Hyperlink  Click="WebsiteLink1Click" NavigateUri="https://sites.google.com/view/trackitofficial">
+                <TextBlock Name="WebsiteLinkText1" Canvas.Left="467" Canvas.Top="966" Width="1194" TextAlignment="Center" Text="https://www.youtube.com/channel/UCi1wcQyTb7vbYbDUuF4HZag" FontSize="40"/>
+            </Hyperlink>
+        </Label>
         <Button x:Name="DeleteBlacklistButton" Click="DeleteBlacklistButtonClick" Height="82" Width ="215" Canvas.Top="125" Background="#E14026" Foreground="#000000" BorderBrush="Transparent" BorderThickness="0" FontFamily="Calibri" FontSize="20" Content="Delete" Canvas.Left="518" HorizontalAlignment="Center" VerticalAlignment="Top">
             <Button.Template>
                 <ControlTemplate TargetType="Button">

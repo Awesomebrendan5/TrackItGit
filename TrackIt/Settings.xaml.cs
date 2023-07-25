@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,7 +28,7 @@ namespace TrackIt
         }
         void ScreenScale()
         {
-            if (SystemParameters.PrimaryScreenHeight != 1080)
+            if (SystemParameters.PrimaryScreenHeight != 1080 | SystemParameters.PrimaryScreenWidth != 1920)
             {
                 Line.Height = SystemParameters.PrimaryScreenHeight * 1;
                 Line.Width = SystemParameters.PrimaryScreenWidth * 0.0031;
@@ -147,6 +148,36 @@ namespace TrackIt
                 Help.Width = SystemParameters.PrimaryScreenWidth * 0.1281;
                 Help.FontSize = (40 * SystemParameters.PrimaryScreenHeight / 1080);
                 Help.SetValue(Canvas.LeftProperty, 960 * (SystemParameters.PrimaryScreenWidth / 1920));
+
+                RedCrossButton.SetValue(Canvas.TopProperty, 0 * (SystemParameters.PrimaryScreenHeight / 1080));
+                RedCrossButton.Height = SystemParameters.PrimaryScreenHeight * 0.0463;
+                RedCrossButton.Width = SystemParameters.PrimaryScreenWidth * 0.0260;
+                RedCrossButton.SetValue(Canvas.LeftProperty, 1870 * (SystemParameters.PrimaryScreenWidth / 1920));
+
+                RedCross.SetValue(Canvas.TopProperty, 0 * (SystemParameters.PrimaryScreenHeight / 1080));
+                RedCross.Height = SystemParameters.PrimaryScreenHeight * 0.0463;
+                RedCross.Width = SystemParameters.PrimaryScreenWidth * 0.0260;
+                RedCross.SetValue(Canvas.LeftProperty, 1870 * (SystemParameters.PrimaryScreenWidth / 1920));
+
+                WebsiteLink.SetValue(Canvas.TopProperty, 861 * (SystemParameters.PrimaryScreenHeight / 1080));
+                WebsiteLink.Width = SystemParameters.PrimaryScreenWidth * 0.4063;
+                WebsiteLink.FontSize = (40 * SystemParameters.PrimaryScreenHeight / 1080);
+                WebsiteLink.SetValue(Canvas.LeftProperty, 674 * (SystemParameters.PrimaryScreenWidth / 1920));
+
+                WebsiteLinkText.SetValue(Canvas.TopProperty, 861 * (SystemParameters.PrimaryScreenHeight / 1080));
+                WebsiteLinkText.Width = SystemParameters.PrimaryScreenWidth * 0.4063;
+                WebsiteLinkText.FontSize = (40 * SystemParameters.PrimaryScreenHeight / 1080);
+                WebsiteLinkText.SetValue(Canvas.LeftProperty, 674 * (SystemParameters.PrimaryScreenWidth / 1920));
+
+                WebsiteLink1.SetValue(Canvas.TopProperty, 966 * (SystemParameters.PrimaryScreenHeight / 1080));
+                WebsiteLink1.Width = SystemParameters.PrimaryScreenWidth * 0.6219;
+                WebsiteLink1.FontSize = (40 * SystemParameters.PrimaryScreenHeight / 1080);
+                WebsiteLink1.SetValue(Canvas.LeftProperty, 467 * (SystemParameters.PrimaryScreenWidth / 1920));
+
+                WebsiteLinkText1.SetValue(Canvas.TopProperty, 966 * (SystemParameters.PrimaryScreenHeight / 1080));
+                WebsiteLinkText1.Width = SystemParameters.PrimaryScreenWidth * 0.6219;
+                WebsiteLinkText1.FontSize = (40 * SystemParameters.PrimaryScreenHeight / 1080);
+                WebsiteLinkText1.SetValue(Canvas.LeftProperty, 467 * (SystemParameters.PrimaryScreenWidth / 1920));
             }
         }
 
@@ -160,6 +191,22 @@ namespace TrackIt
             }
 
         }
+        void WebsiteLinkClick(object sender, RoutedEventArgs e)
+        {
+            var uri = "https://sites.google.com/view/trackitofficial";
+            var psi = new System.Diagnostics.ProcessStartInfo();
+            psi.UseShellExecute = true;
+            psi.FileName = uri;
+            System.Diagnostics.Process.Start(psi);
+        }
+        void WebsiteLink1Click(object sender, RoutedEventArgs e)
+        {
+            var uri = "https://www.youtube.com/channel/UCi1wcQyTb7vbYbDUuF4HZag";
+            var psi = new System.Diagnostics.ProcessStartInfo();
+            psi.UseShellExecute = true;
+            psi.FileName = uri;
+            System.Diagnostics.Process.Start(psi);
+        }
         void ScreenTimeButtonClick(object sender, RoutedEventArgs e)
         {
             if (Properties.Settings.Default.MiniWindowOpened == false & Properties.Settings.Default.MiniWindowOpened1 == false)
@@ -168,6 +215,10 @@ namespace TrackIt
                 newForm.Show();
                 this.Close();
             }
+        }
+        void RedCrossButtonClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
         void PasswordButtonClick(object sender, RoutedEventArgs e)
         {

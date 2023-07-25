@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Images\TrackIt-logos.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,9 +17,28 @@
     <None Remove="Images\Line.png" />
     <None Remove="Images\Password.png" />
     <None Remove="Images\PasswordBox.png" />
+    <None Remove="Images\RedCross.png" />
     <None Remove="Images\Screentime.png" />
     <None Remove="Images\Settings.png" />
     <None Remove="Images\Splashscreen.png" />
+    <None Remove="png-transparent-delete-remove-cross-red-cancel-abort-error-red-cross-removebg-preview.png" />
+    <None Remove="png-transparent-delete-remove-cross-red-cancel-abort-error-red-cross.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <COMReference Include="IWshRuntimeLibrary">
+      <WrapperTool>tlbimp</WrapperTool>
+      <VersionMinor>0</VersionMinor>
+      <VersionMajor>1</VersionMajor>
+      <Guid>f935dc20-1cf0-11d0-adb9-00c04fd58a0b</Guid>
+      <Lcid>0</Lcid>
+      <Isolated>false</Isolated>
+      <EmbedInteropTypes>true</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\TrackIt-logos.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,8 +60,11 @@
     <Resource Include="Images\Line.png" />
     <Resource Include="Images\Password.png" />
     <Resource Include="Images\PasswordBox.png" />
+    <Resource Include="Images\RedCross.png" />
     <Resource Include="Images\Screentime.png" />
     <Resource Include="Images\Settings.png" />
+    <Resource Include="png-transparent-delete-remove-cross-red-cancel-abort-error-red-cross-removebg-preview.png" />
+    <Resource Include="png-transparent-delete-remove-cross-red-cancel-abort-error-red-cross.png" />
   </ItemGroup>
 
   <ItemGroup>

@@ -31,6 +31,9 @@
         <Label Name ="GraphLabel3" Height="69" Width="192" Content="Yearly Usage" FontFamily="Narkisim" Canvas.Left="1240" FontSize="27" Canvas.Top="573" HorizontalAlignment="Center" VerticalAlignment="Top" />
         <Image Name="BlacklistBox" Height="755" Canvas.Left="1608" Source="Images/BlacklistBox.png" Stretch="Fill" Canvas.Top="136" Width="272" HorizontalAlignment="Left" VerticalAlignment="Top" Opacity="100"/>
         <Image Name="SettingsIcon" Source="/Images/Settings.png" Height="77" Canvas.Top="981" Width="80" Canvas.Left="12" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Button Name="RedCrossButton" Height="50" Width="50" Click="RedCrossButtonClick" Canvas.Left="1870" Background="Transparent" BorderThickness="0">
+            <Image Name="RedCross" Height="50" Canvas.Left="1870" Source="/Images/RedCross.png" Stretch="Fill" Width="50"/>
+        </Button>
         <Button x:Name="SettingsButton" Click="SettingsButtonClick" Height="54" Width ="168" Canvas.Top="995" RenderTransformOrigin="0.37,-2.518" Background="Transparent" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Narkisim" FontSize="40" Content="Settings" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="97"/>
         <Button Name ="AddApplicationButton" Click="AddApplicationClick" Content="Add Application" Canvas.Left="1628" Canvas.Top="812" Height="52" Width="227" Background="#5FB72E" FontSize="30" FontFamily="Narkism" HorizontalAlignment="Left" VerticalAlignment="Center">
             <Button.Template>

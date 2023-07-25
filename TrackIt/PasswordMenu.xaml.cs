@@ -14,11 +14,10 @@ namespace TrackIt
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             WindowState = WindowState.Maximized;
             ScreenScale();
-            //Tests();
         }
         void ScreenScale()
         {
-            if (SystemParameters.PrimaryScreenHeight != 1080)
+            if (SystemParameters.PrimaryScreenHeight != 1080 | SystemParameters.PrimaryScreenWidth != 1920)
             {
                 Line.Height = SystemParameters.PrimaryScreenHeight * 1;
                 Line.Width = SystemParameters.PrimaryScreenWidth * 0.0031;
@@ -110,6 +109,16 @@ namespace TrackIt
                 SettingsIcon.Height = SystemParameters.PrimaryScreenHeight * 0.0713;
                 SettingsIcon.Width = SystemParameters.PrimaryScreenWidth * 0.04167;
                 SettingsIcon.SetValue(Canvas.LeftProperty, 12 * (SystemParameters.PrimaryScreenWidth / 1920));
+
+                RedCrossButton.SetValue(Canvas.TopProperty, 0 * (SystemParameters.PrimaryScreenHeight / 1080));
+                RedCrossButton.Height = SystemParameters.PrimaryScreenHeight * 0.0463;
+                RedCrossButton.Width = SystemParameters.PrimaryScreenWidth * 0.0260;
+                RedCrossButton.SetValue(Canvas.LeftProperty, 1870 * (SystemParameters.PrimaryScreenWidth / 1920));
+
+                RedCross.SetValue(Canvas.TopProperty, 0 * (SystemParameters.PrimaryScreenHeight / 1080));
+                RedCross.Height = SystemParameters.PrimaryScreenHeight * 0.0463;
+                RedCross.Width = SystemParameters.PrimaryScreenWidth * 0.0260;
+                RedCross.SetValue(Canvas.LeftProperty, 1870 * (SystemParameters.PrimaryScreenWidth / 1920));
             }
         }
         void CalendarButtonClick(object sender, RoutedEventArgs e)
@@ -143,6 +152,10 @@ namespace TrackIt
                 this.Close();
             }
         }
+        void RedCrossButtonClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        } 
         void PasswordCreationClick(object sender, RoutedEventArgs e)
         {
             string password = new System.Net.NetworkCredential(string.Empty, Properties.Settings.Default.Password).Password;

@@ -23,6 +23,9 @@
         <Image Name="SettingsIcon" Source="/Images/Settings.png" Height="77" Canvas.Top="981" Width="80" Canvas.Left="12" HorizontalAlignment="Left" VerticalAlignment="Top" />
         <Button x:Name="SettingsButton" Click="SettingsButtonClick" Height="54" Width ="168" Canvas.Top="995" RenderTransformOrigin="0.37,-2.518" Background="Transparent" Foreground="#000000" BorderBrush="Transparent" BorderThickness="4" FontFamily="Narkisim" FontSize="40" Content="Settings" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="97"/>
         <TextBlock x:Name = "CalendarLabel" Height="61" Width="204" Text="Calendar" FontFamily="Narkisim" Canvas.Left="771" FontSize="50" Canvas.Top="79" HorizontalAlignment="Center" VerticalAlignment="Top" />
+        <Button Name="RedCrossButton" Height="50" Width="50" Click="RedCrossButtonClick" Canvas.Left="1870" Background="Transparent" BorderThickness="0">
+            <Image Name="RedCross" Height="50" Canvas.Left="1870" Source="/Images/RedCross.png" Stretch="Fill" Width="50"/>
+        </Button>
         <ItemsControl x:Name="BlacklistList" Height="572" Width="228" Background="#E9DBDB" FontFamily="Calibri" FontSize="20" Foreground="Black" Canvas.Left="1624" Canvas.Top="306" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible">
         </ItemsControl>
         <Viewbox x:Name="CalendarContainer" Height="895" Width="1141" Canvas.Left="396" Canvas.Top="145" HorizontalAlignment="Left" VerticalAlignment="Center" >
