@@ -213,16 +213,12 @@ namespace TrackIt
                     var records = csv.GetRecords<ScreentimeStats>().ToList();
                     var today = DateTime.Today;
                     records = records.Where(r => r.DateCollected.Date == today).ToList();
-                    List<ScreentimeStats> alist = records.ToList();
+                    List<ScreentimeStats> alist = records.Where(r => r.ApplicationName.Length <= 17).ToList();
                     alist.Sort((b, a) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
                     try
                     {
-                        if (alist[0].ApplicationName.Length <= 17)
-                        {
                             Properties.Settings.Default.a = alist[0].ApplicationName;
                             Properties.Settings.Default.avalue = (alist[0].ScreenTimeCollect / 60000);
-                            Properties.Settings.Default.Save();
-                        }
                     }
                     catch
                     {
@@ -232,11 +228,8 @@ namespace TrackIt
                     }
                     try
                     {
-                        if (alist[1].ApplicationName.Length <= 17)
-                        {
                             Properties.Settings.Default.b = alist[1].ApplicationName;
                             Properties.Settings.Default.bvalue = (alist[1].ScreenTimeCollect / 60000);
-                        }
                     }
                     catch
                     {
@@ -245,11 +238,8 @@ namespace TrackIt
                     }
                     try
                     {
-                        if (alist[2].ApplicationName.Length <= 17)
-                        {
                             Properties.Settings.Default.c = alist[2].ApplicationName;
                             Properties.Settings.Default.cvalue = (alist[2].ScreenTimeCollect / 60000);
-                        }
                     }
                     catch
                     {
@@ -258,11 +248,8 @@ namespace TrackIt
                     }
                     try
                     {
-                        if (alist[3].ApplicationName.Length <= 17)
-                        {
                             Properties.Settings.Default.d = alist[3].ApplicationName;
                             Properties.Settings.Default.dvalue = (alist[3].ScreenTimeCollect / 60000);
-                        }
                     }
                     catch
                     {
@@ -271,11 +258,8 @@ namespace TrackIt
                     }
                     try
                     {
-                        if (alist[4].ApplicationName.Length <= 17)
-                        {
                             Properties.Settings.Default.e = alist[4].ApplicationName;
                             Properties.Settings.Default.evalue = (alist[4].ScreenTimeCollect / 60000);
-                        }
                     }
                     catch
                     {
@@ -337,15 +321,13 @@ namespace TrackIt
                         var records = csv.GetRecords<ScreentimeStats>().ToList();
                         var today = DateTime.Today;
                         var pastWeekRecords = records.Where(r => r.DateCollected.Date >= today.AddDays(-7)).ToList();
-                        pastWeekRecords.Sort((b, a) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
+                        var pastWeekRecordsSmall = pastWeekRecords.Where(r => r.ApplicationName.Length <= 17).ToList();
+                        pastWeekRecordsSmall.Sort((b, a) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
                         records = records.Where(r => r.DateCollected.Date == today).ToList();
                         try
                         {
-                            if (pastWeekRecords[0].ApplicationName.Length <= 17)
-                            {
-                                Properties.Settings.Default.f = pastWeekRecords[0].ApplicationName;
-                                Properties.Settings.Default.fvalue = (pastWeekRecords[0].ScreenTimeCollect / 60000);
-                            }
+                                Properties.Settings.Default.f = pastWeekRecordsSmall[0].ApplicationName;
+                                Properties.Settings.Default.fvalue = (pastWeekRecordsSmall[0].ScreenTimeCollect / 60000);
                         }
                         catch
                         {
@@ -354,11 +336,8 @@ namespace TrackIt
                         }
                         try
                         {
-                            if (pastWeekRecords[1].ApplicationName.Length <= 17)
-                            {
-                                Properties.Settings.Default.g = pastWeekRecords[1].ApplicationName;
-                                Properties.Settings.Default.gvalue = (pastWeekRecords[1].ScreenTimeCollect / 60000);
-                            }
+                                Properties.Settings.Default.g = pastWeekRecordsSmall[1].ApplicationName;
+                                Properties.Settings.Default.gvalue = (pastWeekRecordsSmall[1].ScreenTimeCollect / 60000);
                         }
                         catch
                         {
@@ -367,11 +346,8 @@ namespace TrackIt
                         }
                         try
                         {
-                            if (pastWeekRecords[2].ApplicationName.Length <= 17)
-                            {
-                                Properties.Settings.Default.h = pastWeekRecords[2].ApplicationName;
-                                Properties.Settings.Default.hvalue = (pastWeekRecords[2].ScreenTimeCollect / 60000);
-                            }
+                                Properties.Settings.Default.h = pastWeekRecordsSmall[2].ApplicationName;
+                                Properties.Settings.Default.hvalue = (pastWeekRecordsSmall[2].ScreenTimeCollect / 60000);
                         }
                         catch
                         {
@@ -380,11 +356,8 @@ namespace TrackIt
                         }
                         try
                         {
-                            if (pastWeekRecords[3].ApplicationName.Length <= 17)
-                            {
-                                Properties.Settings.Default.i = pastWeekRecords[3].ApplicationName;
-                                Properties.Settings.Default.ivalue = (pastWeekRecords[3].ScreenTimeCollect / 60000);
-                            }
+                                Properties.Settings.Default.i = pastWeekRecordsSmall[3].ApplicationName;
+                                Properties.Settings.Default.ivalue = (pastWeekRecordsSmall[3].ScreenTimeCollect / 60000);
                         }
                         catch
                         {
@@ -393,11 +366,8 @@ namespace TrackIt
                         }
                         try
                         {
-                            if (pastWeekRecords[4].ApplicationName.Length <= 17)
-                            {
-                                Properties.Settings.Default.j = pastWeekRecords[4].ApplicationName;
-                                Properties.Settings.Default.jvalue = (pastWeekRecords[4].ScreenTimeCollect / 60000);
-                            }
+                                Properties.Settings.Default.j = pastWeekRecordsSmall[4].ApplicationName;
+                                Properties.Settings.Default.jvalue = (pastWeekRecordsSmall[4].ScreenTimeCollect / 60000);
                         }
                         catch
                         {
@@ -421,15 +391,13 @@ namespace TrackIt
                         var records = csv.GetRecords<ScreentimeStats>().ToList();
                         var today = DateTime.Today;
                         var pastWeekRecords = records.Where(r => r.DateCollected.Date >= today.AddDays(-7)).ToList();
-                        pastWeekRecords.Sort((b, a) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
+                        var pastWeekRecordsSmall = pastWeekRecords.Where(r => r.ApplicationName.Length <= 17).ToList();
+                        pastWeekRecordsSmall.Sort((b, a) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
                         records = records.Where(r => r.DateCollected.Date == today).ToList();
                         try
                         {
-                            if (pastWeekRecords[0].ApplicationName.Length <= 17)
-                            {
-                                Properties.Settings.Default.f = pastWeekRecords[0].ApplicationName;
-                                Properties.Settings.Default.fvalue = (pastWeekRecords[0].ScreenTimeCollect / 60000);
-                            }
+                                Properties.Settings.Default.f = pastWeekRecordsSmall[0].ApplicationName;
+                                Properties.Settings.Default.fvalue = (pastWeekRecordsSmall[0].ScreenTimeCollect / 60000);
                         }
                         catch
                         {
@@ -438,11 +406,8 @@ namespace TrackIt
                         }
                         try
                         {
-                            if (pastWeekRecords[1].ApplicationName.Length <= 17)
-                            {
-                                Properties.Settings.Default.g = pastWeekRecords[1].ApplicationName;
-                                Properties.Settings.Default.gvalue = (pastWeekRecords[1].ScreenTimeCollect / 60000);
-                            }
+                                Properties.Settings.Default.g = pastWeekRecordsSmall[1].ApplicationName;
+                                Properties.Settings.Default.gvalue = (pastWeekRecordsSmall[1].ScreenTimeCollect / 60000);
                         }
                         catch
                         {
@@ -451,11 +416,8 @@ namespace TrackIt
                         }
                         try
                         {
-                            if (pastWeekRecords[2].ApplicationName.Length <= 17)
-                            {
-                                Properties.Settings.Default.h = pastWeekRecords[2].ApplicationName;
-                                Properties.Settings.Default.hvalue = (pastWeekRecords[2].ScreenTimeCollect / 60000);
-                            }
+                                Properties.Settings.Default.h = pastWeekRecordsSmall[2].ApplicationName;
+                                Properties.Settings.Default.hvalue = (pastWeekRecordsSmall[2].ScreenTimeCollect / 60000);
                         }
                         catch
                         {
@@ -464,11 +426,8 @@ namespace TrackIt
                         }
                         try
                         {
-                            if (pastWeekRecords[3].ApplicationName.Length <= 17)
-                            {
-                                Properties.Settings.Default.i = pastWeekRecords[3].ApplicationName;
-                                Properties.Settings.Default.ivalue = (pastWeekRecords[3].ScreenTimeCollect / 60000);
-                            }
+                                Properties.Settings.Default.i = pastWeekRecordsSmall[3].ApplicationName;
+                                Properties.Settings.Default.ivalue = (pastWeekRecordsSmall[3].ScreenTimeCollect / 60000);
                         }
                         catch
                         {
@@ -477,11 +436,8 @@ namespace TrackIt
                         }
                         try
                         {
-                            if (pastWeekRecords[4].ApplicationName.Length <= 17)
-                            {
-                                Properties.Settings.Default.j = pastWeekRecords[4].ApplicationName;
-                                Properties.Settings.Default.jvalue = (pastWeekRecords[4].ScreenTimeCollect / 60000);
-                            }
+                                Properties.Settings.Default.j = pastWeekRecordsSmall[4].ApplicationName;
+                                Properties.Settings.Default.jvalue = (pastWeekRecordsSmall[4].ScreenTimeCollect / 60000);
                         }
                         catch
                         {
@@ -541,15 +497,13 @@ namespace TrackIt
                         var records = csv.GetRecords<ScreentimeStats>().ToList();
                         var today1 = DateTime.Today;
                         var pastWeekRecords = records.Where(r => r.DateCollected.Date >= today1.AddDays(-31)).ToList();
-                        pastWeekRecords.Sort((b, a) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
+                        var pastWeekRecordsSmall = pastWeekRecords.Where(r => r.ApplicationName.Length <= 17).ToList();
+                        pastWeekRecordsSmall.Sort((b, a) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
                         records = records.Where(r => r.DateCollected.Date == today1).ToList();
                         try
                         {
-                            if (pastWeekRecords[0].ApplicationName.Length <= 17)
-                            {
-                                Properties.Settings.Default.k = pastWeekRecords[0].ApplicationName;
-                                Properties.Settings.Default.kvalue = (pastWeekRecords[0].ScreenTimeCollect / 60000);
-                            }
+                                Properties.Settings.Default.k = pastWeekRecordsSmall[0].ApplicationName;
+                                Properties.Settings.Default.kvalue = (pastWeekRecordsSmall[0].ScreenTimeCollect / 60000);
                         }
                         catch
                         {
@@ -558,11 +512,8 @@ namespace TrackIt
                         }
                         try
                         {
-                            if (pastWeekRecords[1].ApplicationName.Length <= 17)
-                            {
-                                Properties.Settings.Default.l = pastWeekRecords[1].ApplicationName;
-                                Properties.Settings.Default.lvalue = (pastWeekRecords[1].ScreenTimeCollect / 60000);
-                            }
+                                Properties.Settings.Default.l = pastWeekRecordsSmall[1].ApplicationName;
+                                Properties.Settings.Default.lvalue = (pastWeekRecordsSmall[1].ScreenTimeCollect / 60000);
                         }
                         catch
                         {
@@ -571,11 +522,8 @@ namespace TrackIt
                         }
                         try
                         {
-                            if (pastWeekRecords[2].ApplicationName.Length <= 17)
-                            {
-                                Properties.Settings.Default.m = pastWeekRecords[2].ApplicationName;
-                                Properties.Settings.Default.mvalue = (pastWeekRecords[2].ScreenTimeCollect / 60000);
-                            }
+                                Properties.Settings.Default.m = pastWeekRecordsSmall[2].ApplicationName;
+                                Properties.Settings.Default.mvalue = (pastWeekRecordsSmall[2].ScreenTimeCollect / 60000);
                         }
                         catch
                         {
@@ -584,11 +532,8 @@ namespace TrackIt
                         }
                         try
                         {
-                            if (pastWeekRecords[3].ApplicationName.Length <= 17)
-                            {
-                                Properties.Settings.Default.n = pastWeekRecords[3].ApplicationName;
-                                Properties.Settings.Default.nvalue = (pastWeekRecords[3].ScreenTimeCollect / 60000);
-                            }
+                                Properties.Settings.Default.n = pastWeekRecordsSmall[3].ApplicationName;
+                                Properties.Settings.Default.nvalue = (pastWeekRecordsSmall[3].ScreenTimeCollect / 60000);
                         }
                         catch
                         {
@@ -597,11 +542,8 @@ namespace TrackIt
                         }
                         try
                         {
-                            if (pastWeekRecords[4].ApplicationName.Length <= 17)
-                            {
-                                Properties.Settings.Default.o = pastWeekRecords[4].ApplicationName;
-                                Properties.Settings.Default.ovalue = (pastWeekRecords[4].ScreenTimeCollect / 60000);
-                            }
+                                Properties.Settings.Default.o = pastWeekRecordsSmall[4].ApplicationName;
+                                Properties.Settings.Default.ovalue = (pastWeekRecordsSmall[4].ScreenTimeCollect / 60000);
                         }
                         catch
                         {
@@ -625,15 +567,13 @@ namespace TrackIt
                         var records = csv.GetRecords<ScreentimeStats>().ToList();
                         var today1 = DateTime.Today;
                         var pastWeekRecords = records.Where(r => r.DateCollected.Date >= today1.AddDays(-31)).ToList();
-                        pastWeekRecords.Sort((b, a) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
+                        var pastWeekRecordsSmall = pastWeekRecords.Where(r => r.ApplicationName.Length <= 17).ToList();
+                        pastWeekRecordsSmall.Sort((b, a) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
                         records = records.Where(r => r.DateCollected.Date == today1).ToList();
                         try
                         {
-                            if (pastWeekRecords[0].ApplicationName.Length <= 17)
-                            {
-                                Properties.Settings.Default.k = pastWeekRecords[0].ApplicationName;
-                                Properties.Settings.Default.kvalue = (pastWeekRecords[0].ScreenTimeCollect / 60000);
-                            }
+                                Properties.Settings.Default.k = pastWeekRecordsSmall[0].ApplicationName;
+                                Properties.Settings.Default.kvalue = (pastWeekRecordsSmall[0].ScreenTimeCollect / 60000);
                         }
                         catch
                         {
@@ -642,11 +582,8 @@ namespace TrackIt
                         }
                         try
                         {
-                            if (pastWeekRecords[1].ApplicationName.Length <= 17)
-                            {
-                                Properties.Settings.Default.l = pastWeekRecords[1].ApplicationName;
-                                Properties.Settings.Default.lvalue = (pastWeekRecords[1].ScreenTimeCollect / 60000);
-                            }
+                                Properties.Settings.Default.l = pastWeekRecordsSmall[1].ApplicationName;
+                                Properties.Settings.Default.lvalue = (pastWeekRecordsSmall[1].ScreenTimeCollect / 60000);
                         }
                         catch
                         {
@@ -655,11 +592,8 @@ namespace TrackIt
                         }
                         try
                         {
-                            if (pastWeekRecords[2].ApplicationName.Length <= 17)
-                            {
-                                Properties.Settings.Default.m = pastWeekRecords[2].ApplicationName;
-                                Properties.Settings.Default.mvalue = (pastWeekRecords[2].ScreenTimeCollect / 60000);
-                            }
+                                Properties.Settings.Default.m = pastWeekRecordsSmall[2].ApplicationName;
+                                Properties.Settings.Default.mvalue = (pastWeekRecordsSmall[2].ScreenTimeCollect / 60000);
                         }
                         catch
                         {
@@ -668,11 +602,8 @@ namespace TrackIt
                         }
                         try
                         {
-                            if (pastWeekRecords[3].ApplicationName.Length <= 17)
-                            {
-                                Properties.Settings.Default.n = pastWeekRecords[3].ApplicationName;
-                                Properties.Settings.Default.nvalue = (pastWeekRecords[3].ScreenTimeCollect / 60000);
-                            }
+                                Properties.Settings.Default.n = pastWeekRecordsSmall[3].ApplicationName;
+                                Properties.Settings.Default.nvalue = (pastWeekRecordsSmall[3].ScreenTimeCollect / 60000);
                         }
                         catch
                         {
@@ -681,11 +612,8 @@ namespace TrackIt
                         }
                         try
                         {
-                            if (pastWeekRecords[4].ApplicationName.Length <= 17)
-                            {
-                                Properties.Settings.Default.o = pastWeekRecords[4].ApplicationName;
-                                Properties.Settings.Default.ovalue = (pastWeekRecords[4].ScreenTimeCollect / 60000);
-                            }
+                                Properties.Settings.Default.o = pastWeekRecordsSmall[4].ApplicationName;
+                                Properties.Settings.Default.ovalue = (pastWeekRecordsSmall[4].ScreenTimeCollect / 60000);
                         }
                         catch
                         {
@@ -710,8 +638,8 @@ namespace TrackIt
                 var today = DateTime.Today;
                 var oneYearAgo = today.AddYears(-1);
                 var records = csv.GetRecords<ScreentimeStats>().ToList();
-                records = records.Where(r => r.DateCollected >= oneYearAgo && r.DateCollected <= today).ToList();
-                List<ScreentimeStats> alist = records.ToList();
+                    records = records.Where(r => r.DateCollected >= oneYearAgo && r.DateCollected <= today.AddDays(1)).ToList();
+                    List<ScreentimeStats> alist = records.ToList();
                 foreach (ScreentimeStats record in records)
                 {
                     int weekNumber = CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(record.DateCollected, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
@@ -745,28 +673,23 @@ namespace TrackIt
                     var records = csv.GetRecords<ScreentimeStats>().ToList();
                     var today = DateTime.Today;
                     var pastWeekRecords = records.Where(r => r.DateCollected.Date >= today.AddDays(-365)).ToList();
-                    pastWeekRecords.Sort((b, a) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
+                    var pastWeekRecordsSmall = pastWeekRecords.Where(r => r.ApplicationName.Length <= 17).ToList();
+                    pastWeekRecordsSmall.Sort((b, a) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
                     records = records.Where(r => r.DateCollected.Date == today).ToList();
                     try
-                        {
-                            if (pastWeekRecords[0].ApplicationName.Length <= 17)
-                            {
-                                Properties.Settings.Default.p = pastWeekRecords[0].ApplicationName;
-                                Properties.Settings.Default.pvalue = (pastWeekRecords[0].ScreenTimeCollect / 60000);
-                            }
+                    {
+                                Properties.Settings.Default.p = pastWeekRecordsSmall[0].ApplicationName;
+                                Properties.Settings.Default.pvalue = (pastWeekRecordsSmall[0].ScreenTimeCollect / 60000);
                     }
                     catch
                     {
                             Properties.Settings.Default.p = null;
                             Properties.Settings.Default.pvalue = 0;
-                        }
+                    }
                     try
-                        {
-                            if (pastWeekRecords[1].ApplicationName.Length <= 17)
-                            {
-                                Properties.Settings.Default.q = pastWeekRecords[1].ApplicationName;
-                                Properties.Settings.Default.qvalue = (pastWeekRecords[1].ScreenTimeCollect / 60000);
-                            }
+                    {
+                                Properties.Settings.Default.q = pastWeekRecordsSmall[1].ApplicationName;
+                                Properties.Settings.Default.qvalue = (pastWeekRecordsSmall[1].ScreenTimeCollect / 60000);
                     }
                     catch
                     {
@@ -774,12 +697,9 @@ namespace TrackIt
                             Properties.Settings.Default.qvalue = 0;
                     }
                     try
-                        {
-                            if (pastWeekRecords[2].ApplicationName.Length <= 17)
-                            {
-                                Properties.Settings.Default.r = pastWeekRecords[2].ApplicationName;
-                                Properties.Settings.Default.rvalue = (pastWeekRecords[2].ScreenTimeCollect / 60000);
-                            }
+                    {
+                                Properties.Settings.Default.r = pastWeekRecordsSmall[2].ApplicationName;
+                                Properties.Settings.Default.rvalue = (pastWeekRecordsSmall[2].ScreenTimeCollect / 60000);
                     }
                     catch
                     {
@@ -787,12 +707,9 @@ namespace TrackIt
                             Properties.Settings.Default.rvalue = 0;
                     }
                     try
-                        {
-                            if (pastWeekRecords[3].ApplicationName.Length <= 17)
-                            {
-                                Properties.Settings.Default.s = pastWeekRecords[3].ApplicationName;
-                                Properties.Settings.Default.svalue = (pastWeekRecords[3].ScreenTimeCollect / 60000);
-                            }
+                    {
+                                Properties.Settings.Default.s = pastWeekRecordsSmall[3].ApplicationName;
+                                Properties.Settings.Default.svalue = (pastWeekRecordsSmall[3].ScreenTimeCollect / 60000);
                     }
                     catch
                     {
@@ -800,12 +717,9 @@ namespace TrackIt
                             Properties.Settings.Default.svalue = 0;
                     }
                     try
-                        {
-                            if (pastWeekRecords[4].ApplicationName.Length <= 17)
-                            {
-                                Properties.Settings.Default.t = pastWeekRecords[4].ApplicationName;
-                                Properties.Settings.Default.tvalue = (pastWeekRecords[4].ScreenTimeCollect / 60000);
-                            }
+                    {
+                                Properties.Settings.Default.t = pastWeekRecordsSmall[4].ApplicationName;
+                                Properties.Settings.Default.tvalue = (pastWeekRecordsSmall[4].ScreenTimeCollect / 60000);
                     }
                     catch
                     {
@@ -829,15 +743,13 @@ namespace TrackIt
                         var records = csv.GetRecords<ScreentimeStats>().ToList();
                         var today = DateTime.Today;
                         var pastWeekRecords = records.Where(r => r.DateCollected.Date >= today.AddDays(-365)).ToList();
-                        pastWeekRecords.Sort((b, a) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
+                        var pastWeekRecordsSmall = pastWeekRecords.Where(r => r.ApplicationName.Length <= 17).ToList();
+                        pastWeekRecordsSmall.Sort((b, a) => a.ScreenTimeCollect.CompareTo(b.ScreenTimeCollect));
                         records = records.Where(r => r.DateCollected.Date == today).ToList();
                         try
                         {
-                            if (pastWeekRecords[0].ApplicationName.Length <= 17)
-                            {
-                                Properties.Settings.Default.p = pastWeekRecords[0].ApplicationName;
-                                Properties.Settings.Default.pvalue = (pastWeekRecords[0].ScreenTimeCollect / 60000);
-                            }
+                                Properties.Settings.Default.p = pastWeekRecordsSmall[0].ApplicationName;
+                                Properties.Settings.Default.pvalue = (pastWeekRecordsSmall[0].ScreenTimeCollect / 60000);
                         }
                         catch
                         {
@@ -846,11 +758,8 @@ namespace TrackIt
                         }
                         try
                         {
-                            if (pastWeekRecords[1].ApplicationName.Length <= 17)
-                            {
-                                Properties.Settings.Default.q = pastWeekRecords[1].ApplicationName;
-                                Properties.Settings.Default.qvalue = (pastWeekRecords[1].ScreenTimeCollect / 60000);
-                            }
+                                Properties.Settings.Default.q = pastWeekRecordsSmall[1].ApplicationName;
+                                Properties.Settings.Default.qvalue = (pastWeekRecordsSmall[1].ScreenTimeCollect / 60000);
                         }
                         catch
                         {
@@ -859,11 +768,8 @@ namespace TrackIt
                         }
                         try
                         {
-                            if (pastWeekRecords[2].ApplicationName.Length <= 17)
-                            {
-                                Properties.Settings.Default.r = pastWeekRecords[2].ApplicationName;
-                                Properties.Settings.Default.rvalue = (pastWeekRecords[2].ScreenTimeCollect / 60000);
-                            }
+                                Properties.Settings.Default.r = pastWeekRecordsSmall[2].ApplicationName;
+                                Properties.Settings.Default.rvalue = (pastWeekRecordsSmall[2].ScreenTimeCollect / 60000);
                         }
                         catch
                         {
@@ -872,11 +778,8 @@ namespace TrackIt
                         }
                         try
                         {
-                            if (pastWeekRecords[3].ApplicationName.Length <= 17)
-                            {
-                                Properties.Settings.Default.s = pastWeekRecords[3].ApplicationName;
-                                Properties.Settings.Default.svalue = (pastWeekRecords[3].ScreenTimeCollect / 60000);
-                            }
+                                Properties.Settings.Default.s = pastWeekRecordsSmall[3].ApplicationName;
+                                Properties.Settings.Default.svalue = (pastWeekRecordsSmall[3].ScreenTimeCollect / 60000);
                         }
                         catch
                         {
@@ -885,11 +788,8 @@ namespace TrackIt
                         }
                         try
                         {
-                            if (pastWeekRecords[4].ApplicationName.Length <= 17)
-                            {
-                                Properties.Settings.Default.t = pastWeekRecords[4].ApplicationName;
-                                Properties.Settings.Default.tvalue = (pastWeekRecords[4].ScreenTimeCollect / 60000);
-                            }
+                                Properties.Settings.Default.t = pastWeekRecordsSmall[4].ApplicationName;
+                                Properties.Settings.Default.tvalue = (pastWeekRecordsSmall[4].ScreenTimeCollect / 60000);
                         }
                         catch
                         {
