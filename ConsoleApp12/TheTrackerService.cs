@@ -181,6 +181,101 @@ namespace TheTracker
                             ApplicationNamed = "Microsoft Teams";
                             Console.WriteLine("works");
                         }
+                        if (ApplicationNamed.Contains("Adobe Photoshop"))
+                        {
+                            ApplicationNamed = "Adobe Photoshop";
+                            Console.WriteLine("works");
+                        }
+                        if (ApplicationNamed.Contains("Creative Cloud"))
+                        {
+                            ApplicationNamed = "Creative Cloud";
+                            Console.WriteLine("works");
+                        }
+                        if (ApplicationNamed.Contains("Adobe Illustrator"))
+                        {
+                            ApplicationNamed = "Adobe Illustrator";
+                            Console.WriteLine("works");
+                        }
+                        if (ApplicationNamed.Contains("Adobe InDesign"))
+                        {
+                            ApplicationNamed = "Adobe InDesign";
+                            Console.WriteLine("works");
+                        }
+                        if (ApplicationNamed.Contains("Adobe Lightroom"))
+                        {
+                            ApplicationNamed = "Adobe Lightroom";
+                            Console.WriteLine("works");
+                        }
+                        if (ApplicationNamed.Contains("Adobe Lightroom"))
+                        {
+                            ApplicationNamed = "Adobe Lightroom";
+                            Console.WriteLine("works");
+                        }
+                        if (ApplicationNamed.Contains("Adobe Premier Pro"))
+                        {
+                            ApplicationNamed = "Premier Pro";
+                            Console.WriteLine("works");
+                        }
+                        if (ApplicationNamed.Contains("Adobe Premier Rush"))
+                        {
+                            ApplicationNamed = "Premier Rush";
+                            Console.WriteLine("works");
+                        }
+                        if (ApplicationNamed.Contains("Adobe After Effects"))
+                        {
+                            ApplicationNamed = "After Effects";
+                            Console.WriteLine("works");
+                        }
+                        if (ApplicationNamed.Contains("Adobe Bridge"))
+                        {
+                            ApplicationNamed = "Adobe Bridge";
+                            Console.WriteLine("works");
+                        }
+                        if (ApplicationNamed.Contains("Adobe Bridge"))
+                        {
+                            ApplicationNamed = "Adobe Bridge";
+                            Console.WriteLine("works");
+                        }
+                        if (ApplicationNamed.Contains("Adobe Dreamweaver"))
+                        {
+                            ApplicationNamed = "Dreamweaver";
+                            Console.WriteLine("works");
+                        }
+                        if (ApplicationNamed.Contains("Adobe Animate"))
+                        {
+                            ApplicationNamed = "Adobe Animate";
+                            Console.WriteLine("works");
+                        }
+                        if (ApplicationNamed.Contains("Adobe Audition"))
+                        {
+                            ApplicationNamed = "Audition";
+                            Console.WriteLine("works");
+                        }
+                        if (ApplicationNamed.Contains("Adobe Dimension"))
+                        {
+                            ApplicationNamed = "Dimension";
+                            Console.WriteLine("works");
+                        }
+                        if (ApplicationNamed.Contains("Media Encoder"))
+                        {
+                            ApplicationNamed = "Media Encoder";
+                            Console.WriteLine("works");
+                        }
+                        if (ApplicationNamed.Contains("Adobe Incopy"))
+                        {
+                            ApplicationNamed = "Adobe Incopy";
+                            Console.WriteLine("works");
+                        }
+                        if (ApplicationNamed.Contains("Github"))
+                        {
+                            ApplicationNamed = "Github";
+                            Console.WriteLine("works");
+                        }
+                        if (ApplicationNamed.Contains("Microsoft Sway"))
+                        {
+                            ApplicationNamed = "Microsoft Sway";
+                            Console.WriteLine("works");
+                        }
                         Dictionary<string, ApplicationsNotToMonitor> DoNotMonitor = new Dictionary<string, ApplicationsNotToMonitor>();
                             string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                             string FilePath = Path.Combine(documentsPath, "TrackIt", "ApplicationsNotToTrack.csv");
@@ -454,6 +549,101 @@ namespace TheTracker
                                     ApplicationNamed = "Microsoft Teams";
                                     Console.WriteLine("works");
                                 }
+                                if (ApplicationNamed.Contains("Adobe Photoshop"))
+                                {
+                                    ApplicationNamed = "Adobe Photoshop";
+                                    Console.WriteLine("works");
+                                }
+                                if (ApplicationNamed.Contains("Creative Cloud"))
+                                {
+                                    ApplicationNamed = "Creative Cloud";
+                                    Console.WriteLine("works");
+                                }
+                                if (ApplicationNamed.Contains("Adobe Illustrator"))
+                                {
+                                    ApplicationNamed = "Adobe Illustrator";
+                                    Console.WriteLine("works");
+                                }
+                                if (ApplicationNamed.Contains("Adobe InDesign"))
+                                {
+                                    ApplicationNamed = "Adobe InDesign";
+                                    Console.WriteLine("works");
+                                }
+                                if (ApplicationNamed.Contains("Adobe Lightroom"))
+                                {
+                                    ApplicationNamed = "Adobe Lightroom";
+                                    Console.WriteLine("works");
+                                }
+                                if (ApplicationNamed.Contains("Adobe Lightroom"))
+                                {
+                                    ApplicationNamed = "Adobe Lightroom";
+                                    Console.WriteLine("works");
+                                }
+                                if (ApplicationNamed.Contains("Adobe Premier Pro"))
+                                {
+                                    ApplicationNamed = "Premier Pro";
+                                    Console.WriteLine("works");
+                                }
+                                if (ApplicationNamed.Contains("Adobe Premier Rush"))
+                                {
+                                    ApplicationNamed = "Premier Rush";
+                                    Console.WriteLine("works");
+                                }
+                                if (ApplicationNamed.Contains("Adobe After Effects"))
+                                {
+                                    ApplicationNamed = "After Effects";
+                                    Console.WriteLine("works");
+                                }
+                                if (ApplicationNamed.Contains("Adobe Bridge"))
+                                {
+                                    ApplicationNamed = "Adobe Bridge";
+                                    Console.WriteLine("works");
+                                }
+                                if (ApplicationNamed.Contains("Adobe Bridge"))
+                                {
+                                    ApplicationNamed = "Adobe Bridge";
+                                    Console.WriteLine("works");
+                                }
+                                if (ApplicationNamed.Contains("Adobe Dreamweaver"))
+                                {
+                                    ApplicationNamed = "Dreamweaver";
+                                    Console.WriteLine("works");
+                                }
+                                if (ApplicationNamed.Contains("Adobe Animate"))
+                                {
+                                    ApplicationNamed = "Adobe Animate";
+                                    Console.WriteLine("works");
+                                }
+                                if (ApplicationNamed.Contains("Adobe Audition"))
+                                {
+                                    ApplicationNamed = "Audition";
+                                    Console.WriteLine("works");
+                                }
+                                if (ApplicationNamed.Contains("Adobe Dimension"))
+                                {
+                                    ApplicationNamed = "Dimension";
+                                    Console.WriteLine("works");
+                                }
+                                if (ApplicationNamed.Contains("Media Encoder"))
+                                {
+                                    ApplicationNamed = "Media Encoder";
+                                    Console.WriteLine("works");
+                                }
+                                if (ApplicationNamed.Contains("Adobe Incopy"))
+                                {
+                                    ApplicationNamed = "Adobe Incopy";
+                                    Console.WriteLine("works");
+                                }
+                                if (ApplicationNamed.Contains("Github Desktop"))
+                                {
+                                    ApplicationNamed = "Github";
+                                    Console.WriteLine("works");
+                                }
+                                if (ApplicationNamed.Contains("Microsoft Sway"))
+                                {
+                                    ApplicationNamed = "Microsoft Sway";
+                                    Console.WriteLine("works");
+                                }
                                 if (screenTime > screenTimeLimit & ApplicationNamed == applicationName)
                                 {
                                     const int WM_CLOSE = 0x10;
@@ -593,6 +783,101 @@ namespace TheTracker
                                     if (ApplicationNamed.Contains("Microsoft Teams"))
                                     {
                                         ApplicationNamed = "Microsoft Teams";
+                                        Console.WriteLine("works");
+                                    }
+                                    if (ApplicationNamed.Contains("Adobe Photoshop"))
+                                    {
+                                        ApplicationNamed = "Adobe Photoshop";
+                                        Console.WriteLine("works");
+                                    }
+                                    if (ApplicationNamed.Contains("Creative Cloud"))
+                                    {
+                                        ApplicationNamed = "Creative Cloud";
+                                        Console.WriteLine("works");
+                                    }
+                                    if (ApplicationNamed.Contains("Adobe Illustrator"))
+                                    {
+                                        ApplicationNamed = "Adobe Illustrator";
+                                        Console.WriteLine("works");
+                                    }
+                                    if (ApplicationNamed.Contains("Adobe InDesign"))
+                                    {
+                                        ApplicationNamed = "Adobe InDesign";
+                                        Console.WriteLine("works");
+                                    }
+                                    if (ApplicationNamed.Contains("Adobe Lightroom"))
+                                    {
+                                        ApplicationNamed = "Adobe Lightroom";
+                                        Console.WriteLine("works");
+                                    }
+                                    if (ApplicationNamed.Contains("Adobe Lightroom"))
+                                    {
+                                        ApplicationNamed = "Adobe Lightroom";
+                                        Console.WriteLine("works");
+                                    }
+                                    if (ApplicationNamed.Contains("Adobe Premier Pro"))
+                                    {
+                                        ApplicationNamed = "Premier Pro";
+                                        Console.WriteLine("works");
+                                    }
+                                    if (ApplicationNamed.Contains("Adobe Premier Rush"))
+                                    {
+                                        ApplicationNamed = "Premier Rush";
+                                        Console.WriteLine("works");
+                                    }
+                                    if (ApplicationNamed.Contains("Adobe After Effects"))
+                                    {
+                                        ApplicationNamed = "After Effects";
+                                        Console.WriteLine("works");
+                                    }
+                                    if (ApplicationNamed.Contains("Adobe Bridge"))
+                                    {
+                                        ApplicationNamed = "Adobe Bridge";
+                                        Console.WriteLine("works");
+                                    }
+                                    if (ApplicationNamed.Contains("Adobe Bridge"))
+                                    {
+                                        ApplicationNamed = "Adobe Bridge";
+                                        Console.WriteLine("works");
+                                    }
+                                    if (ApplicationNamed.Contains("Adobe Dreamweaver"))
+                                    {
+                                        ApplicationNamed = "Dreamweaver";
+                                        Console.WriteLine("works");
+                                    }
+                                    if (ApplicationNamed.Contains("Adobe Animate"))
+                                    {
+                                        ApplicationNamed = "Adobe Animate";
+                                        Console.WriteLine("works");
+                                    }
+                                    if (ApplicationNamed.Contains("Adobe Audition"))
+                                    {
+                                        ApplicationNamed = "Audition";
+                                        Console.WriteLine("works");
+                                    }
+                                    if (ApplicationNamed.Contains("Adobe Dimension"))
+                                    {
+                                        ApplicationNamed = "Dimension";
+                                        Console.WriteLine("works");
+                                    }
+                                    if (ApplicationNamed.Contains("Media Encoder"))
+                                    {
+                                        ApplicationNamed = "Media Encoder";
+                                        Console.WriteLine("works");
+                                    }
+                                    if (ApplicationNamed.Contains("Adobe Incopy"))
+                                    {
+                                        ApplicationNamed = "Adobe Incopy";
+                                        Console.WriteLine("works");
+                                    }
+                                    if (ApplicationNamed.Contains("Github Desktop"))
+                                    {
+                                        ApplicationNamed = "Github";
+                                        Console.WriteLine("works");
+                                    }
+                                    if (ApplicationNamed.Contains("Microsoft Sway"))
+                                    {
+                                        ApplicationNamed = "Microsoft Sway";
                                         Console.WriteLine("works");
                                     }
                                     foreach (var application in lockedApplications)
